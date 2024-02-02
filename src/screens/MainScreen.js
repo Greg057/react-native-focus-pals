@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import SliderTimer from '../components/SliderTimer'
 import CountdownTimer from '../components/CountdownTimer'
+import Header from '../components/Header'
 
 export default function MainScreen () {
 	const [timer, setTimer] = useState(5)
@@ -11,6 +12,7 @@ export default function MainScreen () {
 
 	return (
 		<View style={styles.container}>
+			<Header />
 			{timeFocused && <Text>You focused for {timeFocused} minutes!</Text>}
 
 			{isTimerHidden ? (
@@ -29,7 +31,7 @@ export default function MainScreen () {
 					<CountdownTimer timer={timer} setTimeFocused={setTimeFocused} setIsTimerHidden={setIsTimerHidden} />
 				)}
 
-		<StatusBar style="auto" />
+		<StatusBar hidden={true} />
 		</View>
 	)
 }
