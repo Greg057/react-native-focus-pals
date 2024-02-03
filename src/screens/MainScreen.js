@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center',
-    padding: 30
+    padding: 15
   },
 });

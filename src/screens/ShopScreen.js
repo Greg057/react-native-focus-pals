@@ -1,7 +1,11 @@
-import { Text } from "react-native"
+import { Text, View } from "react-native"
+import Header from "../components/Header"
 
 export default function ShopScreen () {
     return (
-        <Text>Shop</Text>
+        <View style={{flex: 1, padding: 15}}>
+            <Header />
+            <Text>Shop</Text>
+        </View>
     )
 }
