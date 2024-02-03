@@ -39,7 +39,7 @@ export default function MainScreen () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+		backgroundColor: "#30bced",
     alignItems: 'center',
     padding: 15
   },
