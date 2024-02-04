@@ -7,8 +7,8 @@ export default function SliderTimer ({timer, setTimer}) {
 			minimumValue={5}
 			maximumValue={120}
 			step={5}
-			value={timer}
-			onValueChange={(value) => setTimer(value)}
+			value={timer/60}
+			onValueChange={(value) => setTimer(value * 60)}
 			minimumTrackTintColor="#000000"
 		/>
 	)

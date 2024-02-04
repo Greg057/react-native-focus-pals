@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View, Pressable, Button } from 'react-native'
+import { StyleSheet, Text, View, Pressable } from 'react-native'
 import SliderTimer from '../components/SliderTimer'
 import CountdownTimer from '../components/CountdownTimer'
 import Header from '../components/Header'
 
-import { doc, collection, update, deleteField , addDoc, getDoc, getDocs, setDoc, updateDoc, arrayUnion, arrayRemove, increment  } from "firebase/firestore"; 
-import { FIREBASE_DB, FIREBASE_AUTH } from "../../firebaseConfig"
+import { doc, setDoc, updateDoc, increment } from "firebase/firestore"; 
+import { FIREBASE_DB } from "../../firebaseConfig"
 import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
 
 export default function MainScreen () {
@@ -36,6 +36,15 @@ export default function MainScreen () {
 		})
 	}
 
+	function cancel () {
+		setIsTimerHidden(true)
+	}
+
+	function formatTime (time) {
+    const minutes = Math.floor(time / 60)
+    return minutes < 10? `0${minutes}:00` : `${minutes}:00`
+  }
+
 	return (
 		<View style={styles.container}>
 			<Header />
@@ -43,22 +52,21 @@ export default function MainScreen () {
 
 			{isTimerHidden ? (
 				<View>
-					<Text>{timer}</Text>
+					<Text>{formatTime(timer)}</Text>
 					<SliderTimer timer={timer} setTimer={setTimer}/>
 					<Pressable onPress={() => {
-							setTimeFocused(null)
-							setIsTimerHidden(false)
-							}} 
+						setTimeFocused(null)
+						setIsTimerHidden(false)
+						}} 
 						style={{backgroundColor: "lightblue"}}>
 							<Text>Start</Text>
 					</Pressable>
 				</View>
 				) : (
-					<CountdownTimer timer={timer} setTimeFocused={setTimeFocused} setIsTimerHidden={setIsTimerHidden} />
+					<CountdownTimer timer={timer} setTimeFocused={setTimeFocused} setIsTimerHidden={setIsTimerHidden} onPress={cancel}/>
 				)}
 
-		<Button title='add 50 coins' onPress={addCoins} />
-		<StatusBar hidden={true} />
+			<StatusBar hidden={true} />
 		</View>
 	)
 }

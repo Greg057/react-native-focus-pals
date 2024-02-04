@@ -20,4 +20,4 @@ const auth = initializeAuth(FIREBASE_APP, {
     persistence: getReactNativePersistence(ReactNativeAsyncStorage)
   })
 
-export {FIREBASE_APP, FIREBASE_DB, auth}
+export {FIREBASE_APP, FIREBASE_DB}
