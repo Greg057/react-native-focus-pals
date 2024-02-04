@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View, Pressable, Button } from 'react-native'
 import SliderTimer from '../components/SliderTimer'
 import CountdownTimer from '../components/CountdownTimer'
 import Header from '../components/Header'
 
-import { doc, collection, update, deleteField , addDoc, getDocs, setDoc, updateDoc, arrayUnion, arrayRemove  } from "firebase/firestore"; 
+import { doc, collection, update, deleteField , addDoc, getDoc, getDocs, setDoc, updateDoc, arrayUnion, arrayRemove, increment  } from "firebase/firestore"; 
 import { FIREBASE_DB, FIREBASE_AUTH } from "../../firebaseConfig"
 import { getAuth, signInAnonymously } from "firebase/auth";
 
@@ -22,13 +22,15 @@ export default function MainScreen () {
 	const [isTimerHidden, setIsTimerHidden] = useState(true)
 	const [timeFocused, setTimeFocused] = useState(null)
 
+	const user = getAuth().currentUser
+
 	async function addData () {
-		const auth = getAuth();
+		/* const auth = getAuth();
 		const user = await signInAnonymously(auth)
 		await setDoc(doc(FIREBASE_DB, "users", user.user.uid), {
 			petsOwned: []
 		})
-		console.log(user.user)
+		console.log(user.user) */
 
 		// Set the "capital" field of the city 'DC'
 		/* await updateDoc(doc(FIREBASE_DB, "cities", "LA"), {
@@ -47,6 +49,15 @@ export default function MainScreen () {
 		} catch (e) {
 			console.error("Error adding document: ", e);
 		} */
+	}
+
+	async function addCoins () {
+		await updateDoc(doc(FIREBASE_DB, "users", user.uid), {
+			coins: increment(50)
+		})
+		const docRef = await getDoc(doc(FIREBASE_DB, "users", user.uid))
+		console.log(docRef.data().coins)
+
 	}
 
 	return (
@@ -71,6 +82,7 @@ export default function MainScreen () {
 				)}
 
 		<Button title='add data' onPress={() => addData()} />
+		<Button title='add 50 coins' onPress={addCoins} />
 		<StatusBar hidden={true} />
 		</View>
 	)
