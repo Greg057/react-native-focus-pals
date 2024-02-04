@@ -23,7 +23,7 @@ export default function Header () {
 	})
 
 	return (
-		<View style={{width: "100%", flexDirection: "row", justifyContent: "space-between"}}>
+		<View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 12}}>
 			<GameCurrencyUI imageSource={gemUI} amount={gems} size={50}/>
 			<GameCurrencyUI imageSource={coinUI} amount={coins} size={55}/>
 		</View>

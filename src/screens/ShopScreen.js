@@ -1,33 +1,29 @@
-import { Button, Text, View } from "react-native"
+import { Text, View, ScrollView } from "react-native"
 import Header from "../components/Header"
-
-import { getAuth } from "firebase/auth";
-import { doc, collection, update, deleteField , addDoc, getDocs, setDoc, updateDoc, arrayUnion, arrayRemove  } from "firebase/firestore"; 
-import { FIREBASE_DB, FIREBASE_AUTH } from "../../firebaseConfig"
+import EggDisplay from "../components/EggDisplay"
 
 
+const blue = require("../../assets/eggs/blue.png")
+const green = require("../../assets/eggs/green.png")
+const orange = require("../../assets/eggs/orange.png")
+const purple = require("../../assets/eggs/purple.png")
 
 export default function ShopScreen () {
-	const auth = getAuth();
-	const user = auth.currentUser;
-
-	async function update () {
-		console.log(user)
-		if (user) {
-			console.log(user.uid)
-			await updateDoc(doc(FIREBASE_DB, "users", user.uid), {
-				test: "no"
-			});
-		} else {
-			console.log("no user signed in")
-		}
-	}
-	
+		
 	return (
-		<View style={{flex: 1, padding: 15}}>
+		<View style={{backgroundColor: "#30bced", flex: 1, padding: 15}}>
 			<Header />
 			<Text>Shop</Text>
-			<Button onPress={update} title="test" />
+			<ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+				<View style={{flexDirection: "row"}}>
+					<EggDisplay source={green} rarity="Uncommon"/>
+					<EggDisplay source={blue} rarity="Rare"/>
+				</View>
+				<View style={{flexDirection: "row"}}>
+					<EggDisplay source={purple} rarity="Epic"/>
+					<EggDisplay source={orange} rarity="Legendary"/>
+				</View>
+			</ScrollView>
 		</View>
 	)
 }

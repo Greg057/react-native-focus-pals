@@ -10,7 +10,7 @@ import { FIREBASE_DB } from "../../firebaseConfig"
 import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
 
 export default function MainScreen () {
-	const [timer, setTimer] = useState(5)
+	const [timer, setTimer] = useState(5 * 60)
 	const [isTimerHidden, setIsTimerHidden] = useState(true)
 	const [timeFocused, setTimeFocused] = useState(null)
 
@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
     flex: 1,
 		backgroundColor: "#30bced",
     alignItems: 'center',
-    padding: 15
+    padding: 15,
   },
 });
