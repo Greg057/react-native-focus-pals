@@ -20,6 +20,16 @@ export default function MainScreen () {
 		}
 	})
 
+	/* async function addPets () {
+		const pet = "../../assets/pets/cosmic1.png"
+		await setDoc(doc(FIREBASE_DB, "pets", "pet1"), {
+			name: "Cosmic 1",
+			image: pet
+		});
+
+	}
+	addPets() */
+
 	async function authNewUser () {
 		const auth = getAuth()
 		const user = await signInAnonymously(auth)
