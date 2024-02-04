@@ -7,7 +7,7 @@ import Header from '../components/Header'
 
 import { doc, collection, update, deleteField , addDoc, getDoc, getDocs, setDoc, updateDoc, arrayUnion, arrayRemove, increment  } from "firebase/firestore"; 
 import { FIREBASE_DB, FIREBASE_AUTH } from "../../firebaseConfig"
-import { getAuth, signInAnonymously } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
 
 /* async function getData() {
   const querySnapshot = await getDocs(collection(FIREBASE_DB, "users")); 
@@ -22,15 +22,23 @@ export default function MainScreen () {
 	const [isTimerHidden, setIsTimerHidden] = useState(true)
 	const [timeFocused, setTimeFocused] = useState(null)
 
-	const user = getAuth().currentUser
+	/* onAuthStateChanged(getAuth(), (user) => {
+		if (user) {
+			console.log(user.uid)
+		} else {
+			console.log("no user")
+		}
+	}) */
+
+	//const user = getAuth().currentUser
 
 	async function addData () {
-		/* const auth = getAuth();
+		const auth = getAuth();
 		const user = await signInAnonymously(auth)
 		await setDoc(doc(FIREBASE_DB, "users", user.user.uid), {
 			petsOwned: []
 		})
-		console.log(user.user) */
+		console.log(user.user)
 
 		// Set the "capital" field of the city 'DC'
 		/* await updateDoc(doc(FIREBASE_DB, "cities", "LA"), {
@@ -52,10 +60,10 @@ export default function MainScreen () {
 	}
 
 	async function addCoins () {
-		await updateDoc(doc(FIREBASE_DB, "users", user.uid), {
+		await updateDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), {
 			coins: increment(50)
 		})
-		const docRef = await getDoc(doc(FIREBASE_DB, "users", user.uid))
+		const docRef = await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))
 		console.log(docRef.data().coins)
 
 	}
