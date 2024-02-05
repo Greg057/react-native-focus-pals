@@ -5,9 +5,9 @@ import SliderTimer from '../components/SliderTimer'
 import CountdownTimer from '../components/CountdownTimer'
 import Header from '../components/Header'
 
-import { doc, setDoc, updateDoc, increment } from "firebase/firestore"; 
+import { doc, setDoc } from "firebase/firestore"
 import { FIREBASE_DB } from "../../firebaseConfig"
-import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth"
 
 export default function MainScreen () {
 	const [timer, setTimer] = useState(5 * 60)
@@ -20,29 +20,13 @@ export default function MainScreen () {
 		}
 	})
 
-	/* async function addPets () {
-		const pet = "../../assets/pets/cosmic1.png"
-		await setDoc(doc(FIREBASE_DB, "pets", "pet1"), {
-			name: "Cosmic 1",
-			image: pet
-		});
-
-	}
-	addPets() */
-
 	async function authNewUser () {
 		const auth = getAuth()
 		const user = await signInAnonymously(auth)
 		await setDoc(doc(FIREBASE_DB, "users", user.user.uid), {
-			petsOwned: [],
+			petsOwned: {},
 			coins: 100,
 			gems: 20
-		})
-	}
-
-	async function addCoins () {
-		await updateDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), {
-			coins: increment(50)
 		})
 	}
 
@@ -86,6 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
 		backgroundColor: "#30bced",
     alignItems: 'center',
-    padding: 15,
+    paddingHorizontal: 15, 
+		paddingTop: 15
   },
 });

@@ -11,17 +11,17 @@ const purple = require("../../assets/eggs/purple.png")
 export default function ShopScreen () {
 		
 	return (
-		<View style={{backgroundColor: "#30bced", flex: 1, padding: 15}}>
+		<View style={{backgroundColor: "#30bced", flex: 1, paddingHorizontal: 15, paddingTop: 15}}>
 			<Header />
 			<Text>Shop</Text>
 			<ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
 				<View style={{flexDirection: "row"}}>
-					<EggDisplay source={green} rarity="Uncommon" cost={400}/>
-					<EggDisplay source={blue} rarity="Rare" cost={1000}/>
+					<EggDisplay imageSource={green} rarity="Common" cost={400}/>
+					<EggDisplay imageSource={blue} rarity="Rare" cost={1000}/>
 				</View>
 				<View style={{flexDirection: "row"}}>
-					<EggDisplay source={purple} rarity="Epic" cost={2500}/>
-					<EggDisplay source={orange} rarity="Legendary" cost={8000}/>
+					<EggDisplay imageSource={purple} rarity="Epic" cost={2500}/>
+					<EggDisplay imageSource={orange} rarity="Legendary" cost={8000}/>
 				</View>
 			</ScrollView>
 		</View>
