@@ -16,12 +16,12 @@ export default function ShopScreen () {
 			<Text>Shop</Text>
 			<ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
 				<View style={{flexDirection: "row"}}>
-					<EggDisplay source={green} rarity="Uncommon"/>
-					<EggDisplay source={blue} rarity="Rare"/>
+					<EggDisplay source={green} rarity="Uncommon" cost={400}/>
+					<EggDisplay source={blue} rarity="Rare" cost={1000}/>
 				</View>
 				<View style={{flexDirection: "row"}}>
-					<EggDisplay source={purple} rarity="Epic"/>
-					<EggDisplay source={orange} rarity="Legendary"/>
+					<EggDisplay source={purple} rarity="Epic" cost={2500}/>
+					<EggDisplay source={orange} rarity="Legendary" cost={8000}/>
 				</View>
 			</ScrollView>
 		</View>
