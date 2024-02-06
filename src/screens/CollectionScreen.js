@@ -1,6 +1,6 @@
 import { ActivityIndicator, FlatList, Image, Text, View, ImageBackground } from "react-native"
 import Header from "../components/Header"
-import { doc, getDoc, onSnapshot } from "firebase/firestore"
+import { doc, getDoc, onSnapshot, query } from "firebase/firestore"
 import { FIREBASE_DB } from "../../firebaseConfig"
 import { getAuth } from "firebase/auth"
 import { useEffect, useState } from "react"
@@ -15,7 +15,7 @@ export default function CollectionScreen () {
 
 	useEffect(() => {
 		onSnapshot(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), (document) => {
-			setNumberOfPetsOwned(Object.keys(document.data().petsOwned).length)
+			setNumberOfPetsOwned(Object.keys(document.data().petsOwned).length) 
 			async function getPets() {
 				const pets = document.data().petsOwned
 				let dataToReturn = []
@@ -35,6 +35,7 @@ export default function CollectionScreen () {
 		})
 
 	}, [])
+
 	
 	return (
 		<View style={{backgroundColor: "#30bced", flex: 1, paddingHorizontal: 15, paddingTop: 15}}>
@@ -43,9 +44,12 @@ export default function CollectionScreen () {
 				<Text style={{color: "white", fontWeight: "bold"}}>Cards Collected</Text>
 				<Text style={{color: "white"}}>Found: {numberOfPetsOwned}/50</Text>
 			</View>
-			{isLoading ? <ActivityIndicator size="large" /> 
-			: <FlatList showsVerticalScrollIndicator={false} data={petsOwned} renderItem={({item}) => <PetDisplay pet={item} />} />
+	
+			{isLoading ? <ActivityIndicator size="large" />
+			: <FlatList showsVerticalScrollIndicator={false} numColumns={3} columnWrapperStyle={{gap: 8}} 
+					data={petsOwned} renderItem={({item}) => <PetDisplay pet={item} />} />
 			}
+		
 		</View>
 	)
 }
@@ -63,11 +67,11 @@ function PetDisplay ({pet}) {
 		: require("../../assets/frames/Legendary.png")
 	
 	return (
-		<View key={uuidv4()} style={{padding: 5}}>
-			<ImageBackground style={{width: 105, height: 140}} source={petImage}>
-				<Image style={{width: 120, height: 160, position: "absolute", left: -5, top: -10}} source={frameImage} />
+		<View key={uuidv4()} style={{paddingTop: 10, paddingHorizontal: 10, marginBottom: 18}}>
+			<ImageBackground style={{width: 90, height: 123}} source={petImage}>
+				<Image style={{width: 110, height: 140, position: "absolute", left: -10, top: -10}} source={frameImage} />
 				<StarsDisplay stars={pet.stars} />
-				<ElevelerienceDisplay level={pet.level} />
+				<LevelDisplay level={pet.level} />
 			</ImageBackground>
 		</View>
 	)
@@ -77,7 +81,7 @@ function StarsDisplay ({stars}) {
 	let starsDisplay = []
 	for (let i = 0; i < stars; i++) {
 		const leftPosition = i * 10
-		starsDisplay.push(<Image key={uuidv4()} style={{width: 18, height: 18, position: "absolute", left: leftPosition}} source={require("../../assets/images/star.png")} />)
+		starsDisplay.push(<Image key={uuidv4()} style={{width: 18, height: 18, position: "absolute", left: leftPosition, top: -5}} source={require("../../assets/images/star.png")} />)
 	}
   return (
 		<View>
@@ -86,10 +90,10 @@ function StarsDisplay ({stars}) {
  )
 }
 
-function ElevelerienceDisplay({level}) {
+function LevelDisplay({level}) {
 	return (
-		<View style={{alignItems: "center", justifyContent: "center", borderRadius: "50%", width: 20, height: 20, backgroundColor: "#232b2b", position: "absolute", right: -1, top: 1}}>
-			<Text style={{color: "white", fontWeight: 700, fontSize: 10}}>{level}</Text>
+		<View style={{alignItems: "center", justifyContent: "center", borderRadius: "50%", width: 20, height: 20, backgroundColor: "#232b2b", position: "absolute", right: -5, top: -5}}>
+			<Text style={{color: "white", fontWeight: 700, fontSize: 11}}>{level}</Text>
 		</View>
 	)
 }

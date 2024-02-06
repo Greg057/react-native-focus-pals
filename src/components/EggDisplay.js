@@ -13,12 +13,16 @@ const PETS_DATA = {
 export default function EggDisplay({rarity, imageSource, cost}) {
 
   async function buyEgg () {
-    const coins = (await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))).data().coins
+    const userData = (await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))).data()
+    const coins = userData.coins
     if (coins >= cost) {
       const petToAdd = getRandomPet(PETS_DATA[rarity])
+      const petsOwned = userData.petsOwned
       await updateDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), {
         coins: increment(-cost),
-        [`petsOwned.${petToAdd}`]: increment(1)
+        [`petsOwned.${petToAdd}.timesOwned`]: increment(1),
+        [`petsOwned.${petToAdd}.level`]: [...petsOwned[petToAdd].level, 1],
+        [`petsOwned.${petToAdd}.stars`]: [...petsOwned[petToAdd].stars, 1],
       })
 
     } else {
