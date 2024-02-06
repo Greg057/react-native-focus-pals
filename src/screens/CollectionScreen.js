@@ -18,13 +18,17 @@ export default function CollectionScreen () {
 			setNumberOfPetsOwned(Object.keys(document.data().petsOwned).length)
 			async function getPets() {
 				const pets = document.data().petsOwned
+				let dataToReturn = []
+
 				const petPromises = Object.keys(pets).map(async pet => {
 					const petRef = await getDoc(doc(FIREBASE_DB, "pets", pet))
-					const data = {...petRef.data(), count: pets[pet]}
-					return data
+					for (let i = 0; i < pets[pet].timesOwned; i++) {
+						const data = {...petRef.data(), level: pets[pet].level[i], stars: pets[pet].stars[i]}
+						dataToReturn.push(data)
+					}
 				})
-				const petData = await Promise.all(petPromises)
-				setPetsOwned(petData)
+				await Promise.all(petPromises)
+				setPetsOwned(dataToReturn)
 				setIsLoading(false)
 			}
 			getPets()
@@ -40,37 +44,52 @@ export default function CollectionScreen () {
 				<Text style={{color: "white"}}>Found: {numberOfPetsOwned}/50</Text>
 			</View>
 			{isLoading ? <ActivityIndicator size="large" /> 
-			: <FlatList showsVerticalScrollIndicator={false} data={petsOwned} renderItem={({item}) => {
-				const jsx = []
-					for (let i = 0; i < item.count; i++) {
-						jsx.push(petDisplay({item}))
-						}
-						return jsx
-					}} 
-				/>
+			: <FlatList showsVerticalScrollIndicator={false} data={petsOwned} renderItem={({item}) => <PetDisplay pet={item} />} />
 			}
 		</View>
 	)
 }
 
-function petDisplay ({item}) {
-	const petImage = PETS[item.name].image
-	const frameImage = item.rarity === "Common" 
+function PetDisplay ({pet}) {
+	const petImage = PETS[pet.name].image
+	const frameImage = pet.rarity === "Common" 
 		? require("../../assets/frames/Common.png")
-		: item.rarity === "Uncommon"
+		: pet.rarity === "Uncommon"
 		? require("../../assets/frames/Uncommon.png")
-		: item.rarity === "Rare"
+		: pet.rarity === "Rare"
 		? require("../../assets/frames/Rare.png")
-		: item.rarity === "Epic"
+		: pet.rarity === "Epic"
 		? require("../../assets/frames/Epic.png")
 		: require("../../assets/frames/Legendary.png")
 	
 	return (
 		<View key={uuidv4()} style={{padding: 5}}>
-			<Text>{item.name}</Text>
 			<ImageBackground style={{width: 105, height: 140}} source={petImage}>
 				<Image style={{width: 120, height: 160, position: "absolute", left: -5, top: -10}} source={frameImage} />
+				<StarsDisplay stars={pet.stars} />
+				<ElevelerienceDisplay level={pet.level} />
 			</ImageBackground>
+		</View>
+	)
+}
+
+function StarsDisplay ({stars}) {
+	let starsDisplay = []
+	for (let i = 0; i < stars; i++) {
+		const leftPosition = i * 10
+		starsDisplay.push(<Image key={uuidv4()} style={{width: 18, height: 18, position: "absolute", left: leftPosition}} source={require("../../assets/images/star.png")} />)
+	}
+  return (
+		<View>
+			{starsDisplay}
+		</View>
+ )
+}
+
+function ElevelerienceDisplay({level}) {
+	return (
+		<View style={{alignItems: "center", justifyContent: "center", borderRadius: "50%", width: 20, height: 20, backgroundColor: "#232b2b", position: "absolute", right: -1, top: 1}}>
+			<Text style={{color: "white", fontWeight: 700, fontSize: 10}}>{level}</Text>
 		</View>
 	)
 }
