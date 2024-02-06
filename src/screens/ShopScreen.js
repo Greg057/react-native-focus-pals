@@ -16,7 +16,7 @@ export default function ShopScreen () {
 			<Text>Shop</Text>
 			<ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
 				<View style={{flexDirection: "row"}}>
-					<EggDisplay imageSource={green} rarity="Common" cost={400}/>
+					<EggDisplay imageSource={green} rarity="Uncommon" cost={400}/>
 					<EggDisplay imageSource={blue} rarity="Rare" cost={1000}/>
 				</View>
 				<View style={{flexDirection: "row"}}>

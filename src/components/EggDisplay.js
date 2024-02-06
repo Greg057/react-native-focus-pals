@@ -4,7 +4,7 @@ import { FIREBASE_DB } from '../../firebaseConfig'
 import { getAuth } from 'firebase/auth'
 
 const PETS_DATA = {
-  Common: ["cosmic2"],
+  Uncommon: ["cosmic2"],
   Rare: ["cosmic4"],
   Epic: ["cosmic1"],
   Legendary: ["cosmic3"]

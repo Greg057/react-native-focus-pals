@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth"
 import { useEffect, useState } from "react"
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
+import PETS from "../../petsData"
 
 export default function CollectionScreen () {
 	const [petsOwned, setPetsOwned] = useState([])
@@ -53,12 +54,22 @@ export default function CollectionScreen () {
 }
 
 function petDisplay ({item}) {
-	console.log(item.rarity)
+	const petImage = PETS[item.name].image
+	const frameImage = item.rarity === "Common" 
+		? require("../../assets/frames/Common.png")
+		: item.rarity === "Uncommon"
+		? require("../../assets/frames/Uncommon.png")
+		: item.rarity === "Rare"
+		? require("../../assets/frames/Rare.png")
+		: item.rarity === "Epic"
+		? require("../../assets/frames/Epic.png")
+		: require("../../assets/frames/Legendary.png")
+	
 	return (
 		<View key={uuidv4()} style={{padding: 5}}>
 			<Text>{item.name}</Text>
-			<ImageBackground style={{width: 110, height: 145}} source={{ uri: item.image}}>
-				<Image style={{width: 120, height: 160, position: "absolute", left: -5, top: -5}} source={require(`../../assets/frames/${item.rarity}.png`)} />
+			<ImageBackground style={{width: 105, height: 140}} source={petImage}>
+				<Image style={{width: 120, height: 160, position: "absolute", left: -5, top: -10}} source={frameImage} />
 			</ImageBackground>
 		</View>
 	)
