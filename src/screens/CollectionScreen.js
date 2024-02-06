@@ -12,38 +12,24 @@ export default function CollectionScreen () {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		async function getPets() {
-			const docRef = await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))
-			const pets = docRef.data().petsOwned
-			const petPromises = Object.keys(pets).map(async pet => {
-				const petRef = await getDoc(doc(FIREBASE_DB, "pets", pet))
-				const data = {...petRef.data(), count: pets[pet]}
-				return data
-			})
-			const petData = await Promise.all(petPromises)
-			setPetsOwned(petData)
-			setIsLoading(false)
-		}
-		getPets()
+		onSnapshot(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), (document) => {
+			console.log("pets snapshot called")
+			async function getPets() {
+				const pets = document.data().petsOwned
+				const petPromises = Object.keys(pets).map(async pet => {
+					const petRef = await getDoc(doc(FIREBASE_DB, "pets", pet))
+					const data = {...petRef.data(), count: pets[pet]}
+					return data
+				})
+				const petData = await Promise.all(petPromises)
+				setPetsOwned(petData)
+				setIsLoading(false)
+			}
+			getPets()
+		})
+
 	}, [])
-
-	/* onSnapshot(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), (document) => {
-		console.log("hi")
-		async function getPets() {
-			const pets = document.data().petsOwned
-			const petPromises = Object.keys(pets).map(async pet => {
-				const petRef = await getDoc(doc(FIREBASE_DB, "pets", pet))
-				const data = {...petRef.data(), count: pets[pet]}
-				return data
-			})
-			const petData = await Promise.all(petPromises)
-			setPetsOwned(petData)
-			setIsLoading(false)
-		}
-		getPets()
-	}) */
-
-
+	
 	return (
 		<View style={{flex: 1, paddingHorizontal: 15, paddingTop: 15}}>
 			<Header />
