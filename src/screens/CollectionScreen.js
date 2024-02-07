@@ -1,6 +1,6 @@
 import { ActivityIndicator, FlatList, Image, Text, View, ImageBackground, Pressable } from "react-native"
 import Header from "../components/Header"
-import { doc, getDoc, onSnapshot, query } from "firebase/firestore"
+import { doc, getDoc, increment, onSnapshot, updateDoc } from "firebase/firestore"
 import { FIREBASE_DB } from "../../firebaseConfig"
 import { getAuth } from "firebase/auth"
 import { useEffect, useState } from "react"
@@ -23,7 +23,7 @@ export default function CollectionScreen () {
 				const petPromises = Object.keys(pets).map(async pet => {
 					const petRef = await getDoc(doc(FIREBASE_DB, "pets", pet))
 					for (let i = 0; i < pets[pet].timesOwned; i++) {
-						const data = {...petRef.data(), xp: pets[pet].xp[i], level: pets[pet].level[i], stars: pets[pet].stars[i]}
+						const data = {...petRef.data(), id: i, xp: pets[pet].xp[i], level: pets[pet].level[i], stars: pets[pet].stars[i]}
 						dataToReturn.push(data)
 					}
 				})
@@ -73,7 +73,7 @@ function PetDisplay ({pet}) {
 				<StarsDisplay stars={pet.stars} />
 				<LevelDisplay level={pet.level} />
 			</ImageBackground>
-			<XPDisplay XP={pet.xp} />
+			<XPDisplay pet={pet} />
 		</View>
 	)
 }
@@ -99,13 +99,25 @@ function LevelDisplay({level}) {
 	)
 }
 
-function XPDisplay ({XP}) {
+function XPDisplay ({pet}) {
+	async function levelUp () {
+		const docRef = await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))
+		let level = docRef.data().petsOwned[pet.name].level
+		level[pet.id] += 1
+		let XP = docRef.data().petsOwned[pet.name].xp
+		XP[pet.id] -= 100
+		await updateDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), {
+			[`petsOwned.${pet.name}.level`]: level,
+			[`petsOwned.${pet.name}.xp`]: XP,
+		})
+	}
 
+	const widthView = pet.xp >= 100 ? 100 : pet.xp
 	return (
 		<View style={{height: 15, width: 98, marginTop: 4, left: -5, borderRadius: 3, backgroundColor: "#232b2b"}}>
-			<View style={{backgroundColor: "#02748D", width: `${XP}%`, borderRadius: 3, height: 15}}></View>
-			<Pressable disabled={XP !== 100} onPress={() => console.log("h")}>
-				<Text style={{top: -14, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{XP === 100 ? "UPGRADE" : `${XP}/100`}</Text>
+			<View style={{backgroundColor: "#02748D", width: widthView, borderRadius: 3, height: 15}}></View>
+			<Pressable disabled={!pet.xp >= 100} onPress={levelUp} >
+				<Text style={{top: -14, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{pet.xp >= 100 ? "UPGRADE" : `${pet.xp}/100`}</Text>
 			</Pressable>
 		</View>
 	)
