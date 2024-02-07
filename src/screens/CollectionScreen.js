@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, Image, Text, View, ImageBackground } from "react-native"
+import { ActivityIndicator, FlatList, Image, Text, View, ImageBackground, Pressable } from "react-native"
 import Header from "../components/Header"
 import { doc, getDoc, onSnapshot, query } from "firebase/firestore"
 import { FIREBASE_DB } from "../../firebaseConfig"
@@ -23,7 +23,7 @@ export default function CollectionScreen () {
 				const petPromises = Object.keys(pets).map(async pet => {
 					const petRef = await getDoc(doc(FIREBASE_DB, "pets", pet))
 					for (let i = 0; i < pets[pet].timesOwned; i++) {
-						const data = {...petRef.data(), level: pets[pet].level[i], stars: pets[pet].stars[i]}
+						const data = {...petRef.data(), xp: pets[pet].xp[i], level: pets[pet].level[i], stars: pets[pet].stars[i]}
 						dataToReturn.push(data)
 					}
 				})
@@ -46,7 +46,7 @@ export default function CollectionScreen () {
 			</View>
 	
 			{isLoading ? <ActivityIndicator size="large" />
-			: <FlatList showsVerticalScrollIndicator={false} numColumns={3} columnWrapperStyle={{gap: 8}} 
+			: <FlatList showsVerticalScrollIndicator={false} numColumns={3}
 					data={petsOwned} renderItem={({item}) => <PetDisplay pet={item} />} />
 			}
 		
@@ -73,6 +73,7 @@ function PetDisplay ({pet}) {
 				<StarsDisplay stars={pet.stars} />
 				<LevelDisplay level={pet.level} />
 			</ImageBackground>
+			<XPDisplay XP={pet.xp} />
 		</View>
 	)
 }
@@ -94,6 +95,18 @@ function LevelDisplay({level}) {
 	return (
 		<View style={{alignItems: "center", justifyContent: "center", borderRadius: "50%", width: 20, height: 20, backgroundColor: "#232b2b", position: "absolute", right: -5, top: -5}}>
 			<Text style={{color: "white", fontWeight: 700, fontSize: 11}}>{level}</Text>
+		</View>
+	)
+}
+
+function XPDisplay ({XP}) {
+
+	return (
+		<View style={{height: 15, width: 98, marginTop: 4, left: -5, borderRadius: 3, backgroundColor: "#232b2b"}}>
+			<View style={{backgroundColor: "#02748D", width: `${XP}%`, borderRadius: 3, height: 15}}></View>
+			<Pressable disabled={XP !== 100} onPress={() => console.log("h")}>
+				<Text style={{top: -14, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{XP === 100 ? "UPGRADE" : `${XP}/100`}</Text>
+			</Pressable>
 		</View>
 	)
 }
