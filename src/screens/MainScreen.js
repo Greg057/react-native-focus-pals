@@ -48,6 +48,13 @@ export default function MainScreen () {
 				<View>
 					<Text>{formatTime(timer)}</Text>
 					<SliderTimer timer={timer} setTimer={setTimer}/>
+					<Pressable style={{backgroundColor: "white"}}>
+						<Text>Select a Pet to grow!</Text>
+					</Pressable>
+					<View>
+						<Text>+ {timer / 60 * 3} coins</Text>
+						<Text>+ {timer / 60} XP</Text>
+					</View>
 					<Pressable onPress={() => {
 						setTimeFocused(null)
 						setIsTimerHidden(false)

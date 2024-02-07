@@ -38,7 +38,7 @@ export default function CollectionScreen () {
 
 	
 	return (
-		<View style={{backgroundColor: "#30bced", flex: 1, paddingHorizontal: 15, paddingTop: 15}}>
+		<View style={{backgroundColor: "black", flex: 1, paddingHorizontal: 15, paddingTop: 15}}>
 			<Header />
 			<View style={{ backgroundColor: "#232b2b", marginBottom: 12, flexDirection: "row", justifyContent: "space-between", padding: 12, borderRadius: 8}}>
 				<Text style={{color: "white", fontWeight: "bold"}}>Cards Collected</Text>
@@ -100,6 +100,7 @@ function LevelDisplay({level}) {
 }
 
 function XPDisplay ({pet}) {
+	const [isLevelUp, setIsLevelUp] = useState(false)
 	const [isStarUp, setIsStarUp] = useState(false)
 
 	useEffect(() => {
@@ -109,6 +110,8 @@ function XPDisplay ({pet}) {
 			|| pet.xp >= 100 && pet.stars === 4 && pet.level === 39
 			|| pet.xp >= 100 && pet.stars === 5 && pet.level === 49) {
 				setIsStarUp(true)
+		} else if (pet.xp >= 100) {
+			setIsLevelUp(true)
 		}
 	}, [])
 		
@@ -134,7 +137,7 @@ function XPDisplay ({pet}) {
 		<View style={{height: 20, width: 98, marginTop: 4, left: -5, borderRadius: 3, backgroundColor: "#232b2b"}}>
 			<View style={{backgroundColor: isStarUp ? "#ffbf00" : "#02748D", width: widthView, borderRadius: 3, height: 20}}></View>
 			<Pressable disabled={!pet.xp >= 100} onPress={up} >
-				<Text style={{top: -16, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{pet.xp >= 100 ? isStarUp ? "STAR UP" : "UPGRADE" : `${pet.xp}/100`}</Text>
+				<Text style={{top: -16, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{isStarUp ? "STAR UP" : isLevelUp ? "UPGRADE" : `${pet.xp}/100`}</Text>
 			</Pressable>
 		</View>
 	)
