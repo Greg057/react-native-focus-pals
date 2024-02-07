@@ -23,6 +23,7 @@ export default function EggDisplay({rarity, imageSource, cost}) {
         [`petsOwned.${petToAdd}.timesOwned`]: increment(1),
         [`petsOwned.${petToAdd}.level`]: [...petsOwned[petToAdd].level, 1],
         [`petsOwned.${petToAdd}.stars`]: [...petsOwned[petToAdd].stars, 1],
+        [`petsOwned.${petToAdd}.xp`]: [...petsOwned[petToAdd].xp, 0]
       })
 
     } else {
