@@ -3,10 +3,10 @@ import Header from "../components/Header"
 import EggDisplay from "../components/EggDisplay"
 
 
-const blue = require("../../assets/eggs/blue.png")
-const green = require("../../assets/eggs/green.png")
-const orange = require("../../assets/eggs/orange.png")
-const purple = require("../../assets/eggs/purple.png")
+const blue = require("../../assets/eggs/blue.jpg")
+const green = require("../../assets/eggs/green.jpg")
+const orange = require("../../assets/eggs/orange.jpg")
+const purple = require("../../assets/eggs/purple.jpg")
 
 export default function ShopScreen () {
 		

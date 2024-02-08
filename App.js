@@ -25,12 +25,12 @@ export default function App() {
   const [coins, setCoins] = useState()
 	const [gems, setGems] = useState() 
 
+
   useEffect(() => {
     const fetchData = async (user) => {
       if (user) {
         try {
           const document = await getDoc(doc(FIREBASE_DB, "users", user.uid))
-          console.log(document.data().coins)
           setCoins(document.data().coins)
           setGems(document.data().gems)
           const pets = document.data().petsOwned
@@ -90,10 +90,10 @@ export default function App() {
           require("./assets/frames/Rare.png"),
           require("./assets/frames/Epic.png"),
           require("./assets/frames/Legendary.png"),
-          require("./assets/eggs/blue.png"),
-          require("./assets/eggs/green.png"),
-          require("./assets/eggs/orange.png"),
-          require("./assets/eggs/purple.png"),
+          require("./assets/eggs/blue.jpg"),
+          require("./assets/eggs/green.jpg"),
+          require("./assets/eggs/orange.jpg"),
+          require("./assets/eggs/purple.jpg"),
           require("./assets/images/coin.png"),
           require("./assets/images/collectionIconNav.png"),
           require("./assets/images/gem.png"),
@@ -135,7 +135,7 @@ export default function App() {
       <Tab.Navigator initialRouteName="Timer" screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarActiveBackgroundColor: "#30bced", tabBarStyle: {height: 60, backgroundColor: "#02748D"}}}>
         <Tab.Screen name="Shop" component={ShopScreen} options={{tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={require("./assets/images/shopIconNav.png")}/>}} />
         <Tab.Screen name="Timer" children={()=><MainScreen coins={coins} gems={gems}/>} options={{tabBarItemStyle: {borderRightColor: "grey", borderRightWidth: 1, borderLeftColor: "grey", borderLeftWidth: 1}, tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={require("./assets/images/homeIconNav.png")}/>}} />
-        <Tab.Screen name="Collection" children={()=><CollectionScreen petsOwned={petsOwned}/>} options={{tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={require("./assets/images/collectionIconNav.png")}/>}} />
+        <Tab.Screen name="Collection" children={()=><CollectionScreen petsOwnedOnLoad={petsOwned}/>} options={{tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={require("./assets/images/collectionIconNav.png")}/>}} />
       </Tab.Navigator>
     </NavigationContainer>
   )
