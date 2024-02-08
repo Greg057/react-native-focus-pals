@@ -4,10 +4,10 @@ import { StyleSheet, Text, View, Pressable, Modal } from 'react-native'
 import SliderTimer from '../components/SliderTimer'
 import CountdownTimer from '../components/CountdownTimer'
 import Header from '../components/Header'
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons'
 import PetDisplay from '../components/PetDisplay'
 
-export default function MainScreen ({coins, gems}) {
+export default function MainScreen ({coins, gems, petsOwnedOnLoad}) {
 	const [timer, setTimer] = useState(5 * 60)
 	const [isTimerHidden, setIsTimerHidden] = useState(true)
 	const [timeFocused, setTimeFocused] = useState(null)
@@ -40,7 +40,7 @@ export default function MainScreen ({coins, gems}) {
 						}}>
 						<View style={styles.centeredView}>
 							<View style={styles.modalView}>
-								<View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center"}}>
+								<View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center", padding: 15,}}>
 									<Text style={{color: "white"}}>Select a pet to grow!</Text>
 									<Pressable
 										style={{}}
@@ -48,7 +48,7 @@ export default function MainScreen ({coins, gems}) {
 										<Ionicons name="close-sharp" size={36} color="white" />
 									</Pressable>
 								</View>
-								<PetDisplay />
+								<PetDisplay petsOwnedOnLoad={petsOwnedOnLoad} />
 							</View>
 						</View>
 					</Modal>
@@ -95,10 +95,8 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: "100%",
 		top: 30,
-    margin: 20,
     borderTopLeftRadius: 20,
 		borderTopRightRadius: 20,
-    padding: 15,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {

@@ -9,8 +9,9 @@ import PetDisplay from "../components/PetDisplay"
 import PETS from "../../petsData"
 
 export default function CollectionScreen ({petsOwnedOnLoad}) {
-	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
-	const [numberOfPetsOwned, setNumberOfPetsOwned] = useState(0)
+	// const [numberOfPetsOwned, setNumberOfPetsOwned] = useState(0)
+	/* const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
+	
 
 	useEffect(() => {
 		onSnapshot(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), (document) => {
@@ -60,17 +61,17 @@ export default function CollectionScreen ({petsOwnedOnLoad}) {
 			"Common": 1
 		}
 		return rarityOrder[rarity]
-	}
+	} */
 	
 	return (
 		<View style={{backgroundColor: "black", flex: 1, paddingHorizontal: 15, paddingTop: 15}}>
 			<Header />
 			<View style={{ backgroundColor: "#232b2b", marginBottom: 12, flexDirection: "row", justifyContent: "space-between", padding: 12, borderRadius: 8}}>
 				<Text style={{color: "white", fontWeight: "bold"}}>Cards Collected</Text>
-				{<Text style={{color: "white"}}>Found: {numberOfPetsOwned}/50</Text>}
+				{/* <Text style={{color: "white"}}>Found: {numberOfPetsOwned}/50</Text>} */}
 			</View>
 			
-			<PetDisplay petsOwned={petsOwned} />
+			<PetDisplay petsOwnedOnLoad={petsOwnedOnLoad} />
 		
 		</View>
 	)
