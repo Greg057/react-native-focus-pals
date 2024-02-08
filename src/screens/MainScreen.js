@@ -1,34 +1,17 @@
 import { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Modal } from 'react-native'
 import SliderTimer from '../components/SliderTimer'
 import CountdownTimer from '../components/CountdownTimer'
 import Header from '../components/Header'
+import { Ionicons } from '@expo/vector-icons';
+import PetDisplay from '../components/PetDisplay'
 
-import { doc, setDoc } from "firebase/firestore"
-import { FIREBASE_DB } from "../../firebaseConfig"
-import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth"
-
-export default function MainScreen () {
+export default function MainScreen ({coins, gems}) {
 	const [timer, setTimer] = useState(5 * 60)
 	const [isTimerHidden, setIsTimerHidden] = useState(true)
 	const [timeFocused, setTimeFocused] = useState(null)
-
-	onAuthStateChanged(getAuth(), (user) => {
-		if (!user) {
-			authNewUser()
-		}
-	})
-
-	async function authNewUser () {
-		const auth = getAuth()
-		const user = await signInAnonymously(auth)
-		await setDoc(doc(FIREBASE_DB, "users", user.user.uid), {
-			petsOwned: {},
-			coins: 100,
-			gems: 20
-		})
-	}
+	const [modalVisible, setModalVisible] = useState(false)
 
 	function cancel () {
 		setIsTimerHidden(true)
@@ -41,14 +24,35 @@ export default function MainScreen () {
 
 	return (
 		<View style={styles.container}>
-			<Header />
+			<Header coinsOnLoad={coins} gemsOnLoad={gems} />
 			{timeFocused && <Text>You focused for {timeFocused} minutes!</Text>}
 
 			{isTimerHidden ? (
 				<View>
 					<Text>{formatTime(timer)}</Text>
 					<SliderTimer timer={timer} setTimer={setTimer}/>
-					<Pressable style={{backgroundColor: "white"}}>
+					<Modal
+						animationType="slide"
+						transparent={true}
+						visible={modalVisible}
+						onRequestClose={() => {
+							setModalVisible(!modalVisible)
+						}}>
+						<View style={styles.centeredView}>
+							<View style={styles.modalView}>
+								<View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center"}}>
+									<Text style={{color: "white"}}>Select a pet to grow!</Text>
+									<Pressable
+										style={{}}
+										onPress={() => setModalVisible(!modalVisible)}>
+										<Ionicons name="close-sharp" size={36} color="white" />
+									</Pressable>
+								</View>
+								<PetDisplay />
+							</View>
+						</View>
+					</Modal>
+					<Pressable style={{backgroundColor: "white"}} onPress={() => setModalVisible(true)}>
 						<Text>Select a Pet to grow!</Text>
 					</Pressable>
 					<View>
@@ -80,4 +84,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15, 
 		paddingTop: 15
   },
+	centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+		backgroundColor: "black",
+		width: "100%",
+		height: "100%",
+		top: 30,
+    margin: 20,
+    borderTopLeftRadius: 20,
+		borderTopRightRadius: 20,
+    padding: 15,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  
 });

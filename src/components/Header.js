@@ -1,4 +1,4 @@
-import { onSnapshot, getDoc, doc } from "@firebase/firestore"
+import { onSnapshot, doc } from "@firebase/firestore"
 import { Text, Image, View } from "react-native"
 import { getAuth, onAuthStateChanged } from "@firebase/auth"
 import { FIREBASE_DB } from "../../firebaseConfig"
@@ -7,20 +7,14 @@ import { useEffect, useState } from "react"
 const gemUI = require("../../assets/images/gem.png")
 const coinUI = require("../../assets/images/coin.png")
 
-export default function Header () {
-	const [coins, setCoins] = useState(100)
-	const [gems, setGems] = useState(20)
+export default function Header ({coinsOnLoad, gemsOnLoad}) {
+	const [coins, setCoins] = useState(coinsOnLoad)
+	const [gems, setGems] = useState(gemsOnLoad)
 
 	useEffect(() => {
-		onAuthStateChanged(getAuth(), (user) => {
-			if (user) {
-				onSnapshot(doc(FIREBASE_DB, "users", user.uid), (doc) => {
-					setCoins(doc.data().coins)
-					setGems(doc.data().gems)
-				})
-			} else {
-				console.log("no user")
-			}
+		onSnapshot(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), (doc) => {
+			setCoins(doc.data().coins)
+			setGems(doc.data().gems)
 		})
 	}, [])
 	
