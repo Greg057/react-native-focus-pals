@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View, Pressable, Modal, Image } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
 import SliderTimer from '../components/SliderTimer'
 import CountdownTimer from '../components/CountdownTimer'
-import Header from '../components/Header'
-import { Ionicons } from '@expo/vector-icons'
-import PetDisplay from '../components/PetDisplay'
+import {Header} from "../components/Header"
 import PetDisplayMain from '../components/PetDisplayMain'
+import ModalPets from '../components/ModalPets'
+import 'react-native-get-random-values'
+import {useGetPetData, sortPets} from "../hooks/useGetPetData"
 
 export default function MainScreen ({coins, gems, petsOwnedOnLoad}) {
 	const [timer, setTimer] = useState(5 * 60)
@@ -14,6 +15,15 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad}) {
 	const [timeFocused, setTimeFocused] = useState(null)
 	const [modalVisible, setModalVisible] = useState(false)
 	const [selectedPet, setSelectedPet] = useState(null)
+	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
+		
+  useEffect(() => {
+		console.log("enter")
+    const unsubscribe = useGetPetData(setPetsOwned)
+
+    return () => unsubscribe()
+  }, [])
+
 
 	function selectPet (pet) {
 		setSelectedPet(pet)
@@ -39,27 +49,9 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad}) {
 					<Text style={{fontSize: 14, marginTop: 16}}>Start your focus session to grow your pet</Text>
 					<Text style={{fontWeight: 700, fontSize: 36, marginTop: 36}}>{formatTime(timer)}</Text>
 					<SliderTimer timer={timer} setTimer={setTimer}/>
-					<Modal
-						animationType="slide"
-						transparent={true}
-						visible={modalVisible}
-						onRequestClose={() => {
-							setModalVisible(!modalVisible)
-						}}>
-						<View style={styles.centeredView}>
-							<View style={styles.modalView}>
-								<View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center", padding: 15,}}>
-									<Text style={{color: "white"}}>Select a pet to grow!</Text>
-									<Pressable
-										style={{}}
-										onPress={() => setModalVisible(!modalVisible)}>
-										<Ionicons name="close-sharp" size={36} color="white" />
-									</Pressable>
-								</View>
-								<PetDisplay petsOwnedOnLoad={petsOwnedOnLoad} selectPet={selectPet} />
-							</View>
-						</View>
-					</Modal>
+
+					<ModalPets modalVisible={modalVisible} setModalVisible={setModalVisible} petsOwned={petsOwned} selectPet={selectPet} />
+					
 					<Pressable onPress={() => setModalVisible(true)}>
 						{selectedPet !== null
 							? <View style={{padding: 24, left: 4}}>
@@ -104,29 +96,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 15, 
 		paddingTop: 15
-  },
-	centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-		backgroundColor: "black",
-		width: "100%",
-		height: "100%",
-		top: 30,
-    borderTopLeftRadius: 20,
-		borderTopRightRadius: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  
-});
+  },  
+})

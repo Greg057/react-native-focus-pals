@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 const gemUI = require("../../assets/images/gem.png")
 const coinUI = require("../../assets/images/coin.png")
 
-export default function Header ({coinsOnLoad, gemsOnLoad}) {
+export function Header ({coinsOnLoad, gemsOnLoad}) {
 	const [coins, setCoins] = useState(coinsOnLoad)
 	const [gems, setGems] = useState(gemsOnLoad)
 
@@ -26,9 +26,9 @@ export default function Header ({coinsOnLoad, gemsOnLoad}) {
 	)
 }
 
-function GameCurrencyUI ({imageSource, amount, size}) {
+export function GameCurrencyUI ({imageSource, amount, size, width = 110, backgroundColor = "#232b2b"}) {
 	return (
-		<View style={{flexDirection: "row", justifyContent: "space-between", borderRadius: 6, marginLeft: 4, backgroundColor: "#232b2b", height: 25, width: 110, alignItems: "center"}}>
+		<View style={{flexDirection: "row", justifyContent: "space-between", borderRadius: 6, marginLeft: 4, backgroundColor: backgroundColor, height: 25, width: width, alignItems: "center"}}>
 			<Image style={{ width: size, height: size, marginLeft: -16}} source={imageSource} />
 			<Text style={{marginRight: 8, fontWeight: 700, color: "white"}}>{amount}</Text>
 		</View>

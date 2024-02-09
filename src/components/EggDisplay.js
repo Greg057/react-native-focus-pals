@@ -2,12 +2,13 @@ import { doc, updateDoc, increment, getDoc, arrayUnion } from 'firebase/firestor
 import { View, Text, Image, Pressable } from 'react-native'
 import { FIREBASE_DB } from '../../firebaseConfig'
 import { getAuth } from 'firebase/auth'
+import { GameCurrencyUI } from './Header'
 
 const PETS_DATA = {
-  Uncommon: ["cosmic2"],
-  Rare: ["cosmic4"],
-  Epic: ["cosmic1"],
-  Legendary: ["cosmic3"]
+  Uncommon: ["cosmic1"],
+  Rare: ["cosmic2"],
+  Epic: ["cosmic3"],
+  Legendary: ["cosmic4"]
 }
 
 export default function EggDisplay({rarity, imageSource, cost}) {
@@ -37,11 +38,11 @@ export default function EggDisplay({rarity, imageSource, cost}) {
   
 
   return (
-    <View style={{flex: 1, borderColor: "black", borderWidth: 3}}>
-			<Pressable onPress={buyEgg} style={{width: "100%", alignItems: "center"}}>
-          <Image source={imageSource} style={{width: "100%", height: 200, resizeMode: "contain"}} />
-          <Text>{rarity} Egg</Text>
-          <Text>Cost: {cost}</Text>
+    <View style={{flex: 1, borderRadius: 12, backgroundColor: "#232b2b"}}>
+			<Pressable onPress={buyEgg} style={{width: "100%", alignItems: "center", gap: 12, paddingBottom: 12}}>
+          <Image source={imageSource} style={{width: "90%", height: 160, borderRadius: 12, marginTop: 12}} />
+          <Text style={{color: "white", fontWeight: 700}}>{rarity} Egg</Text>
+          <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={40} backgroundColor={"#02748D"} width={70} />
       </Pressable>
     </View>
   )
