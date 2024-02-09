@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
 import SliderTimer from '../components/SliderTimer'
 import CountdownTimer from '../components/CountdownTimer'
 import {Header} from "../components/Header"
-import PetDisplayMain from '../components/PetDisplayMain'
+import {PetDisplayMain} from "../components/PetDisplay"
 import ModalPets from '../components/ModalPets'
 import 'react-native-get-random-values'
 import {useGetPetData, sortPets} from "../hooks/useGetPetData"

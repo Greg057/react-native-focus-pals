@@ -4,12 +4,13 @@ import { getAuth } from "firebase/auth"
 import 'react-native-get-random-values'
 import PETS from "../../petsData"
 
-export function useGetPetData (setPetsOwned) {
+export function useGetPetData (setPetsOwned, setNumberPetsDiscovered = null) {
   return (
     onSnapshot(
       doc(FIREBASE_DB, 'users', getAuth().currentUser.uid), (document) => {
         (async function () {
           const pets = document.data().petsOwned
+          setNumberPetsDiscovered && setNumberPetsDiscovered(Object.keys(pets).length)
           let dataToReturn = []
 
           const petPromises = Object.keys(pets).map(async (pet) => {

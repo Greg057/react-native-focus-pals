@@ -1,17 +1,18 @@
 import { Text, View } from "react-native"
 import {Header} from "../components/Header"
 import 'react-native-get-random-values'
-import PetDisplay from "../components/PetDisplay"
+import {PetDisplay} from "../components/PetDisplay"
 import { useEffect, useState } from "react"
 import 'react-native-get-random-values'
 import {useGetPetData, sortPets} from "../hooks/useGetPetData"
 
 export default function CollectionScreen ({petsOwnedOnLoad}) {
 	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
+	const [numberPetsDiscovered, setNumberPetsDiscovered] = useState(0)
 		
   useEffect(() => {
 		console.log("enter")
-    const unsubscribe = useGetPetData(setPetsOwned)
+    const unsubscribe = useGetPetData(setPetsOwned, setNumberPetsDiscovered)
 
     return () => unsubscribe()
   }, [])
@@ -21,7 +22,7 @@ export default function CollectionScreen ({petsOwnedOnLoad}) {
 			<Header />
 			<View style={{ backgroundColor: "#232b2b", marginBottom: 12, flexDirection: "row", justifyContent: "space-between", padding: 12, borderRadius: 8}}>
 				<Text style={{color: "white", fontWeight: "bold"}}>Cards Collected</Text>
-				{/* <Text style={{color: "white"}}>Found: {numberOfPetsOwned}/50</Text>} */}
+				<Text style={{color: "white"}}>Discovered: {numberPetsDiscovered}/50</Text>
 			</View>
 			
 			<PetDisplay petsOwned={petsOwned} />
