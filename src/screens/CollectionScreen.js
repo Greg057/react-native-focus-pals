@@ -11,9 +11,7 @@ export default function CollectionScreen ({petsOwnedOnLoad}) {
 	const [numberPetsDiscovered, setNumberPetsDiscovered] = useState(0)
 		
   useEffect(() => {
-		console.log("enter")
     const unsubscribe = useGetPetData(setPetsOwned, setNumberPetsDiscovered)
-
     return () => unsubscribe()
   }, [])
 		

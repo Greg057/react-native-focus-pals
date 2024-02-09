@@ -30,7 +30,6 @@ export function useGetPetData (setPetsOwned, setNumberPetsDiscovered = null) {
           })
           await Promise.all(petPromises)
           setPetsOwned(sortPets(dataToReturn))
-          console.log("exit")
         })()
       }
     )

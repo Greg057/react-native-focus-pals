@@ -4,8 +4,8 @@ import { doc, getDoc, increment, updateDoc } from 'firebase/firestore'
 import { FIREBASE_DB } from '../../firebaseConfig'
 import { getAuth } from 'firebase/auth'
 
-export default function CountdownTimer ({timer, setTimeFocused, setIsTimerHidden, selectedPet, onPress}) {
-  
+export default function CountdownTimer ({timer, setTimeFocused, setIsTimerHidden, selectedPet, setSelectedPet, onPress}) {
+    
   const children = ({ remainingTime }) => {
     const minutes = Math.floor(remainingTime / 60).toString().padStart(2, '0')
     const seconds = (remainingTime % 60).toString().padStart(2, '0')
@@ -20,15 +20,14 @@ export default function CountdownTimer ({timer, setTimeFocused, setIsTimerHidden
     await updateDoc((docRef), {
       coins: increment(value / 60 * 3),
       [`petsOwned.${selectedPet.name}.xp`]: XP
-
     })
     setTimeFocused(value)
     setIsTimerHidden(true)
+    setSelectedPet({...selectedPet, xp: XP[selectedPet.id]})
   }
   
-  	
   return (
-    <View style={{flex:1, justifyContent: "center", alignItems: "center"}} >
+    <View style={{flex:1, justifyContent: "flex-end", alignItems: "center", paddingBottom: 36}} >
       <CountdownCircleTimer
         isPlaying
         duration={timer}
@@ -37,7 +36,7 @@ export default function CountdownTimer ({timer, setTimeFocused, setIsTimerHidden
         onComplete={(value) => onComplete(value)}>
         {({ remainingTime }) => <Text style={{fontSize: 26, fontWeight: 700}}>{children({remainingTime})}</Text>}
       </CountdownCircleTimer>
-      <Pressable style={{marginTop: 48, width: 100, height: 30, borderWidth: 2, borderRadius: 6, alignItems: "center", justifyContent: "center"}} onPress={onPress}>
+      <Pressable style={{marginTop: 156, width: 100, height: 30, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)", borderRadius: 6, alignItems: "center", justifyContent: "center"}} onPress={onPress}>
         <Text>Cancel</Text>
       </Pressable>
     </View>

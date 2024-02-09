@@ -28,7 +28,7 @@ export function Header ({coinsOnLoad, gemsOnLoad}) {
 
 export function GameCurrencyUI ({imageSource, amount, size, width = 110, backgroundColor = "#232b2b"}) {
 	return (
-		<View style={{flexDirection: "row", justifyContent: "space-between", borderRadius: 6, marginLeft: 4, backgroundColor: backgroundColor, height: 25, width: width, alignItems: "center"}}>
+		<View style={{flexDirection: "row", justifyContent: "space-between", borderRadius: 6, marginLeft: 4, backgroundColor: backgroundColor, height: 26, width: width, alignItems: "center", borderWidth: 1, borderColor: "rgba(211,211,211, 0.9)"}}>
 			<Image style={{ width: size, height: size, marginLeft: -16}} source={imageSource} />
 			<Text style={{marginRight: 8, fontWeight: 700, color: "white"}}>{amount}</Text>
 		</View>

@@ -45,11 +45,11 @@ export default function EggDisplay({rarity, imageSource, cost}) {
   
 
   return (
-    <View style={{flex: 1, borderRadius: 12, backgroundColor: "#232b2b", marginBottom: 12}}>
+    <View style={{flex: 1, borderRadius: 12, backgroundColor: "#232b2b", marginBottom: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
 			<Pressable onPress={buyEgg} style={{width: "100%", alignItems: "center", gap: 12, paddingBottom: 12}}>
           <Image source={imageSource} style={{width: "90%", height: 160, borderRadius: 12, marginTop: 12}} />
           <Text style={{color: "white", fontWeight: 700}}>{rarity} Egg</Text>
-          <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={45} backgroundColor={"#02748D"} width={70} />
+          <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={50} backgroundColor={"#02748D"} width={80} />
       </Pressable>
     </View>
   )

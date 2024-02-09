@@ -8,14 +8,15 @@ import { v4 as uuidv4 } from 'uuid'
 import { Image } from 'expo-image'
 
 export function PetDisplay({petsOwned, selectPet}) {
+	
 	return (
     <FlatList showsVerticalScrollIndicator={false} numColumns={3}
 				data={petsOwned} renderItem={({item}) => <PetDisplayMain pet={item} selectPet={selectPet} />} keyExtractor={() => uuidv4()}/>
 	)
 }
 
-
-export function PetDisplayMain ({pet, selectPet = null}) {
+export function PetDisplayMain ({pet, selectPet = null, isPetSelected = false}) {
+	
 	function Children () {
 		return(
 			<View style={{paddingTop: 10, paddingHorizontal: 10, marginBottom: 18}}>
@@ -24,7 +25,7 @@ export function PetDisplayMain ({pet, selectPet = null}) {
 					<StarsDisplay stars={pet.stars} />
 					<LevelDisplay level={pet.level} />
 				</ImageBackground>
-				<XPDisplay pet={pet} />
+				<XPDisplay pet={pet} disableUp={selectPet || isPetSelected} />
 			</View>
 		)
 	}
@@ -54,16 +55,16 @@ function LevelDisplay({level}) {
 	)
 }
 
-function XPDisplay ({pet}) {
+function XPDisplay ({pet, disableUp}) {
 	const [isLevelUp, setIsLevelUp] = useState(false)
 	const [isStarUp, setIsStarUp] = useState(false)
 
 	useEffect(() => {
-		if (pet.xp >= 100 && pet.stars === 1 && pet.level === 9
-			|| pet.xp >= 100 && pet.stars === 2 && pet.level === 19
-			|| pet.xp >= 100 && pet.stars === 3 && pet.level === 29
-			|| pet.xp >= 100 && pet.stars === 4 && pet.level === 39
-			|| pet.xp >= 100 && pet.stars === 5 && pet.level === 49) {
+		if (pet.xp >= 100 && pet.stars === 1 && pet.level === 10
+			|| pet.xp >= 100 && pet.stars === 2 && pet.level === 20
+			|| pet.xp >= 100 && pet.stars === 3 && pet.level === 30
+			|| pet.xp >= 100 && pet.stars === 4 && pet.level === 40
+			|| pet.xp >= 100 && pet.stars === 5 && pet.level === 50) {
 				setIsStarUp(true)
 		} else if (pet.xp >= 100) {
 			setIsLevelUp(true)
@@ -91,9 +92,13 @@ function XPDisplay ({pet}) {
 	return (
 		<View style={{height: 20, width: 98, marginTop: 4, left: -5, borderRadius: 3, backgroundColor: "#232b2b"}}>
 			<View style={{backgroundColor: isStarUp ? "#ffbf00" : "#02748D", width: widthView, borderRadius: 3, height: 20}}></View>
-			<Pressable disabled={!pet.xp >= 100} onPress={up} >
-				<Text style={{top: -16, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{isStarUp ? "STAR UP" : isLevelUp ? "UPGRADE" : `${pet.xp}/100`}</Text>
-			</Pressable>
+			{disableUp 
+				? <Text style={{top: -16, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{isStarUp ? "STAR UP" : isLevelUp ? "UPGRADE" : `${pet.xp}/100`}</Text>
+				: <Pressable disabled={!(pet.xp >= 100)} onPress={up} >
+						<Text style={{top: -16, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{isStarUp ? "STAR UP" : isLevelUp ? "UPGRADE" : `${pet.xp}/100`}</Text>
+					</Pressable>
+			}
+			
 		</View>
 	)
 }

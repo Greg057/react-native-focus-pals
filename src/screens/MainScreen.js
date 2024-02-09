@@ -18,9 +18,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad}) {
 	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
 		
   useEffect(() => {
-		console.log("enter")
     const unsubscribe = useGetPetData(setPetsOwned)
-
     return () => unsubscribe()
   }, [])
 
@@ -51,18 +49,19 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad}) {
 					<SliderTimer timer={timer} setTimer={setTimer}/>
 
 					<ModalPets modalVisible={modalVisible} setModalVisible={setModalVisible} petsOwned={petsOwned} selectPet={selectPet} />
-					
+
 					<Pressable onPress={() => setModalVisible(true)}>
+						<View style={{width: 140, height: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
 						{selectedPet !== null
-							? <View style={{padding: 24, left: 4}}>
-									<PetDisplayMain pet={selectedPet} />
+							? <View style={{left: 5}}>
+									<PetDisplayMain pet={selectedPet} isPetSelected={true} />
 								</View>
-							: <View style={{padding: 12, borderRadius: 12, alignSelf: "center", width: "80%", backgroundColor: "grey"}}>
-									<Text>Select a Pet to grow!</Text>
-								</View>
+							: <Text>Select a Pet to grow!</Text>
 						}
+						</View>
 					</Pressable>
-					<View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingTop: 14, paddingHorizontal: 12, alignItems: "center", width: 100}}>
+
+					<View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingTop: 14, paddingHorizontal: 22, alignItems: "center", width: 140}}>
 						<View style={{flexDirection: "row", justifyContent: "space-between", width: "100%", paddingLeft: 10}}>
 							<Text style={{fontWeight: 700, fontSize: 16, color: "white"}}>XP</Text>
 							<Text style={{fontSize: 16, color: "white"}}>+{timer / 60}</Text>
@@ -76,12 +75,13 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad}) {
 						setTimeFocused(null)
 						setIsTimerHidden(false)
 						}} 
-						style={{backgroundColor: "#232b2b", paddingVertical: 8, paddingHorizontal: 26, borderRadius: 8, marginTop: 16}}>
+						disabled={!selectedPet}
+						style={{width: 140, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, paddingHorizontal: 26, borderRadius: 8, marginTop: 16, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
 							<Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Start</Text>
 					</Pressable>
 				</View>
 				) : (
-					<CountdownTimer timer={timer} setTimeFocused={setTimeFocused} setIsTimerHidden={setIsTimerHidden} selectedPet={selectedPet} onPress={cancel}/>
+					<CountdownTimer timer={timer} setTimeFocused={setTimeFocused} setIsTimerHidden={setIsTimerHidden} selectedPet={selectedPet} setSelectedPet={setSelectedPet} onPress={cancel}/>
 				)}
 
 			<StatusBar hidden={true} />
