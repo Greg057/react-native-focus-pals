@@ -31,14 +31,13 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
       petsIds[2] = selectedPet2 && selectedPet2.id
       setThisPetOwnedFiltered(thisPetOwned.filter(petEle => !petsIds.includes(petEle.id)))
     }
-      
   }, [thisPetOwned, selectedPet1, selectedPet2])
  
 
   async function up () {
     setIsLoading(true)
 		const docRef = await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))
-    if (docRef.data().coins < cost ) {
+    if (docRef.data().coins < cost) {
       console.log("not enough coins")
       return
     }
@@ -69,57 +68,30 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
   function onClose () {
     setSelectedPet1(null)
     setSelectedPet2(null)
-    setModalVisible(!modalVisible)
+    setModalVisible(false)
   }
 
   return (
-    <Modal
-      animationType="fade"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={onClose}>
+    <Modal animationType="fade" transparent={true} visible={modalVisible} onRequestClose={onClose}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center", padding: 15,}}>
             <Text style={{color: "white"}}>{isStarUp ? "Evolve your pet!" : "Level up you pet!"}</Text>
-            <Pressable
-              style={{}}
-              onPress={onClose}>
+            <Pressable onPress={onClose}>
               <Ionicons name="close-sharp" size={32} color="white" />
             </Pressable>
           </View>
 
           {isStarUp && 
             <View style={{width: "100%", paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-              <Pressable onPress={() => setModalPetsVisible1(true)}>
-                <View style={{width: 140, height: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
-                {selectedPet1 !== null
-                  ? <View style={{left: 5}}>
-                      <PetDisplayMain pet={selectedPet1} isPetSelected={true} />
-                    </View>
-                  : <Text>Select pet to sacrifice</Text>
-                }
-                </View>
-              </Pressable>
-              <Pressable onPress={() => setModalPetsVisible2(true)}>
-                <View style={{width: 140, height: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
-                {selectedPet2 !== null
-                  ? <View style={{left: 5}}>
-                      <PetDisplayMain pet={selectedPet2} isPetSelected={true} />
-                    </View>
-                  : <Text>Select pet to sacrifice</Text>
-                }
-                </View>
-              </Pressable>
+              <PetToSacrificeModal setModalPetsVisible={setModalPetsVisible1} selectedPet={selectedPet1} />
+              <PetToSacrificeModal setModalPetsVisible={setModalPetsVisible2} selectedPet={selectedPet2} />
             </View>
-            
           }
 
-          
           <ModalPets modalVisible={modalPetsVisible1} setModalVisible={setModalPetsVisible1} petsOwned={thisPetOwnedFiltered} selectPet={selectPet1} sacrifice={true} />
           <ModalPets modalVisible={modalPetsVisible2} setModalVisible={setModalPetsVisible2} petsOwned={thisPetOwnedFiltered} selectPet={selectPet2} sacrifice={true}/>
           
-
           <View style={{width: "100%", paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
             <PetDisplayMain pet={pet} isPetUpgrade={true} />
             <AntDesign name="doubleright" size={32} color="black" />
@@ -128,7 +100,7 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
             
           {isLoading 
             ? <ActivityIndicator size={"large"} color={"black"} /> 
-            : <Pressable disabled={selectedPet1 === null || selectedPet2 === null} onPress={up} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+            : <Pressable disabled={isStarUp && (selectedPet1 === null || selectedPet2 === null)} onPress={up} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
                 <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
                   <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={50} width={80} backgroundColor = "#02748D" />
                   <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>{isStarUp ? "EVOLVE" : "LEVEL UP"}</Text>
@@ -139,6 +111,21 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
         </View>
       </View>
     </Modal>
+  )
+}
+
+function PetToSacrificeModal ({setModalPetsVisible, selectedPet}) {
+  return (
+    <Pressable onPress={() => setModalPetsVisible(true)}>
+      <View style={{width: 140, height: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+      {selectedPet !== null
+        ? <View style={{left: 5}}>
+            <PetDisplayMain pet={selectedPet} isPetSelected={true} />
+          </View>
+        : <Text>Select pet to sacrifice</Text>
+      }
+      </View>
+    </Pressable>
   )
 }
 
