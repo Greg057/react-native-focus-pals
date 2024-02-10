@@ -12,14 +12,27 @@ import { useGetPetData } from '../hooks/useGetPetData'
 
 export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp, pet, cost }) {
   const [isLoading, setIsLoading] = useState(false)
-  const [selectedPet, setSelectedPet] = useState(null)
-  const [modalPetsVisible, setModalPetsVisible] = useState(false)
+  const [selectedPet1, setSelectedPet1] = useState(null)
+  const [selectedPet2, setSelectedPet2] = useState(null)
+  const [modalPetsVisible1, setModalPetsVisible1] = useState(false)
+  const [modalPetsVisible2, setModalPetsVisible2] = useState(false)
   const [thisPetOwned, setThisPetOwned] = useState(null)
+  const [thisPetOwnedFiltered, setThisPetOwnedFiltered] = useState(null)
 
   useEffect(() => {
-    const unsubscribe = modalVisible ? useGetPetData(setThisPetOwned, null, true, pet.name, pet.stars) : null
+    const unsubscribe = modalVisible && useGetPetData(setThisPetOwned, null, true, pet.name, pet.stars)
     return () => modalVisible && unsubscribe()
   }, [modalVisible])
+
+  useEffect(() => {
+    if (modalVisible) {
+      const petsIds = [pet.id]
+      petsIds[1] = selectedPet1 && selectedPet1.id
+      petsIds[2] = selectedPet2 && selectedPet2.id
+      setThisPetOwnedFiltered(thisPetOwned.filter(petEle => !petsIds.includes(petEle.id)))
+    }
+      
+  }, [thisPetOwned, selectedPet1, selectedPet2])
  
 
   async function up () {
@@ -43,57 +56,79 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
 		})
 	}
 
-  function selectPet (pet) {
-		setSelectedPet(pet)
-		setModalPetsVisible(false)
+  function selectPet1 (pet) {
+		setSelectedPet1(pet)
+		setModalPetsVisible1(false)
 	}
+
+  function selectPet2 (pet) {
+		setSelectedPet2(pet)
+		setModalPetsVisible2(false)
+	}
+
+  function onClose () {
+    setSelectedPet1(null)
+    setSelectedPet2(null)
+    setModalVisible(!modalVisible)
+  }
 
   return (
     <Modal
       animationType="fade"
       transparent={true}
       visible={modalVisible}
-      onRequestClose={() => {
-        setModalVisible(!modalVisible)
-      }}>
+      onRequestClose={onClose}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center", padding: 15,}}>
             <Text style={{color: "white"}}>{isStarUp ? "Evolve your pet!" : "Level up you pet!"}</Text>
             <Pressable
               style={{}}
-              onPress={() => setModalVisible(!modalVisible)}>
+              onPress={onClose}>
               <Ionicons name="close-sharp" size={32} color="white" />
             </Pressable>
           </View>
 
           {isStarUp && 
-            <Pressable onPress={() => setModalPetsVisible(true)}>
-              <View style={{width: 140, height: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
-              {selectedPet !== null
-                ? <View style={{left: 5}}>
-                    <PetDisplayMain pet={selectedPet} isPetSelected={true} />
-                  </View>
-                : <Text>Select pet to sacrifice</Text>
-              }
-              </View>
-					  </Pressable>
+            <View style={{width: "100%", paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+              <Pressable onPress={() => setModalPetsVisible1(true)}>
+                <View style={{width: 140, height: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+                {selectedPet1 !== null
+                  ? <View style={{left: 5}}>
+                      <PetDisplayMain pet={selectedPet1} isPetSelected={true} />
+                    </View>
+                  : <Text>Select pet to sacrifice</Text>
+                }
+                </View>
+              </Pressable>
+              <Pressable onPress={() => setModalPetsVisible2(true)}>
+                <View style={{width: 140, height: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+                {selectedPet2 !== null
+                  ? <View style={{left: 5}}>
+                      <PetDisplayMain pet={selectedPet2} isPetSelected={true} />
+                    </View>
+                  : <Text>Select pet to sacrifice</Text>
+                }
+                </View>
+              </Pressable>
+            </View>
+            
           }
 
-          <ModalPets modalVisible={modalPetsVisible} setModalVisible={setModalPetsVisible} petsOwned={thisPetOwned} selectPet={selectPet} />
-
+          
+          <ModalPets modalVisible={modalPetsVisible1} setModalVisible={setModalPetsVisible1} petsOwned={thisPetOwnedFiltered} selectPet={selectPet1} sacrifice={true} />
+          <ModalPets modalVisible={modalPetsVisible2} setModalVisible={setModalPetsVisible2} petsOwned={thisPetOwnedFiltered} selectPet={selectPet2} sacrifice={true}/>
+          
 
           <View style={{width: "100%", paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
             <PetDisplayMain pet={pet} isPetUpgrade={true} />
             <AntDesign name="doubleright" size={32} color="black" />
             <PetDisplayMain pet={isStarUp ? {...pet, stars: pet.stars + 1, level: 1} : {...pet, level: pet.level + 1}} isPetUpgrade={true} />
           </View>
-
-          {/* <ModalPets modalVisible={modalVisible} setModalVisible={setModalVisible} petsOwned={petsOwned} selectPet={selectPet} /> */}
             
           {isLoading 
             ? <ActivityIndicator size={"large"} color={"black"} /> 
-            : <Pressable onPress={up} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+            : <Pressable disabled={selectedPet1 === null || selectedPet2 === null} onPress={up} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
                 <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
                   <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={50} width={80} backgroundColor = "#02748D" />
                   <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>{isStarUp ? "EVOLVE" : "LEVEL UP"}</Text>
@@ -116,21 +151,12 @@ const styles = StyleSheet.create({
   },
   modalView: {
 		backgroundColor: "#30bced",
-		width: "80%",
+		width: "90%",
 		paddingBottom: 12,
-		top: 30,
     borderRadius: 24,
     borderWidth: 2, 
     borderColor: "rgba(211,211,211, 0.9)",
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
   
 })

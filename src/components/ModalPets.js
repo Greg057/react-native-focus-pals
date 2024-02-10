@@ -2,7 +2,7 @@ import { Text, View, Pressable, Modal, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import {PetDisplay} from '../components/PetDisplay'
 
-export default function ModalPets ({modalVisible, setModalVisible, petsOwned, selectPet}) {
+export default function ModalPets ({modalVisible, setModalVisible, petsOwned, selectPet, sacrifice = false}) {
   
   return (
     <Modal
@@ -15,7 +15,7 @@ export default function ModalPets ({modalVisible, setModalVisible, petsOwned, se
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center", padding: 15,}}>
-            <Text style={{color: "white"}}>Select a pet to grow!</Text>
+            <Text style={{color: "white"}}>Select a pet to {sacrifice ? "sacrifice" : "grow"}!</Text>
             <Pressable
               style={{}}
               onPress={() => setModalVisible(!modalVisible)}>
