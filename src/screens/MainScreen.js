@@ -56,7 +56,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad}) {
 							? <View style={{left: 5}}>
 									<PetDisplayMain pet={selectedPet} isPetSelected={true} />
 								</View>
-							: <Text>Select a Pet to grow!</Text>
+							: <Text>Select a Pet</Text>
 						}
 						</View>
 					</Pressable>

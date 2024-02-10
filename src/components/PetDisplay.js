@@ -1,21 +1,19 @@
 import { FlatList, Text, View, ImageBackground, Pressable  } from "react-native"
-import { doc, getDoc, updateDoc } from "firebase/firestore"
-import { FIREBASE_DB } from "../../firebaseConfig"
-import { getAuth } from "firebase/auth"
 import { useEffect, useState } from "react"
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 import { Image } from 'expo-image'
+import ModalUpgrade from "./ModalUpgrade"
 
 export function PetDisplay({petsOwned, selectPet}) {
 	
 	return (
     <FlatList showsVerticalScrollIndicator={false} numColumns={3}
-				data={petsOwned} renderItem={({item}) => <PetDisplayMain pet={item} selectPet={selectPet} />} keyExtractor={() => uuidv4()}/>
+				data={petsOwned} renderItem={({item}) => <PetDisplayMain pet={item} selectPet={selectPet}/>} keyExtractor={() => uuidv4()}/>
 	)
 }
 
-export function PetDisplayMain ({pet, selectPet = null, isPetSelected = false}) {
+export function PetDisplayMain ({pet, selectPet = null, isPetSelected = false, isPetUpgrade = false}) {
 	
 	function Children () {
 		return(
@@ -25,7 +23,7 @@ export function PetDisplayMain ({pet, selectPet = null, isPetSelected = false}) 
 					<StarsDisplay stars={pet.stars} />
 					<LevelDisplay level={pet.level} />
 				</ImageBackground>
-				<XPDisplay pet={pet} disableUp={selectPet || isPetSelected} />
+				{!isPetUpgrade && <XPDisplay pet={pet} disableUp={selectPet || isPetSelected} />}
 			</View>
 		)
 	}
@@ -58,6 +56,7 @@ function LevelDisplay({level}) {
 function XPDisplay ({pet, disableUp}) {
 	const [isLevelUp, setIsLevelUp] = useState(false)
 	const [isStarUp, setIsStarUp] = useState(false)
+	const [modalVisible, setModalVisible] = useState(false)
 
 	useEffect(() => {
 		if (pet.xp >= 100 && pet.stars === 1 && pet.level === 10
@@ -71,33 +70,18 @@ function XPDisplay ({pet, disableUp}) {
 		}
 	}, [])
 		
-
-	async function up () {
-		const docRef = await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))
-		let level = docRef.data().petsOwned[pet.name].level
-		level[pet.id] = isStarUp ? 1 : level[pet.id] + 1
-		let XP = docRef.data().petsOwned[pet.name].xp
-		XP[pet.id] -= 100
-		let stars = docRef.data().petsOwned[pet.name].stars
-		stars[pet.id] += isStarUp && 1
-		await updateDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), {
-			[`petsOwned.${pet.name}.level`]: level,
-			[`petsOwned.${pet.name}.xp`]: XP,
-			[`petsOwned.${pet.name}.stars`]: stars
-		})
-	}
-
 	const widthView = pet.xp >= 100 ? 100 : pet.xp
 
 	return (
-		<View style={{height: 20, width: 98, marginTop: 4, left: -5, borderRadius: 3, backgroundColor: "#232b2b"}}>
-			<View style={{backgroundColor: isStarUp ? "#ffbf00" : "#02748D", width: widthView, borderRadius: 3, height: 20}}></View>
+		<View style={{height: 25, width: 98, marginTop: 4, left: -5, borderRadius: 3, backgroundColor: "#232b2b"}}>
+			<View style={{backgroundColor: isStarUp ? "#ffbf00" : "#02748D", width: widthView, borderRadius: 3, height: 25}}></View>
 			{disableUp 
-				? <Text style={{top: -16, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{isStarUp ? "STAR UP" : isLevelUp ? "UPGRADE" : `${pet.xp}/100`}</Text>
-				: <Pressable disabled={!(pet.xp >= 100)} onPress={up} >
-						<Text style={{top: -16, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{isStarUp ? "STAR UP" : isLevelUp ? "UPGRADE" : `${pet.xp}/100`}</Text>
+				? <Text style={{top: -18, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{isStarUp ? "EVOLVE" : isLevelUp ? "LEVEL UP" : `${pet.xp}/100`}</Text>
+				: <Pressable disabled={!(pet.xp >= 100)} onPress={() => setModalVisible(true)} >
+						<Text style={{top: -18, fontSize: 11, alignSelf: "center", fontWeight: 700, color: "white"}}>{isStarUp ? "EVOLVE" : isLevelUp ? "LEVEL UP" : `${pet.xp}/100`}</Text>
 					</Pressable>
 			}
+			<ModalUpgrade modalVisible={modalVisible} setModalVisible={setModalVisible} isStarUp={isStarUp} pet={pet} cost={50} />
 			
 		</View>
 	)

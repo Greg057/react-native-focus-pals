@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth"
 import 'react-native-get-random-values'
 import PETS from "../../petsData"
 
-export function useGetPetData (setPetsOwned, setNumberPetsDiscovered = null) {
+export function useGetPetData (setPetsOwned, setNumberPetsDiscovered = null, fromEvolve = false, petName = null, petStars = null) {
   return (
     onSnapshot(
       doc(FIREBASE_DB, 'users', getAuth().currentUser.uid), (document) => {
@@ -29,7 +29,9 @@ export function useGetPetData (setPetsOwned, setNumberPetsDiscovered = null) {
             }
           })
           await Promise.all(petPromises)
-          setPetsOwned(sortPets(dataToReturn))
+          fromEvolve 
+            ? setPetsOwned(sortPets(dataToReturn.filter(pet => pet.name == petName && pet.stars == petStars)))
+            : setPetsOwned(sortPets(dataToReturn))
         })()
       }
     )
