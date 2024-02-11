@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Image, AppState } from 'react-native'
 import SliderTimer from '../components/SliderTimer'
 import CountdownTimer from '../components/CountdownTimer'
 import {Header} from "../components/Header"
@@ -9,13 +9,28 @@ import ModalPets from '../components/ModalPets'
 import 'react-native-get-random-values'
 import {useGetPetData, sortPets} from "../hooks/useGetPetData"
 
-export default function MainScreen ({coins, gems, petsOwnedOnLoad}) {
+export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}) {
+
 	const [timer, setTimer] = useState(5 * 60)
 	const [isTimerHidden, setIsTimerHidden] = useState(true)
 	const [timeFocused, setTimeFocused] = useState(null)
 	const [modalVisible, setModalVisible] = useState(false)
 	const [selectedPet, setSelectedPet] = useState(null)
 	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
+
+	const appState = useRef(AppState.currentState);
+
+	useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      console.log('AppState', appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 		
   useEffect(() => {
     const unsubscribe = useGetPetData(setPetsOwned)
@@ -74,6 +89,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad}) {
 					<Pressable onPress={() => {
 						setTimeFocused(null)
 						setIsTimerHidden(false)
+						setIsTimerOn(true)
 						}} 
 						disabled={!selectedPet}
 						style={{width: 140, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, paddingHorizontal: 26, borderRadius: 8, marginTop: 16, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
@@ -81,7 +97,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad}) {
 					</Pressable>
 				</View>
 				) : (
-					<CountdownTimer timer={timer} setTimeFocused={setTimeFocused} setIsTimerHidden={setIsTimerHidden} selectedPet={selectedPet} setSelectedPet={setSelectedPet} onPress={cancel}/>
+					<CountdownTimer timer={timer} setTimeFocused={setTimeFocused} setIsTimerHidden={setIsTimerHidden} selectedPet={selectedPet} setSelectedPet={setSelectedPet} onPress={cancel} setIsTimerOn={setIsTimerOn}/>
 				)}
 
 			<StatusBar hidden={true} />

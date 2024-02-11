@@ -4,7 +4,7 @@ import { doc, getDoc, increment, updateDoc } from 'firebase/firestore'
 import { FIREBASE_DB } from '../../firebaseConfig'
 import { getAuth } from 'firebase/auth'
 
-export default function CountdownTimer ({timer, setTimeFocused, setIsTimerHidden, selectedPet, setSelectedPet, onPress}) {
+export default function CountdownTimer ({timer, setTimeFocused, setIsTimerHidden, selectedPet, setSelectedPet, onPress, setIsTimerOn}) {
     
   const children = ({ remainingTime }) => {
     const minutes = Math.floor(remainingTime / 60).toString().padStart(2, '0')
@@ -23,6 +23,7 @@ export default function CountdownTimer ({timer, setTimeFocused, setIsTimerHidden
     })
     setTimeFocused(value)
     setIsTimerHidden(true)
+    setIsTimerOn(false)
     setSelectedPet({...selectedPet, xp: XP[selectedPet.id]})
   }
   

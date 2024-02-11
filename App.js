@@ -25,6 +25,8 @@ export default function App() {
   const [coins, setCoins] = useState()
 	const [gems, setGems] = useState() 
 
+  const [isTimerOn, setIsTimerOn] = useState(false) 
+
 
   useEffect(() => {
     const fetchData = async (user) => {
@@ -131,12 +133,14 @@ export default function App() {
   }
 
   return (
+    
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Timer" screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarActiveBackgroundColor: "#30bced", tabBarStyle: {height: 60, backgroundColor: "#02748D"}}}>
-        <Tab.Screen name="Shop" component={ShopScreen} options={{tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={require("./assets/images/shopIconNav.png")}/>}} />
-        <Tab.Screen name="Timer" children={()=><MainScreen coins={coins} gems={gems} petsOwnedOnLoad={petsOwnedOnLoad}/>} options={{tabBarItemStyle: {borderRightColor: "rgba(211,211,211, 0.9)", borderRightWidth: 1, borderLeftColor: "rgba(211,211,211, 0.9)", borderLeftWidth: 1}, tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={require("./assets/images/homeIconNav.png")}/>}} />
-        <Tab.Screen name="Collection" children={()=><CollectionScreen petsOwnedOnLoad={petsOwnedOnLoad}/>} options={{tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={require("./assets/images/collectionIconNav.png")}/>}} />
+        {!isTimerOn && <Tab.Screen name="Shop" component={ShopScreen} options={{tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={require("./assets/images/shopIconNav.png")}/>}} />}
+        <Tab.Screen name="Timer" children={()=><MainScreen coins={coins} gems={gems} petsOwnedOnLoad={petsOwnedOnLoad} setIsTimerOn={setIsTimerOn}/>} options={{tabBarItemStyle: {borderRightColor: "rgba(211,211,211, 0.9)", borderRightWidth: 1, borderLeftColor: "rgba(211,211,211, 0.9)", borderLeftWidth: 1}, tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={require("./assets/images/homeIconNav.png")}/>}} />
+        {!isTimerOn && <Tab.Screen name="Collection" children={()=><CollectionScreen petsOwnedOnLoad={petsOwnedOnLoad}/>} options={{tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={require("./assets/images/collectionIconNav.png")}/>}} />}
       </Tab.Navigator>
     </NavigationContainer>
+    
   )
 }
