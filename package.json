@@ -31,6 +31,7 @@
     "react-native-svg": "^14.1.0",
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-web": "~0.19.6",
+    "use-sound": "^4.0.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

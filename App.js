@@ -122,7 +122,6 @@ export default function App() {
     })
 
     return () => {
-      // Cleanup the subscription when the component unmounts
       unsubscribe()
     }
   }, [])

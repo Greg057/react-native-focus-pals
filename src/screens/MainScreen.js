@@ -13,7 +13,6 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 
 	const [timer, setTimer] = useState(5 * 60)
 	const [isTimerHidden, setIsTimerHidden] = useState(true)
-	const [timeFocused, setTimeFocused] = useState(null)
 	const [modalVisible, setModalVisible] = useState(false)
 	const [selectedPet, setSelectedPet] = useState(null)
 	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
@@ -23,7 +22,6 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 	useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
       appState.current = nextAppState;
-      setAppStateVisible(appState.current);
       console.log('AppState', appState.current);
     });
 
@@ -55,7 +53,6 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 	return (
 		<View style={styles.container}>
 			<Header coinsOnLoad={coins} gemsOnLoad={gems} />
-			{timeFocused && <Text>You focused for {formatTime(timeFocused)} minutes!</Text>}
 
 			{isTimerHidden ? (
 				<View style={{flex: 1, alignItems: "center"}}>
@@ -87,7 +84,6 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 						</View>
 					</View>
 					<Pressable onPress={() => {
-						setTimeFocused(null)
 						setIsTimerHidden(false)
 						setIsTimerOn(true)
 						}} 
@@ -97,7 +93,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 					</Pressable>
 				</View>
 				) : (
-					<CountdownTimer timer={timer} setTimeFocused={setTimeFocused} setIsTimerHidden={setIsTimerHidden} selectedPet={selectedPet} setSelectedPet={setSelectedPet} onPress={cancel} setIsTimerOn={setIsTimerOn}/>
+					<CountdownTimer timer={timer} setIsTimerHidden={setIsTimerHidden} selectedPet={selectedPet} setSelectedPet={setSelectedPet} onPress={cancel} setIsTimerOn={setIsTimerOn}/>
 				)}
 
 			<StatusBar hidden={true} />
