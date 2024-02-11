@@ -8,6 +8,8 @@ import {PetDisplayMain} from "../components/PetDisplay"
 import ModalPets from '../components/ModalPets'
 import 'react-native-get-random-values'
 import {useGetPetData, sortPets} from "../hooks/useGetPetData"
+import { playSoundError, playSoundStart } from '../hooks/useSound'
+
 
 export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}) {
 
@@ -35,7 +37,6 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
     return () => unsubscribe()
   }, [])
 
-
 	function selectPet (pet) {
 		setSelectedPet(pet)
 		setModalVisible(false)
@@ -43,6 +44,8 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 
 	function cancel () {
 		setIsTimerHidden(true)
+		setIsTimerOn(false)
+		playSoundError()
 	}
 
 	function formatTime (time) {
@@ -84,10 +87,14 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 						</View>
 					</View>
 					<Pressable onPress={() => {
-						setIsTimerHidden(false)
-						setIsTimerOn(true)
-						}} 
-						disabled={!selectedPet}
+							if (!selectedPet) {
+								playSoundError()
+							} else {
+								playSoundStart()
+								setIsTimerHidden(false)
+								setIsTimerOn(true)
+							}
+						}}
 						style={{width: 140, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, paddingHorizontal: 26, borderRadius: 8, marginTop: 16, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
 							<Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Start</Text>
 					</Pressable>

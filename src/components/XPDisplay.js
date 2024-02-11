@@ -2,6 +2,7 @@ import { Text, View, Pressable  } from "react-native"
 import { useEffect, useState } from "react"
 import 'react-native-get-random-values'
 import ModalUpgrade from "./ModalUpgrade"
+import { playSoundSelect } from '../hooks/useSound'
 
 export default function XPDisplay ({pet, disableUp}) {
 	const [isLevelUp, setIsLevelUp] = useState(false)
@@ -25,7 +26,10 @@ export default function XPDisplay ({pet, disableUp}) {
 	return (
 		<View style={{height: 25, width: 98, marginTop: 4, left: -5, borderRadius: 3, backgroundColor: "#232b2b"}}>
 			<View style={{backgroundColor: isStarUp ? "#ffbf00" : "#02748D", width: widthView, borderRadius: 3, height: 25}}></View>
-			 <Pressable disabled={!(pet.xp >= 100) || disableUp} onPress={() => setModalVisible(true)} >
+			 <Pressable disabled={!(pet.xp >= 100) || disableUp} onPress={() => {
+					setModalVisible(true)
+					playSoundSelect()
+			 }} >
 				<Text style={{top: -18, fontSize: 11, alignSelf: "center", fontWeight: 700, color: isStarUp ? "black" : "white"}}>{isStarUp ? "EVOLVE" : isLevelUp ? "LEVEL UP" : `${pet.xp}/100`}</Text>
 			</Pressable>
 			

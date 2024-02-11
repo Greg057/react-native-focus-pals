@@ -5,6 +5,7 @@ import { FIREBASE_DB } from '../../firebaseConfig'
 import { getAuth } from 'firebase/auth'
 import ModalSessionComplete from './ModalSessionComplete'
 import { useState } from 'react'
+import { playSoundEndSessions } from '../hooks/useSound'
 
 export default function CountdownTimer ({timer, setIsTimerHidden, selectedPet, setSelectedPet, onPress, setIsTimerOn}) {
   const [modalVisible, setModalVisible] = useState(false) 
@@ -26,10 +27,11 @@ export default function CountdownTimer ({timer, setIsTimerHidden, selectedPet, s
       coins: increment(value / 60 * 3),
       [`petsOwned.${selectedPet.name}.xp`]: XP
     })
+    playSoundEndSessions()
     setModalVisible(true)
     setSelectedPet({...selectedPet, xp: XP[selectedPet.id]})
   }
-  
+
   return (
     <View style={{flex:1, justifyContent: "flex-end", alignItems: "center", paddingBottom: 36}} >
       <CountdownCircleTimer
@@ -40,7 +42,7 @@ export default function CountdownTimer ({timer, setIsTimerHidden, selectedPet, s
         onComplete={(value) => onComplete(value)}>
         {({ remainingTime }) => <Text style={{fontSize: 26, fontWeight: 700}}>{children({remainingTime})}</Text>}
       </CountdownCircleTimer>
-      <Pressable style={{marginTop: 156, width: 100, height: 30, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)", borderRadius: 6, alignItems: "center", justifyContent: "center"}} onPress={onPress}>
+      <Pressable onPress={onPress} style={{marginTop: 156, width: 100, height: 30, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)", borderRadius: 6, alignItems: "center", justifyContent: "center"}}>
         <Text>Cancel</Text>
       </Pressable>
 
