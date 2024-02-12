@@ -17,6 +17,7 @@ import { Asset } from 'expo-asset'
 SplashScreen.preventAutoHideAsync()
 
 const Tab = createBottomTabNavigator()
+const Stack = createStackNavigator()
 
 
 export default function App() {

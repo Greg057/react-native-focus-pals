@@ -33,27 +33,9 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
     }
   }, [thisPetOwned, selectedPet1, selectedPet2])
  
-
   async function up () {
-		const docRef = await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))
-    if (docRef.data().coins < cost) {
-      console.log("not enough coins")
-      return
-    }
-		let level = docRef.data().petsOwned[pet.name].level
-		level[pet.id] = isStarUp ? 1 : level[pet.id] + 1
-		let XP = docRef.data().petsOwned[pet.name].xp
-		XP[pet.id] -= 100
-		let stars = docRef.data().petsOwned[pet.name].stars
-		stars[pet.id] += isStarUp && 1
-		await updateDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), {
-      coins: increment(-cost),
-			[`petsOwned.${pet.name}.level`]: level,
-			[`petsOwned.${pet.name}.xp`]: XP,
-			[`petsOwned.${pet.name}.stars`]: stars
-		})
-    petUpgraded()
-    // onClose()
+    petUpgraded(selectedPet1, selectedPet2)
+    onClose()
 	}
 
   function selectPet1 (pet) {

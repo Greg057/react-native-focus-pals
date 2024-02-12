@@ -18,7 +18,7 @@ export default function ModalPetReceived ({modalVisible, setModalVisible, petRec
             </Pressable>
           </View>
 
-          {isNewPet && <Text>NEW</Text>}
+          {isNewPet && <Text style={{color: "white", fontSize: 28, fontWeight: 700}}>NEW</Text>}
 
           <PetDisplayMain pet={petReceived} />
 
@@ -43,16 +43,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "rgba(100, 100, 100, 0.6)",
   },
   modalView: {
-    backgroundColor: "#30bced",
-    width: 320,
-    paddingBottom: 12,
-    borderRadius: 24,
-    borderWidth: 2, 
-    borderColor: "rgba(211,211,211, 0.9)",
+    width: "100%",
+    height: "100%",
+		paddingBottom: 12,
+    backgroundColor: "#232b2b",
     alignItems: 'center',
+    justifyContent: "center"
   },
 
 })
