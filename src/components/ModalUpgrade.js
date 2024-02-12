@@ -10,14 +10,14 @@ import { GameCurrencyUI } from './Header'
 import ModalPets from './ModalPets'
 import { useGetPetData } from '../hooks/useGetPetData'
 
-export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp, pet, cost }) {
-  const [isLoading, setIsLoading] = useState(false)
+export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp, pet, cost, petUpgraded }) {
   const [selectedPet1, setSelectedPet1] = useState(null)
   const [selectedPet2, setSelectedPet2] = useState(null)
   const [modalPetsVisible1, setModalPetsVisible1] = useState(false)
   const [modalPetsVisible2, setModalPetsVisible2] = useState(false)
   const [thisPetOwned, setThisPetOwned] = useState(null)
   const [thisPetOwnedFiltered, setThisPetOwnedFiltered] = useState(null)
+  
 
   useEffect(() => {
     const unsubscribe = modalVisible && useGetPetData(setThisPetOwned, null, true, pet.name, pet.stars)
@@ -35,7 +35,6 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
  
 
   async function up () {
-    setIsLoading(true)
 		const docRef = await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))
     if (docRef.data().coins < cost) {
       console.log("not enough coins")
@@ -53,6 +52,8 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
 			[`petsOwned.${pet.name}.xp`]: XP,
 			[`petsOwned.${pet.name}.stars`]: stars
 		})
+    petUpgraded()
+    // onClose()
 	}
 
   function selectPet1 (pet) {
@@ -98,16 +99,16 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
             <PetDisplayMain pet={isStarUp ? {...pet, stars: pet.stars + 1, level: 1} : {...pet, level: pet.level + 1}} isPetUpgrade={true} />
           </View>
             
-          {isLoading 
-            ? <ActivityIndicator size={"large"} color={"black"} /> 
-            : <Pressable disabled={isStarUp && (selectedPet1 === null || selectedPet2 === null)} onPress={up} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
-                <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
-                  <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={50} width={80} backgroundColor = "#02748D" />
-                  <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>{isStarUp ? "EVOLVE" : "LEVEL UP"}</Text>
-                </View>
-              </Pressable>
-          }
           
+          <Pressable disabled={isStarUp && (selectedPet1 === null || selectedPet2 === null)} onPress={up} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+            <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
+              <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={50} width={80} backgroundColor = "#02748D" />
+              <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>{isStarUp ? "EVOLVE" : "LEVEL UP"}</Text>
+            </View>
+          </Pressable>
+          
+          
+
         </View>
       </View>
     </Modal>

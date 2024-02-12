@@ -3,11 +3,13 @@ import { useEffect, useState } from "react"
 import 'react-native-get-random-values'
 import ModalUpgrade from "./ModalUpgrade"
 import { playSoundSelect } from '../hooks/useSound'
+import ModalPetUpgraded from './ModalPetUpgraded'
 
 export default function XPDisplay ({pet, disableUp}) {
 	const [isLevelUp, setIsLevelUp] = useState(false)
 	const [isStarUp, setIsStarUp] = useState(false)
-	const [modalVisible, setModalVisible] = useState(false)
+	const [modalUpgradeVisible, setModalUpgradeVisible] = useState(false)
+	const [modalPetUpgradedVisible, setModalPetUpgradedVisible] = useState(false)
 
 	useEffect(() => {
 		if (pet.xp >= 100 && pet.stars === 1 && pet.level === 10
@@ -20,6 +22,13 @@ export default function XPDisplay ({pet, disableUp}) {
 			setIsLevelUp(true)
 		}
 	}, [])
+
+	function petUpgraded () {
+		
+    setModalPetUpgradedVisible(true)
+    // playSoundPetReceived()
+		console.log(modalPetUpgradedVisible)
+  }
 		
 	const widthView = pet.xp >= 100 ? 100 : pet.xp
 
@@ -27,13 +36,14 @@ export default function XPDisplay ({pet, disableUp}) {
 		<View style={{height: 25, width: 98, marginTop: 4, left: -5, borderRadius: 3, backgroundColor: "#232b2b"}}>
 			<View style={{backgroundColor: isStarUp ? "#ffbf00" : "#02748D", width: widthView, borderRadius: 3, height: 25}}></View>
 			 <Pressable disabled={!(pet.xp >= 100) || disableUp} onPress={() => {
-					setModalVisible(true)
+					setModalUpgradeVisible(true)
 					playSoundSelect()
 			 }} >
 				<Text style={{top: -18, fontSize: 11, alignSelf: "center", fontWeight: 700, color: isStarUp ? "black" : "white"}}>{isStarUp ? "EVOLVE" : isLevelUp ? "LEVEL UP" : `${pet.xp}/100`}</Text>
 			</Pressable>
 			
-			<ModalUpgrade modalVisible={modalVisible} setModalVisible={setModalVisible} isStarUp={isStarUp} pet={pet} cost={50} />
+			<ModalUpgrade modalVisible={modalUpgradeVisible} setModalVisible={setModalUpgradeVisible} petUpgraded={petUpgraded} isStarUp={isStarUp} pet={pet} cost={50} />
+			<ModalPetUpgraded modalVisible={modalPetUpgradedVisible} setModalVisible={setModalPetUpgradedVisible} pet={pet} isStarUp={isStarUp} />
 			
 		</View>
 	)

@@ -15,6 +15,7 @@
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-community/slider": "^4.4.2",
     "@react-navigation/bottom-tabs": "^6.5.11",
+    "@react-navigation/stack": "^6.3.21",
     "expo": "^50.0.6",
     "expo-av": "~13.10.5",
     "expo-font": "~11.10.2",
