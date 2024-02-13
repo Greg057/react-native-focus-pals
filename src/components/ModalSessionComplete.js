@@ -37,15 +37,9 @@ export default function ModalSessionComplete ({modalVisible, setModalVisible, pe
             <PetDisplayMain pet={pet} isPetSelected={true} />
           </View>
 
-          <View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingTop: 14, paddingHorizontal: 22, alignItems: "center", width: 140}}>
-						<View style={{flexDirection: "row", justifyContent: "space-between", width: "100%", paddingLeft: 10}}>
-							<Text style={{fontWeight: 700, fontSize: 16, color: "white"}}>XP</Text>
-							<Text style={{fontSize: 16, color: "white"}}>+{timeFocused / 60}</Text>
-						</View>
-						<View style={{marginTop: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%"}}>
-							<Image style={{height: 40, width: 40}} source={require("../../assets/images/coin.png")} />
-							<Text style={{fontSize: 16, color: "white"}}>+{timeFocused / 60 * 3}</Text>
-						</View>
+          <View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingHorizontal: 22, alignItems: "center", width: 140}}>
+						<StatsGained imageSource={require("../../assets/images/collectionIconNav.png")} isCoins={false} timeFocused={timeFocused}/>
+            <StatsGained imageSource={require("../../assets/images/coin.png")} isCoins={true} timeFocused={timeFocused}/>
 					</View>
 
           <Pressable onPress={onClose} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
@@ -58,6 +52,15 @@ export default function ModalSessionComplete ({modalVisible, setModalVisible, pe
       </View>
     </Modal>
     
+  )
+}
+
+export function StatsGained ({ imageSource, isCoins, timeFocused }) {
+  return (
+    <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%"}}>
+      <Image style={{height: 40, width: 40}} source={imageSource} />
+      <Text style={{fontSize: 16, color: "white", fontWeight: 700}}> {isCoins ? `+${timeFocused / 60 * 3}` : `x${timeFocused / 60}`}</Text>
+    </View>
   )
 }
 

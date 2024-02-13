@@ -9,6 +9,7 @@ import ModalPets from '../components/ModalPets'
 import 'react-native-get-random-values'
 import {useGetPetData, sortPets} from "../hooks/useGetPetData"
 import { playSoundError, playSoundStart } from '../hooks/useSound'
+import { StatsGained } from '../components/ModalSessionComplete'
 
 
 export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}) {
@@ -76,15 +77,9 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 						</View>
 					</Pressable>
 
-					<View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingTop: 14, paddingHorizontal: 22, alignItems: "center", width: 140}}>
-						<View style={{flexDirection: "row", justifyContent: "space-between", width: "100%", paddingLeft: 10}}>
-							<Text style={{fontWeight: 700, fontSize: 16, color: "white"}}>XP</Text>
-							<Text style={{fontSize: 16, color: "white"}}>+{timer / 60}</Text>
-						</View>
-						<View style={{marginTop: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%"}}>
-							<Image style={{height: 40, width: 40}} source={require("../../assets/images/coin.png")} />
-							<Text style={{fontSize: 16, color: "white"}}>+{timer / 60 * 3}</Text>
-						</View>
+					<View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingHorizontal: 22, alignItems: "center", width: 140}}>
+						<StatsGained imageSource={require("../../assets/images/collectionIconNav.png")} isCoins={false} timeFocused={timer}/>
+            <StatsGained imageSource={require("../../assets/images/coin.png")} isCoins={true} timeFocused={timer}/>
 					</View>
 					<Pressable onPress={() => {
 							if (!selectedPet) {

@@ -1,14 +1,12 @@
-import { Text, View, Pressable, Modal, StyleSheet, ActivityIndicator } from 'react-native'
+import { Text, View, Pressable, Modal, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import { doc, getDoc, increment, updateDoc } from "firebase/firestore"
-import { FIREBASE_DB } from "../../firebaseConfig"
-import { getAuth } from "firebase/auth"
 import { useEffect, useState } from 'react'
 import { PetDisplayMain } from './PetDisplay'
 import { AntDesign } from '@expo/vector-icons'
 import { GameCurrencyUI } from './Header'
 import ModalPets from './ModalPets'
 import { useGetPetData } from '../hooks/useGetPetData'
+
 
 export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp, pet, cost, petUpgraded }) {
   const [selectedPet1, setSelectedPet1] = useState(null)
@@ -17,6 +15,7 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
   const [modalPetsVisible2, setModalPetsVisible2] = useState(false)
   const [thisPetOwned, setThisPetOwned] = useState(null)
   const [thisPetOwnedFiltered, setThisPetOwnedFiltered] = useState(null)
+  
   
 
   useEffect(() => {
@@ -89,7 +88,7 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
             </View>
           </Pressable>
           
-          
+
 
         </View>
       </View>

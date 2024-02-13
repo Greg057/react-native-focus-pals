@@ -7,7 +7,6 @@ import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
 import PETS from '../../petsData'
 
-
 const PETS_DATA = {
   Uncommon: ["cosmic1"],
   Rare: ["cosmic2"],
@@ -15,10 +14,9 @@ const PETS_DATA = {
   Legendary: ["cosmic4"]
 }
 
-
-export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rarity, cost, imageSource, setIsNewPet, setNumberCardsReceived}) {
+export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rarity, cost, imageSource, setIsNewPet, setNumberCardsReceived, setErrorModalVisible}) {
   const [isLoading, setIsLoading] = useState(false)
-
+  
   async function buyEgg () {
     setIsLoading(true)
     const docRef = doc(FIREBASE_DB, "users", getAuth().currentUser.uid)
@@ -26,10 +24,10 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
     const userData = docSnapshot.data()
     const coins = userData.coins
     if (coins >= cost) {
-      const petToAdd = getRandomPet(PETS_DATA[rarity])
+      const petToAdd = PETS_DATA[rarity][Math.floor(Math.random() * PETS_DATA[rarity].length)]
       const petsOwned = userData.petsOwned
     
-      const cardsReceived = getRandomNumberCards()
+      const cardsReceived = Math.floor(Math.random() * 100) + 20
       let XP = cardsReceived
       if (Object.keys(petsOwned).includes(petToAdd)) {
         XP += userData.petsOwned[petToAdd].xp
@@ -49,7 +47,6 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
 
       const level = userData.petsOwned[petToAdd]?.level || 1
       const stars = userData.petsOwned[petToAdd]?.stars || 1
-
       getPet({
         name: petToAdd,
         xp: XP,
@@ -59,22 +56,12 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
         frameImage: PETS[petToAdd].frame,
       })
       setNumberCardsReceived(cardsReceived)
-      
-      
-      
+           
     } else {
-      console.log("not enough coins")
+      setErrorModalVisible(true)
     }
     setIsLoading(false)
     setModalVisible(false)
-  }
-
-  function getRandomPet (arr) {
-    return arr[Math.floor(Math.random() * arr.length)]
-  }
-
-  function getRandomNumberCards () {
-    return Math.floor(Math.random() * 100) + 30
   }
 
   return (

@@ -2,6 +2,7 @@ import { View, Text, Pressable, StyleSheet, Modal } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { PetDisplayMain } from './PetDisplay'
 import { playSoundSelect } from '../hooks/useSound'
+import { StatsGained } from './ModalSessionComplete'
 
 export default function ModalPetReceived ({modalVisible, setModalVisible, petReceived, isNewPet, numberCardsReceived}) {
   return (
@@ -21,7 +22,10 @@ export default function ModalPetReceived ({modalVisible, setModalVisible, petRec
           {isNewPet && <Text style={{color: "white", fontSize: 28, fontWeight: 700}}>NEW</Text>}
 
           <PetDisplayMain pet={petReceived} />
-          <Text style={{color: "white", fontSize: 28, fontWeight: 700}}>x{numberCardsReceived}</Text>
+
+          <View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingHorizontal: 22, alignItems: "center", width: 140}}>
+            <StatsGained imageSource={require("../../assets/images/collectionIconNav.png")} isCoins={false} timeFocused={numberCardsReceived * 60}/>
+          </View>
 
           <Pressable onPress={() => {
                 setModalVisible(false)

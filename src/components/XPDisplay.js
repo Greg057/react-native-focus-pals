@@ -4,6 +4,10 @@ import 'react-native-get-random-values'
 import ModalUpgrade from "./ModalUpgrade"
 import { playSoundSelect, playSoundLevelUp, playSoundStarUp } from '../hooks/useSound'
 import ModalPetUpgraded from './ModalPetUpgraded'
+import ModalError from './ModalError'
+import { doc, getDoc } from "firebase/firestore"
+import { FIREBASE_DB } from "../../firebaseConfig"
+import { getAuth } from "firebase/auth"
 
 export default function XPDisplay ({pet, disableUp}) {
 	const [isLevelUp, setIsLevelUp] = useState(false)
@@ -12,6 +16,9 @@ export default function XPDisplay ({pet, disableUp}) {
 	const [modalPetUpgradedVisible, setModalPetUpgradedVisible] = useState(false)
 	const [selectedPet1, setSelectedPet1] = useState(null)
   const [selectedPet2, setSelectedPet2] = useState(null)
+	const [errorModalVisible, setErrorModalVisible] = useState(false)
+
+	const cost = 50
 
 	useEffect(() => {
 		if (pet.xp >= 100 && pet.stars === 1 && pet.level === 10
@@ -25,11 +32,18 @@ export default function XPDisplay ({pet, disableUp}) {
 		}
 	}, [])
 
-	function petUpgraded (selectedPet1, selectedPet2) {
-		setSelectedPet1(selectedPet1)
-		setSelectedPet2(selectedPet2)
-    setModalPetUpgradedVisible(true)
-		isStarUp ? playSoundStarUp() : playSoundLevelUp()
+	async function petUpgraded (selectedPet1, selectedPet2) {
+		const docRef = await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))
+		const coins = docRef.data().coins
+		if ( coins < cost) {
+			setErrorModalVisible(true)
+		} else {
+			setSelectedPet1(selectedPet1)
+			setSelectedPet2(selectedPet2)
+			setModalPetUpgradedVisible(true)
+			isStarUp ? playSoundStarUp() : playSoundLevelUp()
+		}
+		
   }
 		
 	const widthView = pet.xp >= 100 ? 100 : pet.xp
@@ -46,8 +60,10 @@ export default function XPDisplay ({pet, disableUp}) {
 				</View>
 			</Pressable>
 				
-			<ModalUpgrade modalVisible={modalUpgradeVisible} setModalVisible={setModalUpgradeVisible} petUpgraded={petUpgraded} isStarUp={isStarUp} pet={pet} cost={50} setSelectedPet1={setSelectedPet1} setSelectedPet2={setSelectedPet2} />
-			<ModalPetUpgraded modalVisible={modalPetUpgradedVisible} pet={pet} isStarUp={isStarUp} cost={50} selectedPet1={selectedPet1} selectedPet2={selectedPet2} />
+			<ModalUpgrade modalVisible={modalUpgradeVisible} setModalVisible={setModalUpgradeVisible} petUpgraded={petUpgraded} isStarUp={isStarUp} pet={pet} cost={cost} setSelectedPet1={setSelectedPet1} setSelectedPet2={setSelectedPet2} />
+			<ModalPetUpgraded modalVisible={modalPetUpgradedVisible} pet={pet} isStarUp={isStarUp} cost={cost} selectedPet1={selectedPet1} selectedPet2={selectedPet2} />
+			<ModalError modalVisible={errorModalVisible} setModalVisible={setErrorModalVisible} />
+
 		</>
 		
 	)
