@@ -20,16 +20,16 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
   
 
   useEffect(() => {
-    const unsubscribe = modalVisible && useGetPetData(setThisPetOwned, null, true, pet.name, pet.stars)
+    const unsubscribe = modalVisible && useGetPetData(setThisPetOwned, null, true, pet.stars)
     return () => modalVisible && unsubscribe()
   }, [modalVisible])
 
   useEffect(() => {
     if (modalVisible) {
-      const petsIds = [pet.id]
-      petsIds[1] = selectedPet1 && selectedPet1.id
-      petsIds[2] = selectedPet2 && selectedPet2.id
-      setThisPetOwnedFiltered(thisPetOwned.filter(petEle => !petsIds.includes(petEle.id)))
+      const petsNames = [pet.name]
+      petsNames[1] = selectedPet1 && selectedPet1.name
+      petsNames[2] = selectedPet2 && selectedPet2.name
+      setThisPetOwnedFiltered(thisPetOwned.filter(petEle => !petsNames.includes(petEle.name)))
     }
   }, [thisPetOwned, selectedPet1, selectedPet2])
  

@@ -1,6 +1,5 @@
 import { FlatList, Text, View, ImageBackground, Pressable  } from "react-native"
 import 'react-native-get-random-values'
-import { v4 as uuidv4 } from 'uuid'
 import { Image } from 'expo-image'
 import XPDisplay from "./XPDisplay"
 
@@ -8,7 +7,7 @@ export function PetDisplay({petsOwned, selectPet}) {
 	
 	return (
     <FlatList showsVerticalScrollIndicator={false} numColumns={3}
-				data={petsOwned} renderItem={({item}) => <PetDisplayMain pet={item} selectPet={selectPet}/>} keyExtractor={() => uuidv4()}/>
+				data={petsOwned} renderItem={({item}) => <PetDisplayMain pet={item} selectPet={selectPet}/>} keyExtractor={(item) => item.name}/>
 	)
 }
 
@@ -35,7 +34,7 @@ function StarsDisplay ({stars}) {
 	let starsDisplay = []
 	for (let i = 0; i < stars; i++) {
 		const leftPosition = i * 10
-		starsDisplay.push(<Image key={uuidv4()} style={{width: 18, height: 18, position: "absolute", left: leftPosition, top: -5}} source={require("../../assets/images/star.png")} />)
+		starsDisplay.push(<Image key={i} style={{width: 18, height: 18, position: "absolute", left: leftPosition, top: -5}} source={require("../../assets/images/star.png")} />)
 	}
   return (
 		<View>

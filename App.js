@@ -41,18 +41,15 @@ export default function App() {
           let dataToReturn = []
           const petPromises = Object.keys(pets).map(async (pet) => {
             const petRef = await getDoc(doc(FIREBASE_DB, "pets", pet))
-            for (let i = 0; i < pets[pet].timesOwned; i++) {
-              const data = {
-                ...petRef.data(),
-                id: i,
-                xp: pets[pet].xp[i],
-                level: pets[pet].level[i],
-                stars: pets[pet].stars[i],
-                petImage: PETS[pet].image,
-                frameImage: PETS[pet].frame
-              }
-              dataToReturn.push(data)
+            const data = {
+              ...petRef.data(),
+              xp: pets[pet].xp,
+              level: pets[pet].level,
+              stars: pets[pet].stars,
+              petImage: PETS[pet].image,
+              frameImage: PETS[pet].frame
             }
+            dataToReturn.push(data)
           })
 
           await Promise.all(petPromises)

@@ -22,14 +22,14 @@ export default function CountdownTimer ({timer, setIsTimerHidden, selectedPet, s
     const docRef = doc(FIREBASE_DB, "users", getAuth().currentUser.uid)
     const userDoc = await getDoc(docRef)
 		let XP = userDoc.data().petsOwned[selectedPet.name].xp
-    XP[selectedPet.id] += value / 60
+     += value / 60
     await updateDoc((docRef), {
       coins: increment(value / 60 * 3),
       [`petsOwned.${selectedPet.name}.xp`]: XP
     })
     playSoundEndSessions()
     setModalVisible(true)
-    setSelectedPet({...selectedPet, xp: XP[selectedPet.id]})
+    setSelectedPet({...selectedPet, xp: XP})
   }
 
   return (

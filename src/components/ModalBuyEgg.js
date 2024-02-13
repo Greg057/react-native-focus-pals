@@ -16,39 +16,50 @@ const PETS_DATA = {
 }
 
 
-export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rarity, cost, imageSource, setIsNewPet}) {
+export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rarity, cost, imageSource, setIsNewPet, setNumberCardsReceived}) {
   const [isLoading, setIsLoading] = useState(false)
 
   async function buyEgg () {
     setIsLoading(true)
-    const userData = (await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))).data()
+    const docRef = doc(FIREBASE_DB, "users", getAuth().currentUser.uid)
+    const docSnapshot = await getDoc(docRef)
+    const userData = docSnapshot.data()
     const coins = userData.coins
     if (coins >= cost) {
       const petToAdd = getRandomPet(PETS_DATA[rarity])
       const petsOwned = userData.petsOwned
+    
+      const cardsReceived = getRandomNumberCards()
+      let XP = cardsReceived
       if (Object.keys(petsOwned).includes(petToAdd)) {
-        await updateDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), {
+        XP += userData.petsOwned[petToAdd].xp
+        await updateDoc(docRef, {
           coins: increment(-cost),
-          [`petsOwned.${petToAdd}.timesOwned`]: increment(1),
-          [`petsOwned.${petToAdd}.level`]: [...petsOwned[petToAdd].level, 1],
-          [`petsOwned.${petToAdd}.stars`]: [...petsOwned[petToAdd].stars, 1],
-          [`petsOwned.${petToAdd}.xp`]: [...petsOwned[petToAdd].xp, 0]
+          [`petsOwned.${petToAdd}.xp`]: XP
         })
+        setIsNewPet(false)
+        
       } else {
-        await updateDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), {
+        await updateDoc(docRef, {
           coins: increment(-cost),
-          petsOwned: {...petsOwned,  [`${petToAdd}`]: {level:[1], stars: [1], timesOwned: 1, xp: [0]}},
+          petsOwned: {...petsOwned,  [`${petToAdd}`]: {level: 1, stars: 1, xp: XP}},
         })
         setIsNewPet(true)
       }
+
+      const level = userData.petsOwned[petToAdd]?.level || 1
+      const stars = userData.petsOwned[petToAdd]?.stars || 1
+
       getPet({
         name: petToAdd,
-        xp: 0,
-        level: 1,
-        stars: 1,
+        xp: XP,
+        level: level,
+        stars: stars,
         petImage: PETS[petToAdd].image,
         frameImage: PETS[petToAdd].frame,
       })
+      setNumberCardsReceived(cardsReceived)
+      
       
       
     } else {
@@ -60,6 +71,10 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
 
   function getRandomPet (arr) {
     return arr[Math.floor(Math.random() * arr.length)]
+  }
+
+  function getRandomNumberCards () {
+    return Math.floor(Math.random() * 100) + 30
   }
 
   return (

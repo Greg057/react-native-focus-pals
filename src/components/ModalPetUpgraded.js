@@ -2,7 +2,7 @@ import { Text, View, Pressable, Modal, StyleSheet, ActivityIndicator } from 'rea
 import { Ionicons } from '@expo/vector-icons'
 import { PetDisplayMain } from './PetDisplay'
 import { playSoundSelect } from '../hooks/useSound'
-import { doc, getDoc, increment, updateDoc } from "firebase/firestore"
+import { deleteField, doc, getDoc, increment, updateDoc } from "firebase/firestore"
 import { FIREBASE_DB } from "../../firebaseConfig"
 import { getAuth } from "firebase/auth"
 import { useState } from 'react'
@@ -19,32 +19,25 @@ export default function ModalPetUpgraded ({modalVisible, pet, isStarUp, cost, se
       return
     }
 		let level = docRef.data().petsOwned[pet.name].level
-		level[pet.id] = isStarUp ? 1 : level[pet.id] + 1
+		level = isStarUp ? 1 : level + 1
 		let XP = docRef.data().petsOwned[pet.name].xp
-		XP[pet.id] -= 100
+		XP -= 100
 		let stars = docRef.data().petsOwned[pet.name].stars
-		stars[pet.id] += isStarUp && 1
-    let timesOwned = docRef.data().petsOwned[pet.name].timesOwned
-   
-    if (isStarUp) {
-      selectedPet2.id = selectedPet1.id < selectedPet2.id && selectedPet2.id - 1
-      level.splice(selectedPet1.id, 1)
-      level.splice(selectedPet2.id, 1)
-      XP.splice(selectedPet1.id, 1)
-      XP.splice(selectedPet2.id, 1)
-      stars.splice(selectedPet1.id, 1)
-      stars.splice(selectedPet2.id, 1)
-      timesOwned -= 2
-    }
+		stars += isStarUp && 1
 
-		await updateDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), {
+    const updateObject = {
       coins: increment(-cost),
-			[`petsOwned.${pet.name}.level`]: level,
-			[`petsOwned.${pet.name}.xp`]: XP,
-			[`petsOwned.${pet.name}.stars`]: stars,
-      [`petsOwned.${pet.name}.timesOwned`]: timesOwned,
-
-		})
+      [`petsOwned.${pet.name}.level`]: level,
+      [`petsOwned.${pet.name}.xp`]: XP,
+      [`petsOwned.${pet.name}.stars`]: stars,
+    };
+    
+    if (isStarUp) {
+      updateObject[`petsOwned.${selectedPet1.name}`] = deleteField();
+      updateObject[`petsOwned.${selectedPet2.name}`] = deleteField();
+    }
+    
+    await updateDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), updateObject)
   }
   
 

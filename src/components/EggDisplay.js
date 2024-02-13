@@ -10,6 +10,7 @@ export default function EggDisplay({rarity, imageSource, cost}) {
   const [modalPetReceivedVisible, setModalPetReceivedVisible] = useState(false)
   const [petReceived, setPetReceived] = useState(null)
   const [isNewPet, setIsNewPet] = useState(false)
+  const [numberCardsReceived , setNumberCardsReceived] = useState(0)
 
   function getPet (pet) {
     setPetReceived(pet)
@@ -29,8 +30,8 @@ export default function EggDisplay({rarity, imageSource, cost}) {
           <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={50} backgroundColor={"#02748D"} width={80} />
       </Pressable>
 
-      <ModalBuyEgg modalVisible={modalBuyVisible} setModalVisible={setModalBuyVisible} getPet={getPet} rarity={rarity} cost={cost} imageSource={imageSource} setIsNewPet={setIsNewPet} />
-      <ModalPetReceived modalVisible={modalPetReceivedVisible} setModalVisible={setModalPetReceivedVisible} petReceived={petReceived} isNewPet={isNewPet} />
+      <ModalBuyEgg modalVisible={modalBuyVisible} setModalVisible={setModalBuyVisible} getPet={getPet} rarity={rarity} cost={cost} imageSource={imageSource} setIsNewPet={setIsNewPet} setNumberCardsReceived={setNumberCardsReceived} />
+      <ModalPetReceived modalVisible={modalPetReceivedVisible} setModalVisible={setModalPetReceivedVisible} petReceived={petReceived} isNewPet={isNewPet} numberCardsReceived={numberCardsReceived} />
 
     </View>
   )

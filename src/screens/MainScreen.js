@@ -19,18 +19,18 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 	const [selectedPet, setSelectedPet] = useState(null)
 	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
 
-	const appState = useRef(AppState.currentState);
+	const appState = useRef(AppState.currentState)
 
 	useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
       appState.current = nextAppState;
       console.log('AppState', appState.current);
-    });
+    })
 
     return () => {
-      subscription.remove();
-    };
-  }, []);
+      subscription.remove()
+    }
+  }, [])
 		
   useEffect(() => {
     const unsubscribe = useGetPetData(setPetsOwned)

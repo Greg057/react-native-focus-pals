@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { PetDisplayMain } from './PetDisplay'
 import { playSoundSelect } from '../hooks/useSound'
 
-export default function ModalPetReceived ({modalVisible, setModalVisible, petReceived, isNewPet}) {
+export default function ModalPetReceived ({modalVisible, setModalVisible, petReceived, isNewPet, numberCardsReceived}) {
   return (
     <Modal animationType="fade" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
       <View style={styles.centeredView}>
@@ -21,6 +21,7 @@ export default function ModalPetReceived ({modalVisible, setModalVisible, petRec
           {isNewPet && <Text style={{color: "white", fontSize: 28, fontWeight: 700}}>NEW</Text>}
 
           <PetDisplayMain pet={petReceived} />
+          <Text style={{color: "white", fontSize: 28, fontWeight: 700}}>x{numberCardsReceived}</Text>
 
           <Pressable onPress={() => {
                 setModalVisible(false)
