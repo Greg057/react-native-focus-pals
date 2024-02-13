@@ -1,10 +1,10 @@
 import { Text, View, Pressable  } from "react-native"
 import { useEffect, useState } from "react"
 import 'react-native-get-random-values'
-import ModalUpgrade from "./ModalUpgrade"
+import ModalUpgrade from "./modals/ModalUpgrade"
 import { playSoundSelect, playSoundLevelUp, playSoundStarUp } from '../logic/useSound'
-import ModalPetUpgraded from './ModalPetUpgraded'
-import ModalError from './ModalError'
+import ModalPetUpgraded from './modals/ModalPetUpgraded'
+import ModalError from './modals/ModalError'
 import { doc, getDoc } from "firebase/firestore"
 import { FIREBASE_DB } from "../../firebaseConfig"
 import { getAuth } from "firebase/auth"

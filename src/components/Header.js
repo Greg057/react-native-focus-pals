@@ -3,9 +3,7 @@ import { Text, Image, View } from "react-native"
 import { getAuth, onAuthStateChanged } from "@firebase/auth"
 import { FIREBASE_DB } from "../../firebaseConfig"
 import { useEffect, useState } from "react"
-
-const gemUI = require("../../assets/images/gem.png")
-const coinUI = require("../../assets/images/coin.png")
+import ASSETS from "../constants/assetsData"
 
 export function Header ({coinsOnLoad, gemsOnLoad}) {
 	const [coins, setCoins] = useState(coinsOnLoad)
@@ -20,8 +18,8 @@ export function Header ({coinsOnLoad, gemsOnLoad}) {
 	
 	return (
 		<View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 16}}>
-			<GameCurrencyUI imageSource={gemUI} amount={gems} size={50}/>
-			<GameCurrencyUI imageSource={coinUI} amount={coins} size={55}/>
+			<GameCurrencyUI imageSource={ASSETS.icons.gem} amount={gems} size={50}/>
+			<GameCurrencyUI imageSource={ASSETS.icons.coin} amount={coins} size={55}/>
 		</View>
 	)
 }

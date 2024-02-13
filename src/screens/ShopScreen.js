@@ -1,22 +1,11 @@
 import { Text, View, ScrollView, Pressable, Image } from "react-native"
 import {Header} from "../components/Header"
 import EggDisplay from "../components/EggDisplay"
-import ModalError from "../components/ModalError"
+import ModalError from "../components/modals/ModalError"
 import { useState } from "react"
 import { GameCurrencyUI } from "../components/Header"
-
-import { doc, updateDoc, increment, getDoc } from 'firebase/firestore'
-import { FIREBASE_DB } from '../../firebaseConfig'
-import { getAuth } from 'firebase/auth'
-
-
-const blue = require("../../assets/eggs/blue.jpg")
-const green = require("../../assets/eggs/green.jpg")
-const orange = require("../../assets/eggs/orange.jpg")
-const purple = require("../../assets/eggs/purple.jpg")
-
-const gemUI = require("../../assets/images/gem.png")
-const coinUI = require("../../assets/images/coin.png")
+import { buyGold } from "../logic/buyInShop"
+import ASSETS from "../constants/assetsData"
 
 
 export default function ShopScreen () {
@@ -31,14 +20,8 @@ export default function ShopScreen () {
 				</View>
 
 				<ShopHeader text="Eggs" />
-				<View style={{flexDirection: "row", gap: 12}}>
-					<EggDisplay imageSource={green} rarity="Uncommon" cost={400}/>
-					<EggDisplay imageSource={blue} rarity="Rare" cost={1000}/>
-				</View>
-				<View style={{flexDirection: "row", gap: 12}}>
-					<EggDisplay imageSource={purple} rarity="Epic" cost={2500}/>
-					<EggDisplay imageSource={orange} rarity="Legendary" cost={8000}/>
-				</View>
+				<EggView img1={ASSETS.eggs.green} img2={ASSETS.eggs.blue} rarity1="Uncommon" rarity2="Rare" cost1={400} cost2={1000}/>
+				<EggView img1={ASSETS.eggs.purple} img2={ASSETS.eggs.orange} rarity1="Epic" rarity2="Legendary" cost1={2500} cost2={8000}/>
 
 				<ShopHeader text="Gold" />
 				<View style={{flexDirection: "row", gap: 6}}>
@@ -46,7 +29,6 @@ export default function ShopScreen () {
 					<GoldDisplay gold={10000} gems={250} />
 					<GoldDisplay gold={100000} gems={2000} />
 				</View>
-
 
 			</ScrollView>
 		</View>
@@ -61,29 +43,24 @@ function ShopHeader ({text}) {
 	)
 }
 
+function EggView ({img1, img2, rarity1, rarity2, cost1, cost2}) {
+	return (
+		<View style={{flexDirection: "row", gap: 12}}>
+			<EggDisplay imageSource={img1} rarity={rarity1} cost={cost1}/>
+			<EggDisplay imageSource={img2} rarity={rarity2} cost={cost2}/>
+		</View>
+	)
+}
+
 function GoldDisplay ({ gold, gems}) {
 	const [errorModalVisible, setErrorModalVisible] = useState(false)
 
-	async function buyGold () {
-		const docRef = doc(FIREBASE_DB, "users", getAuth().currentUser.uid)
-		const docSnapshot = await getDoc(docRef)
-		const gemsUser = docSnapshot.data().gems
-		if ( gemsUser < gems) {
-			setErrorModalVisible(true)
-		} else {
-			await updateDoc(docRef, {
-				coins: increment(gold),
-				gems: increment(-gems)
-			})
-		}
-	}
-
 	return (
 		<View style={{flex: 1, borderRadius: 12, backgroundColor: "#232b2b", marginBottom: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
-			<Pressable onPress={buyGold} style={{width: "100%", alignItems: "center", gap: 12, paddingBottom: 12}}>
-				<Image source={coinUI} style={{width: 70, height: 70}} />
+			<Pressable onPress={() => buyGold(gold, gems, setErrorModalVisible)} style={{width: "100%", alignItems: "center", gap: 12, paddingBottom: 12}}>
+				<Image source={ASSETS.icons.coin} style={{width: 70, height: 70}} />
 				<Text style={{color: "white", fontWeight: 700}}>{gold} Gold</Text>
-				<GameCurrencyUI imageSource={gemUI} amount={gems} size={50} backgroundColor="#02748D" width={80} />
+				<GameCurrencyUI imageSource={ASSETS.icons.gem} amount={gems} size={50} backgroundColor="#02748D" width={80} />
       </Pressable>
 
       <ModalError modalVisible={errorModalVisible} setModalVisible={setErrorModalVisible} isGems={true} />

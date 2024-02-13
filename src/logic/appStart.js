@@ -5,6 +5,7 @@ import { getAuth } from "@firebase/auth"
 import PETS from "../constants/petsData"
 import { Asset } from 'expo-asset'
 import fetchPetData from "./fetchPetData"
+import ASSETS from "../constants/assetsData"
 
 export async function fetchData (user, setCoins, setGems, setPetsownedOnLoad) {
   
@@ -45,26 +46,13 @@ function cacheImages(images) {
 
 export async function loadResourcesAndDataAsync() {
   try {
-    const promises = Object.keys(PETS).map(pet => PETS[pet].image)
-    const res = await Promise.all(promises)
-    const imageAssets = cacheImages([...res,
-      require("../../assets/frames/Common.png"),
-      require("../../assets/frames/Uncommon.png"),
-      require("../../assets/frames/Rare.png"),
-      require("../../assets/frames/Epic.png"),
-      require("../../assets/frames/Legendary.png"),
-      require("../../assets/eggs/blue.jpg"),
-      require("../../assets/eggs/green.jpg"),
-      require("../../assets/eggs/orange.jpg"),
-      require("../../assets/eggs/purple.jpg"),
-      require("../../assets/images/coin.png"),
-      require("../../assets/images/collectionIconNav.png"),
-      require("../../assets/images/gem.png"),
-      require("../../assets/images/homeIconNav.png"),
-      require("../../assets/images/shopIconNav.png"),
-    ])
+    const pets = Object.keys(PETS).map(pet => PETS[pet].image)
+    let assets = []
+    Object.keys(ASSETS).map(category => Object.keys(ASSETS[category]).map(item => assets.push(ASSETS[category][item])))
+   
+    const imageAssets = cacheImages([...pets, ...assets])
     await Promise.all([...imageAssets])
   } catch (error) {
-    console.error("Error fetching user data:", error)
+    console.error("Error loading resources:", error)
   }
 }

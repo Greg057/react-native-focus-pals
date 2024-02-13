@@ -1,10 +1,11 @@
 import { View, Text, Image, Pressable } from 'react-native'
 import { GameCurrencyUI } from './Header'
-import ModalBuyEgg from './ModalBuyEgg'
+import ModalBuyEgg from './modals/ModalBuyEgg'
 import { useState } from 'react'
-import ModalPetReceived from './ModalPetReceived'
+import ModalPetReceived from './modals/ModalPetReceived'
 import { playSoundPetReceived, playSoundSelect } from '../logic/useSound'
-import ModalError from './ModalError'
+import ModalError from './modals/ModalError'
+import ASSETS from '../constants/assetsData'
 
 export default function EggDisplay({rarity, imageSource, cost}) {
   const [modalBuyVisible, setModalBuyVisible] = useState(false)
@@ -30,7 +31,7 @@ export default function EggDisplay({rarity, imageSource, cost}) {
         style={{width: "100%", alignItems: "center", gap: 12, paddingBottom: 12}}>
           <Image source={imageSource} style={{width: "90%", height: 160, borderRadius: 12, marginTop: 12}} />
           <Text style={{color: "white", fontWeight: 700}}>{rarity} Egg</Text>
-          <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={50} backgroundColor="#02748D" width={80} />
+          <GameCurrencyUI imageSource={ASSETS.icons.coin} amount={cost} size={50} backgroundColor="#02748D" width={80} />
       </Pressable>
 
       <ModalBuyEgg modalVisible={modalBuyVisible} setModalVisible={setModalBuyVisible} getPet={getPet} rarity={rarity} cost={cost} imageSource={imageSource} setIsNewPet={setIsNewPet} setNumberCardsReceived={setNumberCardsReceived} setErrorModalVisible={setErrorModalVisible} setGemsReceived={setGemsReceived} />

@@ -1,8 +1,9 @@
 import { View, Text, Pressable, StyleSheet, Modal, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import { PetDisplayMain } from './PetDisplay'
+import { PetDisplayMain } from '../PetDisplay'
 import { AntDesign } from '@expo/vector-icons'
-import { playSoundSelect } from '../logic/useSound'
+import { playSoundSelect } from '../../logic/useSound'
+import ASSETS from '../../constants/assetsData'
 
 export default function ModalSessionComplete ({modalVisible, setModalVisible, pet, timeFocused, setIsTimerHidden, setIsTimerOn}) {
 
@@ -38,8 +39,8 @@ export default function ModalSessionComplete ({modalVisible, setModalVisible, pe
           </View>
 
           <View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingHorizontal: 22, alignItems: "center", width: 140}}>
-						<StatsGained imageSource={require("../../assets/images/collectionIconNav.png")} isCoins={false} timeFocused={timeFocused}/>
-            <StatsGained imageSource={require("../../assets/images/coin.png")} isCoins={true} timeFocused={timeFocused}/>
+						<StatsGained imageSource={ASSETS.icons.collectionIconNav} isCoins={false} timeFocused={timeFocused}/>
+            <StatsGained imageSource={ASSETS.icons.coin} isCoins={true} timeFocused={timeFocused}/>
 					</View>
 
           <Pressable onPress={onClose} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>

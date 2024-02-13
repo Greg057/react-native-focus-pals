@@ -3,7 +3,7 @@ import { Pressable, Text, View } from 'react-native'
 import { doc, getDoc, increment, updateDoc } from 'firebase/firestore'
 import { FIREBASE_DB } from '../../firebaseConfig'
 import { getAuth } from 'firebase/auth'
-import ModalSessionComplete from './ModalSessionComplete'
+import ModalSessionComplete from './modals/ModalSessionComplete'
 import { useState } from 'react'
 import { playSoundEndSessions } from '../logic/useSound'
 

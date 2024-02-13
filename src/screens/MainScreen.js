@@ -5,11 +5,12 @@ import SliderTimer from '../components/SliderTimer'
 import CountdownTimer from '../components/CountdownTimer'
 import {Header} from "../components/Header"
 import {PetDisplayMain} from "../components/PetDisplay"
-import ModalPets from '../components/ModalPets'
+import ModalPets from '../components/modals/ModalPets'
 import 'react-native-get-random-values'
-import {getPetData, sortPets} from "../logic/getPetData"
+import {getPetData, sortPets} from "../logic/setPetDataSorted"
 import { playSoundError, playSoundStart } from '../logic/useSound'
-import { StatsGained } from '../components/ModalSessionComplete'
+import { StatsGained } from '../components/modals/ModalSessionComplete'
+import ASSETS from '../constants/assetsData'
 
 
 export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}) {
@@ -78,8 +79,8 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 					</Pressable>
 
 					<View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingHorizontal: 22, alignItems: "center", width: 140}}>
-						<StatsGained imageSource={require("../../assets/images/collectionIconNav.png")} isCoins={false} timeFocused={timer}/>
-            <StatsGained imageSource={require("../../assets/images/coin.png")} isCoins={true} timeFocused={timer}/>
+						<StatsGained imageSource={ASSETS.icons.collectionIconNav} isCoins={false} timeFocused={timer}/>
+            <StatsGained imageSource={ASSETS.icons.coin} isCoins={true} timeFocused={timer}/>
 					</View>
 					<Pressable onPress={() => {
 							if (!selectedPet) {

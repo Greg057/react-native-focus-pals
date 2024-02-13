@@ -1,9 +1,9 @@
 import { Text, View, Pressable, Modal, StyleSheet, ActivityIndicator } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import { PetDisplayMain } from './PetDisplay'
-import { playSoundSelect } from '../logic/useSound'
+import { PetDisplayMain } from '../PetDisplay'
+import { playSoundSelect } from '../../logic/useSound'
 import { deleteField, doc, getDoc, increment, updateDoc } from "firebase/firestore"
-import { FIREBASE_DB } from "../../firebaseConfig"
+import { FIREBASE_DB } from "../../../firebaseConfig"
 import { getAuth } from "firebase/auth"
 import { useState } from 'react'
 

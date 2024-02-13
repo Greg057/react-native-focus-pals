@@ -2,6 +2,7 @@ import { FlatList, Text, View, ImageBackground, Pressable  } from "react-native"
 import 'react-native-get-random-values'
 import { Image } from 'expo-image'
 import XPDisplay from "./XPDisplay"
+import ASSETS from "../constants/assetsData"
 
 export function PetDisplay({petsOwned, selectPet}) {
 	
@@ -34,7 +35,7 @@ function StarsDisplay ({stars}) {
 	let starsDisplay = []
 	for (let i = 0; i < stars; i++) {
 		const leftPosition = i * 10
-		starsDisplay.push(<Image key={i} style={{width: 18, height: 18, position: "absolute", left: leftPosition, top: -5}} source={require("../../assets/images/star.png")} />)
+		starsDisplay.push(<Image key={i} style={{width: 18, height: 18, position: "absolute", left: leftPosition, top: -5}} source={ASSETS.icons.star} />)
 	}
   return (
 		<View>

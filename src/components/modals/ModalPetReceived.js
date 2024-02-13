@@ -1,8 +1,9 @@
 import { View, Text, Pressable, StyleSheet, Modal } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import { PetDisplayMain } from './PetDisplay'
-import { playSoundSelect } from '../logic/useSound'
+import { PetDisplayMain } from '../PetDisplay'
+import { playSoundSelect } from '../../logic/useSound'
 import { StatsGained } from './ModalSessionComplete'
+import ASSETS from '../../constants/assetsData'
 
 export default function ModalPetReceived ({modalVisible, setModalVisible, petReceived, isNewPet, numberCardsReceived, gemsReceived}) {
   return (
@@ -24,8 +25,8 @@ export default function ModalPetReceived ({modalVisible, setModalVisible, petRec
           <PetDisplayMain pet={petReceived} isPetSelected={true} />
 
           <View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingHorizontal: 22, alignItems: "center", width: 140}}>
-            <StatsGained imageSource={require("../../assets/images/collectionIconNav.png")} isCoins={false} timeFocused={numberCardsReceived * 60}/>
-            <StatsGained imageSource={require("../../assets/images/gem.png")} isCoins={false} timeFocused={gemsReceived * 60}/>
+            <StatsGained imageSource={ASSETS.icons.collectionIconNav} isCoins={false} timeFocused={numberCardsReceived * 60}/>
+            <StatsGained imageSource={ASSETS.icons.gem} isCoins={false} timeFocused={gemsReceived * 60}/>
           </View>
 
           <Pressable onPress={() => {

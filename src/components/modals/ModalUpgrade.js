@@ -1,12 +1,12 @@
 import { Text, View, Pressable, Modal, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { useEffect, useState } from 'react'
-import { PetDisplayMain } from './PetDisplay'
+import { PetDisplayMain } from '../PetDisplay'
 import { AntDesign } from '@expo/vector-icons'
-import { GameCurrencyUI } from './Header'
+import { GameCurrencyUI } from '../Header'
 import ModalPets from './ModalPets'
-import { useGetPetData } from '../logic/getPetData'
-
+import { getPetData } from '../../logic/setPetDataSorted'
+import ASSETS from '../../constants/assetsData'
 
 export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp, pet, cost, petUpgraded }) {
   const [selectedPet1, setSelectedPet1] = useState(null)
@@ -16,10 +16,8 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
   const [thisPetOwned, setThisPetOwned] = useState(null)
   const [thisPetOwnedFiltered, setThisPetOwnedFiltered] = useState(null)
   
-  
-
   useEffect(() => {
-    const unsubscribe = modalVisible && useGetPetData(setThisPetOwned, null, true, pet.stars)
+    const unsubscribe = modalVisible && getPetData(setThisPetOwned, null, true, pet.stars)
     return () => modalVisible && unsubscribe()
   }, [modalVisible])
 
@@ -83,7 +81,7 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
           
           <Pressable disabled={isStarUp && (selectedPet1 === null || selectedPet2 === null)} onPress={up} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
             <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
-              <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={50} width={80} backgroundColor = "#02748D" />
+              <GameCurrencyUI imageSource={ASSETS.icons.coin} amount={cost} size={50} width={80} backgroundColor = "#02748D" />
               <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>{isStarUp ? "EVOLVE" : "LEVEL UP"}</Text>
             </View>
           </Pressable>
