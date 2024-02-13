@@ -1,7 +1,7 @@
 import { Text, View, Pressable, Modal, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import {PetDisplay} from '../components/PetDisplay'
-import { playSoundSelect } from '../hooks/useSound'
+import { playSoundSelect } from '../logic/useSound'
 
 export default function ModalPets ({modalVisible, setModalVisible, petsOwned, selectPet, sacrifice = false}) {
   modalVisible && playSoundSelect()

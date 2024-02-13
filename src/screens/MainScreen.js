@@ -7,8 +7,8 @@ import {Header} from "../components/Header"
 import {PetDisplayMain} from "../components/PetDisplay"
 import ModalPets from '../components/ModalPets'
 import 'react-native-get-random-values'
-import {useGetPetData, sortPets} from "../hooks/useGetPetData"
-import { playSoundError, playSoundStart } from '../hooks/useSound'
+import {getPetData, sortPets} from "../logic/getPetData"
+import { playSoundError, playSoundStart } from '../logic/useSound'
 import { StatsGained } from '../components/ModalSessionComplete'
 
 
@@ -34,7 +34,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
   }, [])
 		
   useEffect(() => {
-    const unsubscribe = useGetPetData(setPetsOwned)
+    const unsubscribe = getPetData(setPetsOwned)
     return () => unsubscribe()
   }, [])
 

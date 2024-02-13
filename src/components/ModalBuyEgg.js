@@ -5,7 +5,7 @@ import { getAuth } from 'firebase/auth'
 import { GameCurrencyUI } from './Header'
 import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
-import PETS from '../../petsData'
+import PETS from '../constants/petsData'
 
 const PETS_DATA = {
   Uncommon: ["cosmic1"],

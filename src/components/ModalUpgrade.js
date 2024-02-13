@@ -5,7 +5,7 @@ import { PetDisplayMain } from './PetDisplay'
 import { AntDesign } from '@expo/vector-icons'
 import { GameCurrencyUI } from './Header'
 import ModalPets from './ModalPets'
-import { useGetPetData } from '../hooks/useGetPetData'
+import { useGetPetData } from '../logic/getPetData'
 
 
 export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp, pet, cost, petUpgraded }) {

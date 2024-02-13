@@ -2,32 +2,16 @@ import { doc, getDoc, onSnapshot } from "firebase/firestore"
 import { FIREBASE_DB } from "../../firebaseConfig"
 import { getAuth } from "firebase/auth"
 import 'react-native-get-random-values'
-import PETS from "../../petsData"
+import fetchPetData from "./fetchPetData"
 
-export function useGetPetData (setPetsOwned, setNumberPetsDiscovered = null, fromEvolve = false, petStars = null) {
+export function getPetData (setPetsOwned, setNumberPetsDiscovered = null, fromEvolve = false, petStars = null) {
   return (
     onSnapshot(
       doc(FIREBASE_DB, 'users', getAuth().currentUser.uid), (document) => {
         (async function () {
           const pets = document.data().petsOwned
           setNumberPetsDiscovered && setNumberPetsDiscovered(Object.keys(pets).length)
-          let dataToReturn = []
-
-          const petPromises = Object.keys(pets).map(async (pet) => {
-            const petRef = await getDoc(doc(FIREBASE_DB, 'pets', pet))
-            const data = {
-              ...petRef.data(),
-              xp: pets[pet].xp,
-              level: pets[pet].level,
-              stars: pets[pet].stars,
-              petImage: PETS[pet].image,
-              frameImage: PETS[pet].frame
-            }
-              
-            dataToReturn.push(data)
-            }
-          )
-          await Promise.all(petPromises)
+          const dataToReturn = fetchPetData(pets)
           fromEvolve 
             ? setPetsOwned(sortPets(dataToReturn.filter(pet => pet.stars == petStars)))
             : setPetsOwned(sortPets(dataToReturn))

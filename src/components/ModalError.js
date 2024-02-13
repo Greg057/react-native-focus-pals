@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Modal } from 'react-native'
-import { playSoundError } from '../hooks/useSound'
+import { playSoundError } from '../logic/useSound'
 import { useEffect } from 'react'
 
 export default function ModalError ({modalVisible, setModalVisible, isGems = false}) {

@@ -2,7 +2,7 @@ import { View, Text, Pressable, StyleSheet, Modal, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { PetDisplayMain } from './PetDisplay'
 import { AntDesign } from '@expo/vector-icons'
-import { playSoundSelect } from '../hooks/useSound'
+import { playSoundSelect } from '../logic/useSound'
 
 export default function ModalSessionComplete ({modalVisible, setModalVisible, pet, timeFocused, setIsTimerHidden, setIsTimerOn}) {
 

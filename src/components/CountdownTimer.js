@@ -5,7 +5,7 @@ import { FIREBASE_DB } from '../../firebaseConfig'
 import { getAuth } from 'firebase/auth'
 import ModalSessionComplete from './ModalSessionComplete'
 import { useState } from 'react'
-import { playSoundEndSessions } from '../hooks/useSound'
+import { playSoundEndSessions } from '../logic/useSound'
 
 export default function CountdownTimer ({timer, setIsTimerHidden, selectedPet, setSelectedPet, onPress, setIsTimerOn}) {
   const [modalVisible, setModalVisible] = useState(false) 

@@ -3,7 +3,7 @@ import { GameCurrencyUI } from './Header'
 import ModalBuyEgg from './ModalBuyEgg'
 import { useState } from 'react'
 import ModalPetReceived from './ModalPetReceived'
-import { playSoundPetReceived, playSoundSelect } from '../hooks/useSound'
+import { playSoundPetReceived, playSoundSelect } from '../logic/useSound'
 import ModalError from './ModalError'
 
 export default function EggDisplay({rarity, imageSource, cost}) {

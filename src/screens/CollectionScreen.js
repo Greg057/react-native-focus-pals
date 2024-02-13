@@ -4,14 +4,14 @@ import 'react-native-get-random-values'
 import {PetDisplay} from "../components/PetDisplay"
 import { useEffect, useState } from "react"
 import 'react-native-get-random-values'
-import {useGetPetData, sortPets} from "../hooks/useGetPetData"
+import {getPetData, sortPets} from "../logic/getPetData"
 
 export default function CollectionScreen ({petsOwnedOnLoad}) {
 	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
 	const [numberPetsDiscovered, setNumberPetsDiscovered] = useState(0)
 		
   useEffect(() => {
-    const unsubscribe = useGetPetData(setPetsOwned, setNumberPetsDiscovered)
+    const unsubscribe = getPetData(setPetsOwned, setNumberPetsDiscovered)
     return () => unsubscribe()
   }, [])
 		

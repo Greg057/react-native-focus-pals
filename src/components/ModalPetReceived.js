@@ -1,7 +1,7 @@
 import { View, Text, Pressable, StyleSheet, Modal } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { PetDisplayMain } from './PetDisplay'
-import { playSoundSelect } from '../hooks/useSound'
+import { playSoundSelect } from '../logic/useSound'
 import { StatsGained } from './ModalSessionComplete'
 
 export default function ModalPetReceived ({modalVisible, setModalVisible, petReceived, isNewPet, numberCardsReceived, gemsReceived}) {
