@@ -14,7 +14,7 @@ const PETS_DATA = {
   Legendary: ["cosmic4"]
 }
 
-export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rarity, cost, imageSource, setIsNewPet, setNumberCardsReceived, setErrorModalVisible}) {
+export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rarity, cost, imageSource, setIsNewPet, setNumberCardsReceived, setErrorModalVisible, setGemsReceived}) {
   const [isLoading, setIsLoading] = useState(false)
   
   async function buyEgg () {
@@ -26,6 +26,8 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
     if (coins >= cost) {
       const petToAdd = PETS_DATA[rarity][Math.floor(Math.random() * PETS_DATA[rarity].length)]
       const petsOwned = userData.petsOwned
+
+      const gemsReceived = getGems()
     
       const cardsReceived = Math.floor(Math.random() * 100) + 20
       let XP = cardsReceived
@@ -33,6 +35,7 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
         XP += userData.petsOwned[petToAdd].xp
         await updateDoc(docRef, {
           coins: increment(-cost),
+          gems: increment(gemsReceived),
           [`petsOwned.${petToAdd}.xp`]: XP
         })
         setIsNewPet(false)
@@ -40,6 +43,7 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
       } else {
         await updateDoc(docRef, {
           coins: increment(-cost),
+          gems: increment(gemsReceived),
           petsOwned: {...petsOwned,  [`${petToAdd}`]: {level: 1, stars: 1, xp: XP}},
         })
         setIsNewPet(true)
@@ -55,6 +59,7 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
         petImage: PETS[petToAdd].image,
         frameImage: PETS[petToAdd].frame,
       })
+      setGemsReceived(gemsReceived)
       setNumberCardsReceived(cardsReceived)
            
     } else {
@@ -62,6 +67,17 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
     }
     setIsLoading(false)
     setModalVisible(false)
+  }
+
+  function getGems () {
+    return rarity === "Uncommon" 
+      ? Math.random() >= 0.8 ? 2 : 1
+      : rarity === "Rare"
+        ? Math.random() >= 0.6 ? Math.floor(Math.random() * 2) + 3 : 2
+        : rarity === "Epic"
+          ? Math.random() >= 0.4 ? Math.floor(Math.random() * 4) + 6 : 4
+          : Math.random() >= 0.2 ? Math.floor(Math.random() * 16) + 12 : 8 // Legendary
+    
   }
 
   return (

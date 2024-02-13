@@ -82,7 +82,7 @@ function GoldDisplay ({ gold, gems}) {
 		<View style={{flex: 1, borderRadius: 12, backgroundColor: "#232b2b", marginBottom: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
 			<Pressable onPress={buyGold} style={{width: "100%", alignItems: "center", gap: 12, paddingBottom: 12}}>
 				<Image source={coinUI} style={{width: 70, height: 70}} />
-				<Text style={{color: "white", fontWeight: 700}}>Buy {gold} Gold</Text>
+				<Text style={{color: "white", fontWeight: 700}}>{gold} Gold</Text>
 				<GameCurrencyUI imageSource={gemUI} amount={gems} size={50} backgroundColor="#02748D" width={80} />
       </Pressable>
 

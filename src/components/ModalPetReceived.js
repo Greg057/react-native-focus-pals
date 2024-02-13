@@ -4,7 +4,7 @@ import { PetDisplayMain } from './PetDisplay'
 import { playSoundSelect } from '../hooks/useSound'
 import { StatsGained } from './ModalSessionComplete'
 
-export default function ModalPetReceived ({modalVisible, setModalVisible, petReceived, isNewPet, numberCardsReceived}) {
+export default function ModalPetReceived ({modalVisible, setModalVisible, petReceived, isNewPet, numberCardsReceived, gemsReceived}) {
   return (
     <Modal animationType="fade" transparent={true} visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
       <View style={styles.centeredView}>
@@ -21,10 +21,11 @@ export default function ModalPetReceived ({modalVisible, setModalVisible, petRec
 
           {isNewPet && <Text style={{color: "white", fontSize: 28, fontWeight: 700}}>NEW</Text>}
 
-          <PetDisplayMain pet={petReceived} />
+          <PetDisplayMain pet={petReceived} isPetSelected={true} />
 
           <View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingHorizontal: 22, alignItems: "center", width: 140}}>
             <StatsGained imageSource={require("../../assets/images/collectionIconNav.png")} isCoins={false} timeFocused={numberCardsReceived * 60}/>
+            <StatsGained imageSource={require("../../assets/images/gem.png")} isCoins={false} timeFocused={gemsReceived * 60}/>
           </View>
 
           <Pressable onPress={() => {

@@ -10,7 +10,7 @@ export default function ModalError ({modalVisible, setModalVisible, isGems = fal
 
       const timeoutId = setTimeout(() => {
         setModalVisible(false)
-      }, 2000)
+      }, 1500)
 
       return () => clearTimeout(timeoutId)
     }
@@ -35,8 +35,9 @@ export default function ModalError ({modalVisible, setModalVisible, isGems = fal
 const styles = StyleSheet.create({
 	centeredView: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: "rgba(100, 100, 100, 0.6)",
   },
   modalView: {
 		backgroundColor: "#02748D",
