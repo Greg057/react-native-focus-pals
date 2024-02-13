@@ -17,6 +17,7 @@ export default function XPDisplay ({pet, disableUp}) {
 	const [selectedPet1, setSelectedPet1] = useState(null)
   const [selectedPet2, setSelectedPet2] = useState(null)
 	const [errorModalVisible, setErrorModalVisible] = useState(false)
+	const [isPetMaxLevel, setIsPetMaxLevel] = useState(false)
 
 	const cost = 50
 
@@ -27,6 +28,8 @@ export default function XPDisplay ({pet, disableUp}) {
 			|| pet.xp >= 100 && pet.stars === 4 && pet.level === 40
 			|| pet.xp >= 100 && pet.stars === 5 && pet.level === 50) {
 				setIsStarUp(true)
+		} else if (pet.stars === 6 && pet.level === 60) {
+			setIsPetMaxLevel(true)
 		} else if (pet.xp >= 100) {
 			setIsLevelUp(true)
 		}
@@ -46,17 +49,17 @@ export default function XPDisplay ({pet, disableUp}) {
 		
   }
 		
-	const widthView = pet.xp >= 100 ? 100 : pet.xp
+	const widthView = pet.xp >= 100 || isPetMaxLevel ? 100 : pet.xp
 
 	return (
 		<>
-			<Pressable disabled={!(pet.xp >= 100) || disableUp} onPress={() => {
+			<Pressable disabled={!(pet.xp >= 100) || isPetMaxLevel || disableUp} onPress={() => {
 				setModalUpgradeVisible(true)
 				playSoundSelect()
 				}} >
 			<View style={{height: 25, width: 98, marginTop: 4, left: -5, borderRadius: 3, backgroundColor: "#232b2b"}}>
 				<View style={{backgroundColor: isStarUp ? "#ffbf00" : "#02748D", width: widthView, borderRadius: 3, height: 25}}></View>
-					<Text style={{top: -18, fontSize: 11, alignSelf: "center", fontWeight: 700, color: isStarUp ? "black" : "white"}}>{isStarUp ? "EVOLVE" : isLevelUp ? "LEVEL UP" : `${pet.xp}/100`}</Text>
+					<Text style={{top: -18, fontSize: 11, alignSelf: "center", fontWeight: 700, color: isStarUp ? "black" : "white"}}>{isStarUp ? "EVOLVE" : isLevelUp ? "LEVEL UP" : isPetMaxLevel ? "MAX LEVEL" : `${pet.xp}/100`}</Text>
 				</View>
 			</Pressable>
 				

@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Modal } from 'react-native'
 import { playSoundError } from '../hooks/useSound'
 import { useEffect } from 'react'
 
-export default function ModalError ({modalVisible, setModalVisible}) {
+export default function ModalError ({modalVisible, setModalVisible, isGems = false}) {
 
   useEffect(() => {
     if (modalVisible) {
@@ -22,7 +22,7 @@ export default function ModalError ({modalVisible, setModalVisible}) {
 
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text>Not enough coins</Text>
+          <Text>Not enough {isGems ? "Gems" : "gold"}</Text>
         </View>
       </View>
 
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     height: 50,
     marginTop: 8,
 		paddingHorizontal: 12,
-    borderRadius: 24,
+    borderRadius: 8,
     borderWidth: 2, 
     borderColor: "rgba(211,211,211, 0.9)",
     alignItems: 'center',

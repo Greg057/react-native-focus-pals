@@ -29,7 +29,7 @@ export default function EggDisplay({rarity, imageSource, cost}) {
         style={{width: "100%", alignItems: "center", gap: 12, paddingBottom: 12}}>
           <Image source={imageSource} style={{width: "90%", height: 160, borderRadius: 12, marginTop: 12}} />
           <Text style={{color: "white", fontWeight: 700}}>{rarity} Egg</Text>
-          <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={50} backgroundColor={"#02748D"} width={80} />
+          <GameCurrencyUI imageSource={require("../../assets/images/coin.png")} amount={cost} size={50} backgroundColor="#02748D" width={80} />
       </Pressable>
 
       <ModalBuyEgg modalVisible={modalBuyVisible} setModalVisible={setModalBuyVisible} getPet={getPet} rarity={rarity} cost={cost} imageSource={imageSource} setIsNewPet={setIsNewPet} setNumberCardsReceived={setNumberCardsReceived} setErrorModalVisible={setErrorModalVisible} />
