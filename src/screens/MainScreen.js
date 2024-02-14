@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View, Pressable, Image, AppState } from 'react-native'
-import SliderTimer from '../components/SliderTimer'
+import { StyleSheet, Text, View, Pressable, AppState } from 'react-native'
 import CountdownTimer from '../components/CountdownTimer'
 import {Header} from "../components/Header"
 import {PetDisplayMain} from "../components/PetDisplay"
@@ -11,11 +10,12 @@ import {getPetData, sortPets} from "../logic/setPetDataSorted"
 import { playSoundError, playSoundStart } from '../logic/useSound'
 import { StatsGained } from '../components/modals/ModalSessionComplete'
 import ASSETS from '../constants/assetsData'
+import Slider from '@react-native-community/slider'
 
 
 export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}) {
 
-	const [timer, setTimer] = useState(5 * 60)
+	const [timer, setTimer] = useState(25 * 60)
 	const [isTimerHidden, setIsTimerHidden] = useState(true)
 	const [modalVisible, setModalVisible] = useState(false)
 	const [selectedPet, setSelectedPet] = useState(null)
@@ -55,6 +55,16 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
     return minutes < 10 ? `0${minutes}:00` : `${minutes}:00`
   }
 
+	function onStartLogic () {
+		if (!selectedPet) {
+			playSoundError()
+		} else {
+			playSoundStart()
+			setIsTimerHidden(false)
+			setIsTimerOn(true)
+		}
+	}
+
 	return (
 		<View style={styles.container}>
 			<Header coinsOnLoad={coins} gemsOnLoad={gems} />
@@ -63,7 +73,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 				<View style={{flex: 1, alignItems: "center"}}>
 					<Text style={{fontSize: 14, marginTop: 16}}>Start your focus session to grow your pet</Text>
 					<Text style={{fontWeight: 700, fontSize: 36, marginTop: 36}}>{formatTime(timer)}</Text>
-					<SliderTimer timer={timer} setTimer={setTimer}/>
+					<Slider style={{width: 250, height: 40}} minimumValue={1} maximumValue={120} step={5} value={timer/60} onValueChange={(value) => setTimer(value * 60)} minimumTrackTintColor="black"/>
 
 					<ModalPets modalVisible={modalVisible} setModalVisible={setModalVisible} petsOwned={petsOwned} selectPet={selectPet} />
 
@@ -82,17 +92,8 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 						<StatsGained imageSource={ASSETS.icons.collectionIconNav} isCoins={false} timeFocused={timer}/>
             <StatsGained imageSource={ASSETS.icons.coin} isCoins={true} timeFocused={timer}/>
 					</View>
-					<Pressable onPress={() => {
-							if (!selectedPet) {
-								playSoundError()
-							} else {
-								playSoundStart()
-								setIsTimerHidden(false)
-								setIsTimerOn(true)
-							}
-						}}
-						style={{width: 140, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, paddingHorizontal: 26, borderRadius: 8, marginTop: 16, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
-							<Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Start</Text>
+					<Pressable onPress={onStartLogic}	style={{width: 140, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, paddingHorizontal: 26, borderRadius: 8, marginTop: 16, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+						<Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Start</Text>
 					</Pressable>
 				</View>
 				) : (

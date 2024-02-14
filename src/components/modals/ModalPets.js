@@ -8,23 +8,16 @@ export default function ModalPets ({modalVisible, setModalVisible, petsOwned, se
   modalVisible && playSoundSelect()
   
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        setModalVisible(!modalVisible)
-      }}>
+    <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {setModalVisible(!modalVisible)}}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center", padding: 15,}}>
             <Text style={{color: "white"}}>Select a pet to {sacrifice ? "sacrifice" : "grow"}!</Text>
-            <Pressable
-              style={{}}
-              onPress={() => setModalVisible(!modalVisible)}>
+            <Pressable onPress={() => setModalVisible(!modalVisible)}>
               <Ionicons name="close-sharp" size={36} color="white" />
             </Pressable>
           </View>
+          
           <PetDisplay petsOwned={petsOwned} selectPet={selectPet} />
         </View>
       </View>
