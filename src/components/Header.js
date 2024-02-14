@@ -1,6 +1,6 @@
 import { onSnapshot, doc } from "@firebase/firestore"
 import { Text, Image, View } from "react-native"
-import { getAuth, onAuthStateChanged } from "@firebase/auth"
+import { getAuth } from "@firebase/auth"
 import { FIREBASE_DB } from "../../firebaseConfig"
 import { useEffect, useState } from "react"
 import ASSETS from "../constants/assetsData"

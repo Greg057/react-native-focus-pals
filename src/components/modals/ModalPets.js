@@ -4,7 +4,9 @@ import {PetDisplay} from '../PetDisplay'
 import { playSoundSelect } from '../../logic/useSound'
 
 export default function ModalPets ({modalVisible, setModalVisible, petsOwned, selectPet, sacrifice = false}) {
+
   modalVisible && playSoundSelect()
+  
   return (
     <Modal
       animationType="slide"

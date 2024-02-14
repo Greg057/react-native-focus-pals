@@ -5,7 +5,6 @@ import XPDisplay from "./XPDisplay"
 import ASSETS from "../constants/assetsData"
 
 export function PetDisplay({petsOwned, selectPet}) {
-	
 	return (
     <FlatList showsVerticalScrollIndicator={false} numColumns={3}
 				data={petsOwned} renderItem={({item}) => <PetDisplayMain pet={item} selectPet={selectPet}/>} keyExtractor={(item) => item.name}/>
@@ -13,7 +12,6 @@ export function PetDisplay({petsOwned, selectPet}) {
 }
 
 export function PetDisplayMain ({pet, selectPet = null, isPetSelected = false, isPetUpgrade = false}) {
-	
 	function Children () {
 		return(
 			<View style={{paddingTop: 10, paddingHorizontal: 10, marginBottom: 18}}>

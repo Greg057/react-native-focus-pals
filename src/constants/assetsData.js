@@ -20,7 +20,6 @@ const ASSETS = {
     homeIconNav: require("../../assets/icons/homeIconNav.png"),
     shopIconNav: require("../../assets/icons/shopIconNav.png"),
   }
-  
 }
 
 export default ASSETS

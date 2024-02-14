@@ -7,6 +7,7 @@ import { GameCurrencyUI } from '../Header'
 import ModalPets from './ModalPets'
 import { getPetData } from '../../logic/setPetDataSorted'
 import ASSETS from '../../constants/assetsData'
+import { playSoundError } from '../../logic/useSound'
 
 export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp, pet, cost, petUpgraded }) {
   const [selectedPet1, setSelectedPet1] = useState(null)
@@ -31,8 +32,12 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
   }, [thisPetOwned, selectedPet1, selectedPet2])
  
   async function up () {
-    petUpgraded(selectedPet1, selectedPet2)
-    onClose()
+    if (isStarUp && (selectedPet1 === null || selectedPet2 === null)) {
+      playSoundError()
+    } else {
+      petUpgraded(selectedPet1, selectedPet2)
+      onClose()
+    }
 	}
 
   function selectPet1 (pet) {
@@ -79,7 +84,7 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
           </View>
             
           
-          <Pressable disabled={isStarUp && (selectedPet1 === null || selectedPet2 === null)} onPress={up} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+          <Pressable onPress={up} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
             <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
               <GameCurrencyUI imageSource={ASSETS.icons.coin} amount={cost} size={50} width={80} backgroundColor = "#02748D" />
               <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>{isStarUp ? "EVOLVE" : "LEVEL UP"}</Text>

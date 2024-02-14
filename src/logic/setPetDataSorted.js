@@ -16,8 +16,7 @@ export function getPetData (setPetsOwned, setNumberPetsDiscovered = null, fromEv
             ? setPetsOwned(sortPets(dataToReturn.filter(pet => pet.stars == petStars)))
             : setPetsOwned(sortPets(dataToReturn))
         })()
-      }
-    )
+      })
   )
 }
 

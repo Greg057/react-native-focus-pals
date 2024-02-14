@@ -7,7 +7,6 @@ export default function ModalError ({modalVisible, setModalVisible, isGems = fal
   useEffect(() => {
     if (modalVisible) {
       playSoundError()
-
       const timeoutId = setTimeout(() => {
         setModalVisible(false)
       }, 1500)

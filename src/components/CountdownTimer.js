@@ -1,35 +1,23 @@
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { Pressable, Text, View } from 'react-native'
-import { doc, getDoc, increment, updateDoc } from 'firebase/firestore'
-import { FIREBASE_DB } from '../../firebaseConfig'
-import { getAuth } from 'firebase/auth'
 import ModalSessionComplete from './modals/ModalSessionComplete'
 import { useState } from 'react'
 import { playSoundEndSessions } from '../logic/useSound'
+import { formatTime, timerCompleted } from '../logic/countdownTimerLogic'
 
 export default function CountdownTimer ({timer, setIsTimerHidden, selectedPet, setSelectedPet, onPress, setIsTimerOn}) {
   const [modalVisible, setModalVisible] = useState(false) 
   const [timeFocused, setTimeFocused] = useState(null)
 
-  const children = ({ remainingTime }) => {
-    const minutes = Math.floor(remainingTime / 60).toString().padStart(2, '0')
-    const seconds = (remainingTime % 60).toString().padStart(2, '0')
-    return `${minutes}:${seconds}`
+  function children ({remainingTime}) {
+    return formatTime({remainingTime})
   }
 
   async function onComplete (value) {
     setTimeFocused(value)
-    const docRef = doc(FIREBASE_DB, "users", getAuth().currentUser.uid)
-    const userDoc = await getDoc(docRef)
-		let XP = userDoc.data().petsOwned[selectedPet.name].xp
-     += value / 60
-    await updateDoc((docRef), {
-      coins: increment(value / 60 * 3),
-      [`petsOwned.${selectedPet.name}.xp`]: XP
-    })
+    await timerCompleted (selectedPet, value, setSelectedPet)
     playSoundEndSessions()
     setModalVisible(true)
-    setSelectedPet({...selectedPet, xp: XP})
   }
 
   return (
