@@ -3,19 +3,23 @@ import { FIREBASE_DB } from '../../firebaseConfig'
 import { getAuth } from 'firebase/auth'
 import PETS from '../constants/petsData'
 import PETS_RARITY from '../constants/petsRarity'
+import { playSoundCoins } from './useSound'
 
-export async function buyGold (gold, gems, setErrorModalVisible) {
+export async function buyGold (gold, gems, setErrorModalVisible, setModalVisible) {
   const docRef = doc(FIREBASE_DB, "users", getAuth().currentUser.uid)
   const docSnapshot = await getDoc(docRef)
   const gemsUser = docSnapshot.data().gems
   if ( gemsUser < gems) {
     setErrorModalVisible(true)
   } else {
-    await updateDoc(docRef, {
+    const soundPlay = playSoundCoins()
+    const docUpdate = updateDoc(docRef, {
       coins: increment(gold),
       gems: increment(-gems)
     })
+    await Promise.all(soundPlay, docUpdate)
   }
+  setModalVisible(false)
 }
 
 export async function buyEgg (cost, rarity, setIsNewPet, getPet, setGemsReceived, setNumberCardsReceived, setErrorModalVisible, setIsLoading, setModalVisible) {

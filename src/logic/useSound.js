@@ -34,3 +34,8 @@ export async function playSoundStarUp() {
   const { sound } = await Audio.Sound.createAsync(require('../../assets/sounds/starUp.wav'))
   await sound.playAsync()
 }
+
+export async function playSoundCoins() {
+  const { sound } = await Audio.Sound.createAsync(require('../../assets/sounds/coins.wav'))
+  await sound.playAsync()
+}

@@ -4,8 +4,8 @@ import EggDisplay from "../components/EggDisplay"
 import ModalError from "../components/modals/ModalError"
 import { useState } from "react"
 import { GameCurrencyUI } from "../components/Header"
-import { buyGold } from "../logic/buyInShop"
 import ASSETS from "../constants/assetsData"
+import ModalBuyGold from "../components/modals/ModalBuyGold"
 
 
 export default function ShopScreen () {
@@ -54,16 +54,18 @@ function EggView ({img1, img2, rarity1, rarity2, cost1, cost2}) {
 
 function GoldDisplay ({ gold, gems}) {
 	const [errorModalVisible, setErrorModalVisible] = useState(false)
+	const [buyGoldModalVisible, setBuyGoldModalVisible] = useState(false)
 
 	return (
 		<View style={{flex: 1, borderRadius: 12, backgroundColor: "#232b2b", marginBottom: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
-			<Pressable onPress={() => buyGold(gold, gems, setErrorModalVisible)} style={{width: "100%", alignItems: "center", gap: 12, paddingBottom: 12}}>
+			<Pressable onPress={() => setBuyGoldModalVisible(true)} style={{width: "100%", alignItems: "center", gap: 12, paddingBottom: 12}}>
 				<Image source={ASSETS.icons.coin} style={{width: 70, height: 70}} />
 				<Text style={{color: "white", fontWeight: 700}}>{gold} Gold</Text>
 				<GameCurrencyUI imageSource={ASSETS.icons.gem} amount={gems} size={50} backgroundColor="#02748D" width={80} />
       </Pressable>
 
       <ModalError modalVisible={errorModalVisible} setModalVisible={setErrorModalVisible} isGems={true} />
+			<ModalBuyGold modalVisible={buyGoldModalVisible} setModalVisible={setBuyGoldModalVisible} setErrorModalVisible={setErrorModalVisible} gold={gold} gems={gems} />
 
     </View>
 	)
