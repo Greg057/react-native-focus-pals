@@ -4,10 +4,13 @@ import ModalSessionComplete from './modals/ModalSessionComplete'
 import { useState } from 'react'
 import { playSoundEndSessions } from '../logic/useSound'
 import { formatTime, timerCompleted } from '../logic/countdownTimerLogic'
+import { useKeepAwake } from 'expo-keep-awake'
 
-export default function CountdownTimer ({timer, setIsTimerHidden, selectedPet, setSelectedPet, onPress, setIsTimerOn}) {
+export default function CountdownTimer ({timer, setIsTimerHidden, selectedPet, setSelectedPet, onPress, setIsTimerOn, isDeepModeEnabled}) {
   const [modalVisible, setModalVisible] = useState(false) 
   const [timeFocused, setTimeFocused] = useState(null)
+
+  isDeepModeEnabled && useKeepAwake()
 
   function children ({remainingTime}) {
     return formatTime({remainingTime})

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View, Pressable, AppState } from 'react-native'
+import { StyleSheet, Text, View, Pressable, AppState, Switch } from 'react-native'
 import CountdownTimer from '../components/CountdownTimer'
 import {Header} from "../components/Header"
 import {PetDisplayMain} from "../components/PetDisplay"
@@ -21,18 +21,23 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 	const [selectedPet, setSelectedPet] = useState(null)
 	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
 
+	const [isDeepModeEnabled, setIsDeepModeEnabled] = useState(false)
+  const toggleSwitch = () => setIsDeepModeEnabled(isDeepModeEnabled ? false : true)
+
 	const appState = useRef(AppState.currentState)
 
 	useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
-      appState.current = nextAppState;
-      console.log('AppState', appState.current);
+      appState.current = nextAppState
+			if (appState.current === "background" && isDeepModeEnabled && !isTimerHidden) {
+				cancel(false)
+			}
     })
 
     return () => {
       subscription.remove()
     }
-  }, [])
+  }, [isDeepModeEnabled, isTimerHidden])
 		
   useEffect(() => {
     const unsubscribe = getPetData(setPetsOwned)
@@ -44,10 +49,10 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 		setModalVisible(false)
 	}
 
-	function cancel () {
+	function cancel (notFromDeepMode = true) {
 		setIsTimerHidden(true)
 		setIsTimerOn(false)
-		playSoundError()
+		notFromDeepMode && playSoundError()
 	}
 
 	function formatTime (time) {
@@ -71,10 +76,22 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 
 			{isTimerHidden ? (
 				<View style={{flex: 1, alignItems: "center"}}>
-					<Text style={{fontSize: 14, marginTop: 16}}>Start your focus session to grow your pet</Text>
-					<Text style={{fontWeight: 700, fontSize: 36, marginTop: 36}}>{formatTime(timer)}</Text>
-					<Slider style={{width: 250, height: 40}} minimumValue={1} maximumValue={120} step={5} value={timer/60} onValueChange={(value) => setTimer(value * 60)} minimumTrackTintColor="black"/>
-
+					<Text style={{fontWeight: 700, fontSize: 36, marginTop: 12}}>{formatTime(timer)}</Text>
+					<Slider style={{width: 300, height: 40}} minimumValue={1} maximumValue={120} step={5} value={timer/60} onValueChange={(value) => setTimer(value * 60)} minimumTrackTintColor="black"/>
+					<View style={{width: 350, flexDirection:"row", alignItems: "center", justifyContent: "space-around", marginVertical: 18}}> 
+						<View>
+							<Text style={{fontSize: 16, fontWeight: 700}}>Deep Focus Mode:</Text>
+							<Text style={{fontSize: 11}}>Leaving the app will stop the timer</Text>
+						</View>
+						<Switch
+							trackColor={{false: '#232b2b', true: '#02748D'}}
+							thumbColor='#f4f3f4'
+							ios_backgroundColor="#232b2b"
+							onValueChange={toggleSwitch}
+							value={isDeepModeEnabled}
+						/>
+						
+					</View>
 					<ModalPets modalVisible={modalVisible} setModalVisible={setModalVisible} petsOwned={petsOwned} selectPet={selectPet} />
 
 					<Pressable onPress={() => setModalVisible(true)}>
@@ -92,12 +109,13 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 						<StatsGained imageSource={ASSETS.icons.collectionIconNav} isCoins={false} timeFocused={timer}/>
             <StatsGained imageSource={ASSETS.icons.coin} isCoins={true} timeFocused={timer}/>
 					</View>
-					<Pressable onPress={onStartLogic}	style={{width: 140, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, paddingHorizontal: 26, borderRadius: 8, marginTop: 16, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
-						<Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Start</Text>
-					</Pressable>
+					
+					<Pressable onPress={onStartLogic}	style={{width: 140, alignItems: "center", backgroundColor: "#232b2b", marginTop: 12, paddingVertical: 8, paddingHorizontal: 26, borderRadius: 8, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+							<Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Start</Text>
+						</Pressable>
 				</View>
 				) : (
-					<CountdownTimer timer={timer} setIsTimerHidden={setIsTimerHidden} selectedPet={selectedPet} setSelectedPet={setSelectedPet} onPress={cancel} setIsTimerOn={setIsTimerOn}/>
+					<CountdownTimer timer={timer} setIsTimerHidden={setIsTimerHidden} selectedPet={selectedPet} setSelectedPet={setSelectedPet} onPress={cancel} setIsTimerOn={setIsTimerOn} isDeepModeEnabled={isDeepModeEnabled}/>
 				)}
 
 			<StatusBar hidden={true} />

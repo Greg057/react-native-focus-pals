@@ -3,6 +3,7 @@ import 'react-native-get-random-values'
 import { Image } from 'expo-image'
 import XPDisplay from "./XPDisplay"
 import ASSETS from "../constants/assetsData"
+import { memo } from "react"
 
 export function PetDisplay({petsOwned, selectPet}) {
 	return (
@@ -11,7 +12,8 @@ export function PetDisplay({petsOwned, selectPet}) {
 	)
 }
 
-export function PetDisplayMain ({pet, selectPet = null, isPetSelected = false, isPetUpgrade = false}) {
+export const PetDisplayMain = memo(({pet, selectPet = null, isPetSelected = false, isPetUpgrade = false}) => {
+
 	function Children () {
 		return(
 			<View style={{paddingTop: 10, paddingHorizontal: 10, marginBottom: 18}}>
@@ -27,7 +29,7 @@ export function PetDisplayMain ({pet, selectPet = null, isPetSelected = false, i
 	return (
 		selectPet ? <Pressable onPress={() => selectPet(pet)}><Children /></Pressable> : <Children />
 	)
-}
+})
 
 function StarsDisplay ({stars}) {
 	let starsDisplay = []
@@ -49,5 +51,6 @@ function LevelDisplay({level}) {
 		</View>
 	)
 }
+
 
 

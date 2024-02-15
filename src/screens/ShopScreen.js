@@ -61,7 +61,7 @@ function GoldDisplay ({ gold, gems}) {
 			<Pressable onPress={() => setBuyGoldModalVisible(true)} style={{width: "100%", alignItems: "center", gap: 12, paddingBottom: 12}}>
 				<Image source={ASSETS.icons.coin} style={{width: 70, height: 70}} />
 				<Text style={{color: "white", fontWeight: 700}}>{gold} Gold</Text>
-				<GameCurrencyUI imageSource={ASSETS.icons.gem} amount={gems} size={50} backgroundColor="#02748D" width={80} />
+				<GameCurrencyUI imageSource={ASSETS.icons.gem} amount={gems} size={45} backgroundColor="#02748D" width={80} />
       </Pressable>
 
       <ModalError modalVisible={errorModalVisible} setModalVisible={setErrorModalVisible} isGems={true} />
