@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.greg057.firstapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,8 +27,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      
-    ]
+    "plugins": [],
+    "extra": {
+      "eas": {
+        "projectId": "40e4a0d2-b070-4594-a4f4-a4c3af4f4e6a"
+      }
+    }
   }
 }

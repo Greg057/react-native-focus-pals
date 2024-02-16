@@ -9,6 +9,7 @@ import { getAuth, onAuthStateChanged } from "@firebase/auth"
 import * as SplashScreen from 'expo-splash-screen'
 import { fetchData, authNewUser, loadResourcesAndDataAsync } from "./src/logic/appStart"
 import ASSETS from "./src/constants/assetsData"
+import 'expo-dev-client'
 
 SplashScreen.preventAutoHideAsync()
 const Tab = createBottomTabNavigator()

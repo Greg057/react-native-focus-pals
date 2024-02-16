@@ -1,7 +1,7 @@
 import { Image } from "react-native"
 import { doc, getDoc, setDoc } from "firebase/firestore"
 import { FIREBASE_DB } from "../../firebaseConfig"
-import { getAuth } from "@firebase/auth"
+import { getAuth, signInAnonymously } from "@firebase/auth"
 import PETS from "../constants/petsData"
 import { Asset } from 'expo-asset'
 import fetchPetData from "./fetchPetData"
@@ -31,7 +31,7 @@ export const authNewUser = async () => {
     coins: 100,
     gems: 20,
   })
-  fetchData(user.user)
+  //fetchData(user.user)
 }
 
 function cacheImages(images) {
