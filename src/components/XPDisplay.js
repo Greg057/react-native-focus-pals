@@ -33,9 +33,9 @@ export default function XPDisplay ({pet, disableUp}) {
 				setModalUpgradeVisible(true)
 				playSoundSelect()
 				}} >
-			<View style={{height: 25, width: 98, marginTop: 4, left: -5, borderRadius: 3, backgroundColor: "#232b2b"}}>
-				<View style={{backgroundColor: isStarUp ? "#ffbf00" : "#02748D", width: pet.xp >= 100 || isPetMaxLevel ? 100 : pet.xp, borderRadius: 3, height: 25}}></View>
-					<Text style={{top: -18, fontSize: 11, alignSelf: "center", fontWeight: 700, color: isStarUp ? "black" : "white"}}>{isStarUp ? "EVOLVE" : isLevelUp ? "LEVEL UP" : isPetMaxLevel ? "MAX LEVEL" : `${pet.xp}/100`}</Text>
+			<View style={{height: 25, width: 98, marginTop: 4, left: -5, borderRadius: 3, backgroundColor: "#232b2b", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+				<View style={{backgroundColor: isStarUp ? "#ffbf00" : "#02748D", width: pet.xp >= 100 || isPetMaxLevel ? "100%" : pet.xp + "%", borderRadius: 2, height: 21}}></View>
+					<Text style={{top: -16, fontSize: 11, alignSelf: "center", fontWeight: 700, color: isStarUp ? "black" : "white"}}>{isStarUp ? "EVOLVE" : isLevelUp ? "LEVEL UP" : isPetMaxLevel ? "MAX LEVEL" : `${pet.xp}/100`}</Text>
 				</View>
 			</Pressable>
 				
