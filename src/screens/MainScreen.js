@@ -11,9 +11,7 @@ import { playSoundError, playSoundStart } from '../logic/useSound'
 import { StatsGained } from '../components/modals/ModalSessionComplete'
 import ASSETS from '../constants/assetsData'
 import Slider from '@react-native-community/slider'
-import sendPushNotif from '../logic/sendPushNotif'
-import * as Notifications from 'expo-notifications'
-
+import {sendPushNotif, cancelNotif} from '../logic/sendPushNotif'
 
 export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}) {
 
@@ -54,7 +52,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 	function cancel (notFromDeepMode = true) {
 		setIsTimerHidden(true)
 		setIsTimerOn(false)
-		Notifications.cancelAllScheduledNotificationsAsync()
+		cancelNotif()
 		notFromDeepMode && playSoundError()
 	}
 
