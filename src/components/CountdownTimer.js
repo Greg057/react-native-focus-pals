@@ -5,21 +5,18 @@ import { useState } from 'react'
 import { playSoundEndSessions } from '../logic/useSound'
 import { formatTime, timerCompleted } from '../logic/countdownTimerLogic'
 import { useKeepAwake } from 'expo-keep-awake'
-import sendPushNotif from '../logic/sendPushNotif'
 
 export default function CountdownTimer ({timer, setIsTimerHidden, selectedPet, setSelectedPet, onPress, setIsTimerOn, isDeepModeEnabled}) {
   const [modalVisible, setModalVisible] = useState(false) 
   const [timeFocused, setTimeFocused] = useState(null)
 
   isDeepModeEnabled && useKeepAwake()
-  sendPushNotif()
 
   function children ({remainingTime}) {
     return formatTime({remainingTime})
   }
 
   async function onComplete (value) {
-    sendPushNotif()
     setTimeFocused(value)
     await timerCompleted (selectedPet, value, setSelectedPet)
     playSoundEndSessions()
