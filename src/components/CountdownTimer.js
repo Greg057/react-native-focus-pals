@@ -25,7 +25,7 @@ export default function CountdownTimer ({timer, setIsTimerHidden, selectedPet, s
   }
 
   return (
-    <View style={{flex:1, justifyContent: "flex-end", alignItems: "center", paddingBottom: 36}} >
+    <View style={{flex:1, justifyContent: "center", alignItems: "center", paddingBottom: 36}} >
       <CountdownCircleTimer
         isPlaying
         duration={timer}

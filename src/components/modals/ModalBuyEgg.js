@@ -13,7 +13,7 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center", padding: 15,}}>
-            <Text style={{color: "white"}}>Buy Egg</Text>
+            <Text style={{color: "white"}}>Buy {rarity} Egg</Text>
             <Pressable onPress={() => setModalVisible(false)}>
               <Ionicons name="close-sharp" size={32} color="white" />
             </Pressable>
@@ -26,10 +26,10 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
           {isLoading 
             ? <ActivityIndicator size={"large"} color={"black"} /> 
             : <Pressable onPress={() => buyEgg(cost, rarity, setIsNewPet, getPet, setGemsReceived, setNumberCardsReceived, setErrorModalVisible, setIsLoading, setModalVisible)} 
-                  style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+                  style={{minWidth: "80%", marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
                 <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
                   <GameCurrencyUI imageSource={ASSETS.icons.coin} amount={cost} size={50} width={80} backgroundColor = "#02748D" />
-                  <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Buy {rarity} Egg</Text>
+                  <Text style={{color: "white", fontSize: 14, fontWeight: 700}}>Buy Egg</Text>
                 </View>
               </Pressable>
           }

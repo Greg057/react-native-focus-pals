@@ -1,14 +1,19 @@
-import { FlatList, Text, View, ImageBackground, Pressable  } from "react-native"
+import { FlatList, Text, View, ImageBackground, Pressable, Dimensions } from "react-native"
 import 'react-native-get-random-values'
 import { Image } from 'expo-image'
 import XPDisplay from "./XPDisplay"
 import ASSETS from "../constants/assetsData"
 import { memo } from "react"
 
+const screenWidth = Dimensions.get("window").width
+const numColumns = Math.floor(screenWidth / 125)
+
 export function PetDisplay({petsOwned, selectPet}) {
 	return (
-    <FlatList showsVerticalScrollIndicator={false} numColumns={3}
-				data={petsOwned} renderItem={({item}) => <PetDisplayMain pet={item} selectPet={selectPet}/>} keyExtractor={(item) => item.name}/>
+    <View style={{flex: 1, alignItems: "center"}}>
+			<FlatList showsVerticalScrollIndicator={false} numColumns={numColumns}
+							data={petsOwned} renderItem={({item}) => <PetDisplayMain pet={item} selectPet={selectPet}/>} keyExtractor={(item) => item.name}/>
+		</View>
 	)
 }
 

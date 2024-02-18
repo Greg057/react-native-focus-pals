@@ -84,7 +84,7 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
           </View>
             
           
-          <Pressable onPress={up} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+          <Pressable onPress={up} style={{minWidth: "80%", marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
             <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
               <GameCurrencyUI imageSource={ASSETS.icons.coin} amount={cost} size={50} width={80} backgroundColor = "#02748D" />
               <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>{isStarUp ? "EVOLVE" : "LEVEL UP"}</Text>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
 		backgroundColor: "#30bced",
-		width: "90%",
+		width: 320,
 		paddingBottom: 12,
     borderRadius: 24,
     borderWidth: 2, 

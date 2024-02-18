@@ -77,10 +77,10 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 			<Header coinsOnLoad={coins} gemsOnLoad={gems} />
 
 			{isTimerHidden ? (
-				<View style={{flex: 1, alignItems: "center"}}>
-					<Text style={{fontWeight: 700, fontSize: 36, marginTop: 12}}>{formatTime(timer)}</Text>
-					<Slider style={{width: 300, height: 40}} minimumValue={1} maximumValue={120} step={5} value={timer/60} onValueChange={(value) => setTimer(value * 60)} minimumTrackTintColor="black"/>
-					<View style={{width: 350, flexDirection:"row", alignItems: "center", justifyContent: "space-around", marginVertical: 18}}> 
+				<View style={{flex: 1, alignItems: "center", paddingBottom: 22}}>
+					<Text style={{fontWeight: 700, fontSize: 36, marginTop: 12, flex: 1}}>{formatTime(timer)}</Text>
+					<Slider style={{width: 300, height: 40, flex: 1}} minimumValue={1} maximumValue={120} step={5} value={timer/60} onValueChange={(value) => setTimer(value * 60)} minimumTrackTintColor="black"/>
+					<View style={{width: 350, flex: 1, flexDirection:"row", alignItems: "center", justifyContent: "space-around", marginVertical: 18}}> 
 						<View>
 							<Text style={{fontSize: 16, fontWeight: 700}}>Deep Focus Mode:</Text>
 							<Text style={{fontSize: 11}}>Leaving the app will stop the timer</Text>
@@ -97,7 +97,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 					<ModalPets modalVisible={modalVisible} setModalVisible={setModalVisible} petsOwned={petsOwned} selectPet={selectPet} />
 
 					<Pressable onPress={() => setModalVisible(true)}>
-						<View style={{width: 140, height: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+						<View style={{flex: 1, width: 140, minHeight: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
 						{selectedPet !== null
 							? <View style={{left: 5}}>
 									<PetDisplayMain pet={selectedPet} isPetSelected={true} />
@@ -107,12 +107,12 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 						</View>
 					</Pressable>
 
-					<View style={{backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingHorizontal: 22, alignItems: "center", width: 140}}>
+					<View style={{flex: 1, minHeight: 100, backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingHorizontal: 22, justifyContent: "center", alignItems: "center", width: 140}}>
 						<StatsGained imageSource={ASSETS.icons.collectionIconNav} isCoins={false} timeFocused={timer}/>
             <StatsGained imageSource={ASSETS.icons.coin} isCoins={true} timeFocused={timer}/>
 					</View>
 					
-					<Pressable onPress={onStartLogic}	style={{width: 140, alignItems: "center", backgroundColor: "#232b2b", marginTop: 12, paddingVertical: 8, paddingHorizontal: 26, borderRadius: 8, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+					<Pressable onPress={onStartLogic}	style={{flex: 1, minHeight: 40, maxHeight: 60, width: 140, alignItems: "center", justifyContent: "center", backgroundColor: "#232b2b", marginTop: 12, borderRadius: 8, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
 							<Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Start</Text>
 						</Pressable>
 				</View>

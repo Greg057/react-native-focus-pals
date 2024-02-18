@@ -31,7 +31,6 @@ export const authNewUser = async () => {
     coins: 100,
     gems: 20,
   })
-  //fetchData(user.user)
 }
 
 function cacheImages(images) {
