@@ -26,7 +26,6 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 	const appState = useRef(AppState.currentState)
 
 	useEffect(() => {
-
     const subscription = AppState.addEventListener('change', nextAppState => {
       appState.current = nextAppState
 			if (appState.current === "background" && isDeepModeEnabled && !isTimerHidden) {
@@ -40,7 +39,6 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
   }, [isDeepModeEnabled, isTimerHidden])
 		
   useEffect(() => {
-		setSelectedPet(null)
     const unsubscribe = getPetData(setPetsOwned)
     return () => unsubscribe()
   }, [])
