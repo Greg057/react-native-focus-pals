@@ -19,7 +19,7 @@ export default function ModalPetUpgraded ({modalVisible, pet, isStarUp, cost, se
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center", padding: 15,}}>
-            <Text style={{color: "white"}}>{isStarUp ? "Pet Evolved!" : "Pet Leveled up!"}</Text>
+            <Text style={{color: "white"}}>{isStarUp ? "Pal Evolved!" : "Pal Leveled up!"}</Text>
             <Pressable onPress={onClose}>
               <Ionicons name="close-sharp" size={32} color="white" />
             </Pressable>

@@ -61,7 +61,7 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center", padding: 15,}}>
-            <Text style={{color: "white"}}>{isStarUp ? "Evolve your pet!" : "Level up you pet!"}</Text>
+            <Text style={{color: "white"}}>{isStarUp ? "Evolve your Pal!" : "Level up your Pal!"}</Text>
             <Pressable onPress={onClose}>
               <Ionicons name="close-sharp" size={32} color="white" />
             </Pressable>
@@ -107,7 +107,7 @@ function PetToSacrificeModal ({setModalPetsVisible, selectedPet}) {
         ? <View style={{left: 5}}>
             <PetDisplayMain pet={selectedPet} isPetSelected={true} />
           </View>
-        : <Text>Select pet to sacrifice</Text>
+        : <Text>Select Pal to sacrifice</Text>
       }
       </View>
     </Pressable>

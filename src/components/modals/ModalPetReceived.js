@@ -11,7 +11,7 @@ export default function ModalPetReceived ({modalVisible, setModalVisible, petRec
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={{flexDirection: "row", width: "100%", justifyContent: "space-between", alignItems: "center", padding: 15,}}>
-            <Text style={{color: "white"}}>You received...</Text>
+            <Text style={{color: "white"}}>You received:</Text>
             <Pressable onPress={() => {
                 setModalVisible(false)
                 playSoundSelect()

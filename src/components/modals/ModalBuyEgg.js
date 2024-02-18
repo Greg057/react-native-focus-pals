@@ -22,6 +22,25 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
           <View style={{borderRadius: 12, backgroundColor: "#232b2b", padding: 12, marginBottom: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
             <Image source={imageSource} resizeMode='contain' style={{width: 160, height: 160, borderRadius: 12}} />
           </View>
+
+          <View style={{alignItems: "center"}}>
+            <Text>{rarity === "Uncommon" 
+                    ? "70% chance to get a Common Pal" 
+                    : rarity === "Rare" 
+                      ? "60% chance to get an Uncommon Pal"
+                      : rarity === "Epic" 
+                        ? "50% chance to get a Rare Pal"
+                        : "40% chance to get an Epic Pal"}
+            </Text>
+            <Text>{rarity === "Uncommon" 
+                    ? "30% chance to get an Uncommon Pal" 
+                    : rarity === "Rare" 
+                      ? "40% chance to get a Rare Pal"
+                      : rarity === "Epic" 
+                        ? "50% chance to get an Epic Pal"
+                        : "60% chance to get a Legendary Pal"}
+            </Text>
+          </View>
  
           {isLoading 
             ? <ActivityIndicator size={"large"} color={"black"} /> 

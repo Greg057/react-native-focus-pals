@@ -9,7 +9,7 @@ export default function ModalSessionComplete ({modalVisible, setModalVisible, pe
 
   function formatTime (time) {
     const minutes = Math.floor(time / 60)
-    return minutes < 10 ? `0${minutes}:00` : `${minutes}:00`
+    return minutes
   }
 
   function onClose () {
@@ -30,7 +30,7 @@ export default function ModalSessionComplete ({modalVisible, setModalVisible, pe
             </Pressable>
           </View>
 
-          <Text style={{alignSelf: "flex-start", padding: 15, fontWeight: 700}}>You focused for {formatTime(timeFocused)} minutes!</Text>
+          <Text style={{alignSelf: "flex-start", padding: 15}}>You focused for {formatTime(timeFocused)} minutes!</Text>
 
           <View style={{width: "100%", paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
             <PetDisplayMain pet={{...pet, xp: pet.xp - timeFocused / 60}} isPetSelected={true} />

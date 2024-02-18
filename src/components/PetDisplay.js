@@ -10,7 +10,7 @@ const numColumns = Math.floor(screenWidth / 125)
 
 export function PetDisplay({petsOwned, selectPet}) {
 	return (
-    <View style={{flex: 1, alignItems: "center"}}>
+    <View style={{flex: 1, alignSelf: "center"}}>
 			<FlatList showsVerticalScrollIndicator={false} numColumns={numColumns}
 							data={petsOwned} renderItem={({item}) => <PetDisplayMain pet={item} selectPet={selectPet}/>} keyExtractor={(item) => item.name}/>
 		</View>

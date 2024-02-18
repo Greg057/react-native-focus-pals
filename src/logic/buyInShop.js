@@ -29,12 +29,12 @@ export async function buyEgg (cost, rarity, setIsNewPet, getPet, setGemsReceived
   const userData = docSnapshot.data()
   const coins = userData.coins
   if (coins >= cost) {
-    const petToAdd = PETS_RARITY[rarity][Math.floor(Math.random() * PETS_RARITY[rarity].length)]
+    const petToAdd = fetchPet(rarity)
     const petsOwned = userData.petsOwned
 
     const gemsReceived = getGems(rarity)
   
-    const cardsReceived = Math.floor(Math.random() * 100) + 20
+    const cardsReceived = Math.floor(Math.random() * 60) + 20
     let XP = cardsReceived
     if (Object.keys(petsOwned).includes(petToAdd)) {
       XP += userData.petsOwned[petToAdd].xp
@@ -82,4 +82,19 @@ function getGems (rarity) {
       : rarity === "Epic"
         ? Math.random() >= 0.6 ? Math.floor(Math.random() * 4) + 6 : 3
         : Math.random() >= 0.5 ? Math.floor(Math.random() * 8) + 9 : 4 // Legendary
+}
+
+function fetchPet (rarity) {
+  function returnPet (givenRarity) {
+    return PETS_RARITY[givenRarity][Math.floor(Math.random() * PETS_RARITY[givenRarity].length)]
+  }
+
+  return rarity === "Uncommon" 
+    ? Math.random() >= 0.3 ? returnPet("Common") : returnPet("Uncommon")
+    : rarity === "Rare"
+      ? Math.random() >= 0.4 ? returnPet("Uncommon") : returnPet("Rare")
+      : rarity === "Epic"
+        ? Math.random() >= 0.5 ? returnPet("Rare") : returnPet("Epic")
+        : Math.random() >= 0.6 ? returnPet("Epic") : returnPet("Legendary") // Legendary
+  
 }

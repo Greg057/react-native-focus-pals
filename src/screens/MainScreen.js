@@ -97,22 +97,22 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 					<ModalPets modalVisible={modalVisible} setModalVisible={setModalVisible} petsOwned={petsOwned} selectPet={selectPet} />
 
 					<Pressable onPress={() => setModalVisible(true)}>
-						<View style={{flex: 1, width: 140, minHeight: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+						<View style={{flex: 0, width: 140, height: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
 						{selectedPet !== null
 							? <View style={{left: 5}}>
 									<PetDisplayMain pet={selectedPet} isPetSelected={true} />
 								</View>
-							: <Text>Select a Pet</Text>
+							: <Text>Select a Pal</Text>
 						}
 						</View>
 					</Pressable>
 
-					<View style={{flex: 1, minHeight: 100, backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingHorizontal: 22, justifyContent: "center", alignItems: "center", width: 140}}>
+					<View style={{flex: 0, minHeight: 100, backgroundColor: "#02748D", borderRadius: 8, paddingVertical: 8, paddingHorizontal: 22, justifyContent: "center", alignItems: "center", width: 140}}>
 						<StatsGained imageSource={ASSETS.icons.collectionIconNav} isCoins={false} timeFocused={timer}/>
             <StatsGained imageSource={ASSETS.icons.coin} isCoins={true} timeFocused={timer}/>
 					</View>
 					
-					<Pressable onPress={onStartLogic}	style={{flex: 1, minHeight: 40, maxHeight: 60, width: 140, alignItems: "center", justifyContent: "center", backgroundColor: "#232b2b", marginTop: 12, borderRadius: 8, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+					<Pressable onPress={onStartLogic}	style={{flex: 0, minHeight: 40, maxHeight: 60, width: 140, alignItems: "center", justifyContent: "center", backgroundColor: "#232b2b", marginTop: 12, borderRadius: 8, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
 							<Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Start</Text>
 						</Pressable>
 				</View>

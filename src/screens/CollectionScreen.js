@@ -19,7 +19,7 @@ export default function CollectionScreen ({petsOwnedOnLoad}) {
 		<View style={{backgroundColor: "black", flex: 1, paddingHorizontal: 15, paddingTop: 15}}>
 			<Header />
 			<View style={{ backgroundColor: "#232b2b", marginBottom: 12, flexDirection: "row", justifyContent: "space-between", padding: 12, borderRadius: 8}}>
-				<Text style={{color: "white", fontWeight: "bold"}}>Cards Collected</Text>
+				<Text style={{color: "white", fontWeight: "bold"}}>Pals Collected</Text>
 				<Text style={{color: "white"}}>Discovered: {numberPetsDiscovered}/50</Text>
 			</View>
 			
