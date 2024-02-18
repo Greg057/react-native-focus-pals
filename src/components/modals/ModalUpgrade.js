@@ -1,58 +1,18 @@
 import { Text, View, Pressable, Modal, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import { useEffect, useState } from 'react'
 import { PetDisplayMain } from '../PetDisplay'
 import { AntDesign } from '@expo/vector-icons'
 import { GameCurrencyUI } from '../Header'
-import ModalPets from './ModalPets'
-import { getPetData } from '../../logic/setPetDataSorted'
 import ASSETS from '../../constants/assetsData'
-import { playSoundError } from '../../logic/useSound'
 
 export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp, pet, cost, petUpgraded }) {
-  const [selectedPet1, setSelectedPet1] = useState(null)
-  const [selectedPet2, setSelectedPet2] = useState(null)
-  const [modalPetsVisible1, setModalPetsVisible1] = useState(false)
-  const [modalPetsVisible2, setModalPetsVisible2] = useState(false)
-  const [thisPetOwned, setThisPetOwned] = useState(null)
-  const [thisPetOwnedFiltered, setThisPetOwnedFiltered] = useState(null)
-  
-  useEffect(() => {
-    const unsubscribe = modalVisible && getPetData(setThisPetOwned, null, true, pet.stars)
-    return () => modalVisible && unsubscribe()
-  }, [modalVisible])
-
-  useEffect(() => {
-    if (modalVisible) {
-      const petsNames = [pet.name]
-      petsNames[1] = selectedPet1 && selectedPet1.name
-      petsNames[2] = selectedPet2 && selectedPet2.name
-      setThisPetOwnedFiltered(thisPetOwned.filter(petEle => !petsNames.includes(petEle.name)))
-    }
-  }, [thisPetOwned, selectedPet1, selectedPet2])
- 
+    
   async function up () {
-    if (isStarUp && (selectedPet1 === null || selectedPet2 === null)) {
-      playSoundError()
-    } else {
-      petUpgraded(selectedPet1, selectedPet2)
-      onClose()
-    }
-	}
-
-  function selectPet1 (pet) {
-		setSelectedPet1(pet)
-		setModalPetsVisible1(false)
-	}
-
-  function selectPet2 (pet) {
-		setSelectedPet2(pet)
-		setModalPetsVisible2(false)
+    petUpgraded()
+    onClose()
 	}
 
   function onClose () {
-    setSelectedPet1(null)
-    setSelectedPet2(null)
     setModalVisible(false)
   }
 
@@ -67,22 +27,22 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
             </Pressable>
           </View>
 
-          {isStarUp && 
-            <View style={{width: "100%", paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-              <PetToSacrificeModal setModalPetsVisible={setModalPetsVisible1} selectedPet={selectedPet1} />
-              <PetToSacrificeModal setModalPetsVisible={setModalPetsVisible2} selectedPet={selectedPet2} />
-            </View>
-          }
-
-          <ModalPets modalVisible={modalPetsVisible1} setModalVisible={setModalPetsVisible1} petsOwned={thisPetOwnedFiltered} selectPet={selectPet1} sacrifice={true} />
-          <ModalPets modalVisible={modalPetsVisible2} setModalVisible={setModalPetsVisible2} petsOwned={thisPetOwnedFiltered} selectPet={selectPet2} sacrifice={true}/>
-          
           <View style={{width: "100%", paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
             <PetDisplayMain pet={pet} isPetUpgrade={true} />
             <AntDesign name="doubleright" size={32} color="black" />
             <PetDisplayMain pet={isStarUp ? {...pet, stars: pet.stars + 1, level: 1} : {...pet, level: pet.level + 1}} isPetUpgrade={true} />
           </View>
             
+          <View>
+            <Text style={{alignSelf: "center", marginVertical: 12}}>{isStarUp ? `Gold gained while focusing with this Pal:` : `Next evolution possible at level ${pet.stars * 10}`}</Text>
+          </View>
+          {isStarUp && 
+              <View style={{width: "100%", paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 24}}>
+                <Text style={{fontSize: 16}}>+{pet.stars === 1 ? 0 : (pet.stars) ** 2}%</Text>
+                <AntDesign name="doubleright" size={20} color="black" />
+                <Text style={{fontWeight: 700, fontSize: 16}}>+{(pet.stars + 1) ** 2}%</Text>
+              </View>
+            }
           
           <Pressable onPress={up} style={{minWidth: "80%", marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
             <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>

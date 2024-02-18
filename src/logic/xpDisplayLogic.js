@@ -17,14 +17,12 @@ export function setXPPet (pet, setIsStarUp, setIsPetMaxLevel, setIsLevelUp) {
   }
 }
 
-export async function petUpgrade (selectedPet1, selectedPet2, setErrorModalVisible, setSelectedPet1, setSelectedPet2, setModalPetUpgradedVisible, cost, isStarUp) {
+export async function petUpgrade (setErrorModalVisible, setModalPetUpgradedVisible, cost, isStarUp) {
   const docRef = await getDoc(doc(FIREBASE_DB, "users", getAuth().currentUser.uid))
   const coins = docRef.data().coins
   if ( coins < cost) {
     setErrorModalVisible(true)
   } else {
-    setSelectedPet1(selectedPet1)
-    setSelectedPet2(selectedPet2)
     setModalPetUpgradedVisible(true)
     isStarUp ? playSoundStarUp() : playSoundLevelUp()
   }

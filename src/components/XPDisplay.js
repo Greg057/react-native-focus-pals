@@ -12,8 +12,6 @@ export default function XPDisplay ({pet, disableUp}) {
 	const [isStarUp, setIsStarUp] = useState(false)
 	const [modalUpgradeVisible, setModalUpgradeVisible] = useState(false)
 	const [modalPetUpgradedVisible, setModalPetUpgradedVisible] = useState(false)
-	const [selectedPet1, setSelectedPet1] = useState(null)
-  const [selectedPet2, setSelectedPet2] = useState(null)
 	const [errorModalVisible, setErrorModalVisible] = useState(false)
 	const [isPetMaxLevel, setIsPetMaxLevel] = useState(false)
 	
@@ -21,10 +19,10 @@ export default function XPDisplay ({pet, disableUp}) {
 		setXPPet(pet, setIsStarUp, setIsPetMaxLevel, setIsLevelUp)
 	}, [])
 
-	const cost = 50
+	const cost = isStarUp ? pet.stars * 1000 : 100
 
-	function petUpgraded(selectedPet1, selectedPet2) {
-		petUpgrade(selectedPet1, selectedPet2, setErrorModalVisible, setSelectedPet1, setSelectedPet2, setModalPetUpgradedVisible, cost, isStarUp)
+	function petUpgraded() {
+		petUpgrade(setErrorModalVisible, setModalPetUpgradedVisible, cost, isStarUp)
 	}
 	
 	return (
@@ -39,8 +37,8 @@ export default function XPDisplay ({pet, disableUp}) {
 				</View>
 			</Pressable>
 				
-			<ModalUpgrade modalVisible={modalUpgradeVisible} setModalVisible={setModalUpgradeVisible} petUpgraded={petUpgraded} isStarUp={isStarUp} pet={pet} cost={cost} setSelectedPet1={setSelectedPet1} setSelectedPet2={setSelectedPet2} />
-			<ModalPetUpgraded modalVisible={modalPetUpgradedVisible} pet={pet} isStarUp={isStarUp} cost={cost} selectedPet1={selectedPet1} selectedPet2={selectedPet2} />
+			<ModalUpgrade modalVisible={modalUpgradeVisible} setModalVisible={setModalUpgradeVisible} petUpgraded={petUpgraded} isStarUp={isStarUp} pet={pet} cost={cost} />
+			<ModalPetUpgraded modalVisible={modalPetUpgradedVisible} pet={pet} isStarUp={isStarUp} cost={cost} setErrorModalVisible={setErrorModalVisible}/>
 			<ModalError modalVisible={errorModalVisible} setModalVisible={setErrorModalVisible} />
 
 		</>

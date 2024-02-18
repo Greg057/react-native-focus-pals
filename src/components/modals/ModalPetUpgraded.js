@@ -5,13 +5,13 @@ import { playSoundSelect } from '../../logic/useSound'
 import { useState } from 'react'
 import { upgradePetLogic } from '../../logic/upgradePetLogic'
 
-export default function ModalPetUpgraded ({modalVisible, pet, isStarUp, cost, selectedPet1, selectedPet2}) {
+export default function ModalPetUpgraded ({modalVisible, pet, isStarUp, cost, setErrorModalVisible}) {
   const [isLoading, setIsLoading] = useState(false)
 
   function onClose () {
     setIsLoading(true)
     playSoundSelect()
-    upgradePetLogic(cost, pet, isStarUp, selectedPet1, selectedPet2)
+    upgradePetLogic(cost, pet, isStarUp, setErrorModalVisible)
   }
   
   return (

@@ -51,7 +51,7 @@ function StarsDisplay ({stars}) {
 
 function LevelDisplay({level}) {
 	return (
-		<View style={{alignItems: "center", justifyContent: "center", borderRadius: "50%", width: 20, height: 20, backgroundColor: "#232b2b", position: "absolute", right: -5, top: -5}}>
+		<View style={{alignItems: "center", justifyContent: "center", borderRadius: 24, width: 20, height: 20, backgroundColor: "#232b2b", position: "absolute", right: -5, top: -5}}>
 			<Text style={{color: "white", fontWeight: 700, fontSize: 11}}>{level}</Text>
 		</View>
 	)
