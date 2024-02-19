@@ -2,16 +2,18 @@ import { useState, useEffect, useRef } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View, Pressable, AppState, Switch } from 'react-native'
 import CountdownTimer from '../components/CountdownTimer'
-import {Header} from "../components/Header"
-import {PetDisplayMain} from "../components/PetDisplay"
+import { Header } from "../components/Header"
+import { PetDisplayMain } from "../components/PetDisplay"
 import ModalPets from '../components/modals/ModalPets'
 import 'react-native-get-random-values'
-import {getPetData, sortPets} from "../logic/setPetDataSorted"
-import { playSoundError, playSoundStart } from '../logic/useSound'
+import { getPetData, sortPets } from "../logic/setPetDataSorted"
+import { playSoundError, playSoundStart, playSoundSelect } from '../logic/useSound'
 import { StatsGained } from '../components/modals/ModalSessionComplete'
 import ASSETS from '../constants/assetsData'
 import Slider from '@react-native-community/slider'
-import {sendPushNotif, cancelNotif, registerForPushNotificationsAsync} from '../logic/sendPushNotif'
+import { sendPushNotif, cancelNotif } from '../logic/sendPushNotif'
+import { onSnapshotPetSelected } from '../logic/onSnapshotLogic'
+
 
 export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}) {
 	const [timer, setTimer] = useState(25 * 60)
@@ -33,15 +35,17 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 			}
     })
 
-    return () => {
-      subscription.remove()
-    }
+    return () => subscription.remove()
   }, [isDeepModeEnabled, isTimerHidden])
 		
   useEffect(() => {
     const unsubscribe = getPetData(setPetsOwned)
     return () => unsubscribe()
   }, [])
+
+	useEffect(() => {
+		onSnapshotPetSelected(selectedPet, setSelectedPet)
+	}, [modalVisible])
 
 	function selectPet (pet) {
 		setSelectedPet(pet)
@@ -71,6 +75,11 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 		}
 	}
 
+	function openSelectPetModal () {
+		setModalVisible(true)
+		playSoundSelect()
+	}
+
 	return (
 		<View style={styles.container}>
 			<Header coinsOnLoad={coins} gemsOnLoad={gems} />
@@ -95,7 +104,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 
 					<ModalPets modalVisible={modalVisible} setModalVisible={setModalVisible} petsOwned={petsOwned} selectPet={selectPet} />
 
-					<Pressable onPress={() => setModalVisible(true)}>
+					<Pressable onPress={openSelectPetModal}>
 						<View style={{flex: 0, width: 140, height: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
 						{selectedPet !== null
 							? <View style={{left: 5}}>

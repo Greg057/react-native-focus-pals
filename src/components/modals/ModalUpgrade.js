@@ -59,21 +59,6 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
   )
 }
 
-function PetToSacrificeModal ({setModalPetsVisible, selectedPet}) {
-  return (
-    <Pressable onPress={() => setModalPetsVisible(true)}>
-      <View style={{width: 140, height: 180, paddingTop: 14, marginVertical: 18, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(211,211,211, 0.6)", borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
-      {selectedPet !== null
-        ? <View style={{left: 5}}>
-            <PetDisplayMain pet={selectedPet} isPetSelected={true} />
-          </View>
-        : <Text>Select Pal to sacrifice</Text>
-      }
-      </View>
-    </Pressable>
-  )
-}
-
 const styles = StyleSheet.create({
 	centeredView: {
     flex: 1,

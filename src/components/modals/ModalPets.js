@@ -1,12 +1,9 @@
 import { Text, View, Pressable, Modal, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import {PetDisplay} from '../PetDisplay'
-import { playSoundSelect } from '../../logic/useSound'
 
 export default function ModalPets ({modalVisible, setModalVisible, petsOwned, selectPet}) {
-
-  modalVisible && playSoundSelect()
-  
+ 
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => {setModalVisible(!modalVisible)}}>
       <View style={styles.centeredView}>

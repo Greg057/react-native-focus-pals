@@ -1,19 +1,14 @@
-import { onSnapshot, doc } from "@firebase/firestore"
 import { Text, Image, View } from "react-native"
-import { getAuth } from "@firebase/auth"
-import { FIREBASE_DB } from "../../firebaseConfig"
 import { useEffect, useState } from "react"
 import ASSETS from "../constants/assetsData"
+import { onSnapshotGoldGems } from "../logic/onSnapshotLogic"
 
 export function Header ({coinsOnLoad, gemsOnLoad}) {
 	const [coins, setCoins] = useState(coinsOnLoad)
 	const [gems, setGems] = useState(gemsOnLoad)
 
 	useEffect(() => {
-		onSnapshot(doc(FIREBASE_DB, "users", getAuth().currentUser.uid), (doc) => {
-			setCoins(doc.data().coins)
-			setGems(doc.data().gems)
-		})
+		onSnapshotGoldGems (setCoins, setGems)
 	}, [])
 	
 	return (
