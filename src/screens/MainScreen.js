@@ -13,12 +13,14 @@ import ASSETS from '../constants/assetsData'
 import Slider from '@react-native-community/slider'
 import { sendPushNotif, cancelNotif } from '../logic/sendPushNotif'
 import { onSnapshotPetSelected } from '../logic/onSnapshotLogic'
+import ModalPetReceived from '../components/modals/ModalPetReceived'
 
 
-export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}) {
+export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn, isNewUser, setIsNewUser}) {
 	const [timer, setTimer] = useState(25 * 60)
 	const [isTimerHidden, setIsTimerHidden] = useState(true)
 	const [modalVisible, setModalVisible] = useState(false)
+	const [modalPetNewVisible, setModalPetNewVisible] = useState(false)
 	const [selectedPet, setSelectedPet] = useState(null)
 	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
 
@@ -46,6 +48,11 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 	useEffect(() => {
 		onSnapshotPetSelected(selectedPet, setSelectedPet)
 	}, [modalVisible])
+
+	useEffect(() => {
+		isNewUser && setModalPetNewVisible(true)
+		setIsNewUser(false)
+	}, [])
 
 	function selectPet (pet) {
 		setSelectedPet(pet)
@@ -83,6 +90,8 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}
 	return (
 		<View style={styles.container}>
 			<Header coinsOnLoad={coins} gemsOnLoad={gems} />
+
+			<ModalPetReceived modalVisible={modalPetNewVisible} setModalVisible={setModalPetNewVisible} petReceived={{"frameImage": 28, "level": 1, "name": "electric1", "petImage": 57, "rarity": "Rare", "stars": 1, "xp": 43}} isNewPet={true} numberCardsReceived={43} gemsReceived={2} />
 
 			{isTimerHidden ? (
 				<View style={{flex: 1, alignItems: "center", paddingBottom: 22}}>

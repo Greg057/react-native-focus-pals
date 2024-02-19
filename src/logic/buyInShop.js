@@ -61,6 +61,7 @@ export async function buyEgg (cost, rarity, setIsNewPet, getPet, setGemsReceived
       xp: XP,
       level: level,
       stars: stars,
+      rarity: PETS[petToAdd].rarity, 
       petImage: PETS[petToAdd].image,
       frameImage: PETS[petToAdd].frame,
     })
