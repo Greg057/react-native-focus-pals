@@ -35,7 +35,7 @@ export default function CountdownTimer ({timer, setIsTimerHidden, selectedPet, s
         {({ remainingTime }) => <Text style={{fontSize: 26, fontWeight: 700}}>{children({remainingTime})}</Text>}
       </CountdownCircleTimer>
       <View style={{paddingTop: 36, paddingHorizontal: 36}}>
-        <Text>{isDeepModeEnabled ? "Hint: Deep Focus is on, do not leave the app or close the screen." : "Hint: Make sure your phone is not in silent mode to be notified."}</Text>
+        <Text>{isDeepModeEnabled ? "Hint: Deep Focus is on, do not leave the app or close the screen." : "Hint: Make sure your phone is not in silent mode and that notifications are allowed."}</Text>
       </View>
       <Pressable onPress={onPress} style={{marginTop: 156, width: 100, height: 30, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)", borderRadius: 6, alignItems: "center", justifyContent: "center"}}>
         <Text>Cancel</Text>

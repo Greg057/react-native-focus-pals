@@ -11,7 +11,7 @@ import { playSoundError, playSoundStart } from '../logic/useSound'
 import { StatsGained } from '../components/modals/ModalSessionComplete'
 import ASSETS from '../constants/assetsData'
 import Slider from '@react-native-community/slider'
-import {sendPushNotif, cancelNotif} from '../logic/sendPushNotif'
+import {sendPushNotif, cancelNotif, registerForPushNotificationsAsync} from '../logic/sendPushNotif'
 
 export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn}) {
 	const [timer, setTimer] = useState(25 * 60)
