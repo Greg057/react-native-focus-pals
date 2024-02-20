@@ -75,5 +75,4 @@ const styles = StyleSheet.create({
     borderColor: "rgba(211,211,211, 0.9)",
     alignItems: 'center',
   },
-  
 })
