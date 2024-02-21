@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import MainScreen from "./src/screens/MainScreen"
 import ShopScreen from "./src/screens/ShopScreen"
 import CollectionScreen from "./src/screens/CollectionScreen"
-import { Image } from "react-native"
+import { Image, LogBox  } from "react-native"
 import { useState, useEffect } from "react"
 import { getAuth, onAuthStateChanged } from "@firebase/auth"
 import * as SplashScreen from 'expo-splash-screen'
@@ -13,6 +13,8 @@ import 'expo-dev-client'
 
 SplashScreen.preventAutoHideAsync()
 const Tab = createBottomTabNavigator()
+
+LogBox.ignoreAllLogs()
 
 export default function App() {
   const [isTimerOn, setIsTimerOn] = useState(false) 

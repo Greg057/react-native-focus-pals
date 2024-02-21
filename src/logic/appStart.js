@@ -28,7 +28,7 @@ export const authNewUser = async () => {
   const user = await signInAnonymously(auth)
   await setDoc(doc(FIREBASE_DB, "users", user.user.uid), {
     petsOwned: {"electric1": {"level": 1, "stars": 1, "xp": 43}},
-    coins: 200,
+    coins: 400,
     gems: 10,
   })
 }

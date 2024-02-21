@@ -24,7 +24,7 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
           </View>
 
           <View style={{alignItems: "center"}}>
-            <Text>{rarity === "Uncommon" 
+            <Text style={{fontWeight: 700}}>{rarity === "Uncommon" 
                     ? "70% chance to get a Common Pal" 
                     : rarity === "Rare" 
                       ? "60% chance to get an Uncommon Pal"
@@ -32,7 +32,7 @@ export default function ModalBuyEgg({modalVisible, setModalVisible, getPet, rari
                         ? "50% chance to get a Rare Pal"
                         : "40% chance to get an Epic Pal"}
             </Text>
-            <Text>{rarity === "Uncommon" 
+            <Text style={{fontWeight: 700}}>{rarity === "Uncommon" 
                     ? "30% chance to get an Uncommon Pal" 
                     : rarity === "Rare" 
                       ? "40% chance to get a Rare Pal"

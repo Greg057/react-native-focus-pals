@@ -1,7 +1,7 @@
 import { doc, getDoc } from "firebase/firestore"
 import { FIREBASE_DB } from "../../firebaseConfig"
 import { getAuth } from "firebase/auth"
-import { playSoundLevelUp, playSoundStarUp } from '../logic/useSound'
+import { playSoundLevelUp, playSoundStarUp } from './useSound'
 
 export function setXPPet (pet, setIsStarUp, setIsPetMaxLevel, setIsLevelUp) {
   if (pet.xp >= 100 && pet.stars === 1 && pet.level === 10

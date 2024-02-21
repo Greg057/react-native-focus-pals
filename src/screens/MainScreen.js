@@ -96,7 +96,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn,
 			{isTimerHidden ? (
 				<View style={{flex: 1, alignItems: "center", paddingBottom: 22}}>
 					<Text style={{fontWeight: 700, fontSize: 36, marginTop: 12, flex: 1}}>{formatTime(timer)}</Text>
-					<Slider style={{width: 300, height: 40, flex: 1}} minimumValue={1} maximumValue={120} step={5} value={timer/60} onValueChange={(value) => setTimer(value * 60)} minimumTrackTintColor="black"/>
+					<Slider style={{width: 300, height: 40, flex: 1}} minimumValue={5} maximumValue={120} step={5} value={timer/60} onValueChange={(value) => setTimer(value * 60)} minimumTrackTintColor="black"/>
 					<View style={{width: 350, flex: 1, flexDirection:"row", alignItems: "center", justifyContent: "space-around", marginVertical: 18}}> 
 						<View>
 							<Text style={{fontSize: 16, fontWeight: 700}}>Deep Focus Mode:</Text>
