@@ -66,7 +66,7 @@ export const PetDisplayMain = memo(({pet, selectPet = null, isPetSelected = fals
 						}} >
 							<Children />
 					</Pressable>
-					<ModalUpgrade modalVisible={modalUpgradeVisible} setModalVisible={setModalUpgradeVisible} petUpgraded={petUpgraded} isStarUp={isStarUp} pet={pet} cost={cost} />
+					<ModalUpgrade modalVisible={modalUpgradeVisible} setModalVisible={setModalUpgradeVisible} petUpgraded={petUpgraded} isStarUp={isStarUp} pet={pet} cost={cost} isPetMaxLevel={isPetMaxLevel} />
 					<ModalPetUpgraded modalVisible={modalPetUpgradedVisible} setModalVisible={setModalPetUpgradedVisible} pet={pet} isStarUp={isStarUp} cost={cost} setErrorModalVisible={setErrorModalVisible}/>
 					<ModalError modalVisible={errorModalVisible} setModalVisible={setErrorModalVisible} />
 				</>

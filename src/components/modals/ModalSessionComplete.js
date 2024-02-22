@@ -57,7 +57,7 @@ export default function ModalSessionComplete ({modalVisible, setModalVisible, pe
 }
 
 export function StatsGained ({ imageSource, isCoins, timeFocused, selectedPet = null }) {
-  const bonusGoldPet = selectedPet === null ? 0 : selectedPet.stars === 1 ? 0 : selectedPet.stars ** 2 / 100
+  const bonusGoldPet = selectedPet === null ? 0 : selectedPet.stars === 6 && selectedPet.level === 60 ? 1 : selectedPet.stars === 1 ? 0 : selectedPet.stars ** 2 / 100
   return (
     <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%"}}>
       <Image style={{height: 40, width: 40}} source={imageSource} />

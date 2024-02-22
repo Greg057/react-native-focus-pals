@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons'
 import { GameCurrencyUI } from '../Header'
 import ASSETS from '../../constants/assetsData'
 
-export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp, pet, cost, petUpgraded }) {
+export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp, pet, cost, petUpgraded, isPetMaxLevel }) {
     
   async function up () {
     petUpgraded()
@@ -27,14 +27,14 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
             </Pressable>
           </View>
 
-          <View style={{width: "100%", paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+          <View style={{width: "100%", paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 18}}>
             <PetDisplayMain pet={pet} isPetUpgrade={true} />
-            <AntDesign name="doubleright" size={32} color="black" />
-            <PetDisplayMain pet={isStarUp ? {...pet, stars: pet.stars + 1, level: 1} : {...pet, level: pet.level + 1}} isPetUpgrade={true} />
+            {isPetMaxLevel === false && <AntDesign name="doubleright" size={32} color="black" />}
+            {isPetMaxLevel === false && <PetDisplayMain pet={isStarUp ? {...pet, stars: pet.stars + 1, level: 1} : {...pet, level: pet.level + 1}} isPetUpgrade={true} />}
           </View>
             
           <View>
-            <Text style={{alignSelf: "center", marginVertical: 12, fontWeight: 700}}>{isStarUp ? `Gold gained while focusing with this Pal:` : `Next evolution possible at level ${pet.stars * 10}`}</Text>
+            <Text style={{alignSelf: "center", marginVertical: 12, paddingHorizontal: 12, fontWeight: 700}}>{isStarUp ? `Gold gained while focusing with this Pal:` : pet.stars === 6 ? pet.level === 60 ? "MAX evolution and level reached: +100% Gold bonus while focusing with this Pal!" : "MAX evolution reached, reach level 60 to get a +100% Gold bonus while focusing" : `Next evolution possible at level ${pet.stars * 10}`}</Text>
           </View>
           {isStarUp && 
               <View style={{width: "100%", paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 24}}>
@@ -44,22 +44,25 @@ export default function ModalUpgrade ({ modalVisible, setModalVisible, isStarUp,
               </View>
             }
           
-          {pet.xp >= 100 
-            ? <Pressable onPress={up} style={{minWidth: "80%", marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+          {isPetMaxLevel
+            ? <Pressable onPress={onClose} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
                 <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
-                  <GameCurrencyUI imageSource={ASSETS.icons.coin} amount={cost} size={50} width={80} backgroundColor = "#02748D" />
-                  <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>{isStarUp ? "EVOLVE" : "LEVEL UP"}</Text>
+                  <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Continue</Text>
                 </View>
-              </Pressable>
-            : <Pressable onPress={onClose} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
-                <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
-                  <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Not enough XP to {isStarUp ? "evolve" : "level up"} Pal</Text>
-                </View>
-              </Pressable>
+              </Pressable> 
+            : pet.xp >= 100 
+              ? <Pressable onPress={up} style={{minWidth: "80%", marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+                  <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
+                    <GameCurrencyUI imageSource={ASSETS.icons.coin} amount={cost} size={50} width={80} backgroundColor = "#02748D" />
+                    <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>{isStarUp ? "EVOLVE" : "LEVEL UP"}</Text>
+                  </View>
+                </Pressable>
+              : <Pressable onPress={onClose} style={{marginHorizontal: 12, alignItems: "center", backgroundColor: "#232b2b", paddingVertical: 8, borderRadius: 8, marginTop: 12, borderWidth: 2, borderColor: "rgba(211,211,211, 0.9)"}}>
+                  <View style={{width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 18}}>
+                    <Text style={{color: "white", fontSize: 16, fontWeight: 700}}>Not enough XP to {isStarUp ? "evolve" : "level up"} Pal</Text>
+                  </View>
+                </Pressable>
           }
-          
-          
-
 
         </View>
       </View>
