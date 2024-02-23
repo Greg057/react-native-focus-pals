@@ -1,4 +1,4 @@
-import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import MainScreen from "./src/screens/MainScreen"
@@ -58,9 +58,9 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Tab.Navigator initialRouteName="Timer" screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarActiveBackgroundColor: "#30bced", tabBarStyle: {height: 60, backgroundColor: "#02748D"}}}>
-          {!isTimerOn && <Tab.Screen name="Shop" component={ShopScreen} options={{tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={ASSETS.icons.shopIconNav}/>}} />}
-          <Tab.Screen name="Timer" children={()=><MainScreen coins={coins} gems={gems} petsOwnedOnLoad={petsOwnedOnLoad} setIsTimerOn={setIsTimerOn} isNewUser={isNewUser} setIsNewUser={setIsNewUser} />} options={{tabBarItemStyle: {borderRightColor: "rgba(211,211,211, 0.9)", borderRightWidth: 1, borderLeftColor: "rgba(211,211,211, 0.9)", borderLeftWidth: 1}, tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={ASSETS.icons.homeIconNav}/>}} />
-          {!isTimerOn && <Tab.Screen name="Collection" children={()=><CollectionScreen petsOwnedOnLoad={petsOwnedOnLoad}/>} options={{tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={ASSETS.icons.collectionIconNav}/>}} />}
+          {!isTimerOn && <Tab.Screen name="Shop" children={()=><ShopScreen />} options={{tabBarIcon: () => <SafeAreaView><Image style={{ width: 60, height: 60}} source={ASSETS.icons.shopIconNav}/></SafeAreaView>}} />}
+          <Tab.Screen name="Timer" children={()=><MainScreen coins={coins} gems={gems} petsOwnedOnLoad={petsOwnedOnLoad} setIsTimerOn={setIsTimerOn} isNewUser={isNewUser} setIsNewUser={setIsNewUser} />} options={{tabBarItemStyle: {borderRightColor: "rgba(211,211,211, 0.9)", borderRightWidth: 1, borderLeftColor: "rgba(211,211,211, 0.9)", borderLeftWidth: 1}, tabBarIcon: () => <SafeAreaView><Image style={{ width: 60, height: 60}} source={ASSETS.icons.homeIconNav}/></SafeAreaView>}} />
+          {!isTimerOn && <Tab.Screen name="Collection" children={()=><CollectionScreen petsOwnedOnLoad={petsOwnedOnLoad}/>} options={{tabBarIcon: () => <SafeAreaView><Image style={{ width: 60, height: 60}} source={ASSETS.icons.collectionIconNav}/></SafeAreaView>}} />}
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

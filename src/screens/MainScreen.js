@@ -14,7 +14,7 @@ import Slider from '@react-native-community/slider'
 import { sendPushNotif, cancelNotif } from '../logic/sendPushNotif'
 import { onSnapshotPetSelected } from '../logic/onSnapshotLogic'
 import ModalPetReceived from '../components/modals/ModalPetReceived'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn, isNewUser, setIsNewUser}) {
@@ -27,8 +27,6 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn,
 
 	const [isDeepModeEnabled, setIsDeepModeEnabled] = useState(false)
   const toggleSwitch = () => setIsDeepModeEnabled(isDeepModeEnabled ? false : true)
-
-	const insets = useSafeAreaInsets() 
 
 	const appState = useRef(AppState.currentState)
 
@@ -91,7 +89,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn,
 	}
 
 	return (
-		<View style={[styles.container, {paddingTop: insets.top + 12, paddingBottom: insets.bottom, paddingLeft: insets.left + 15, paddingRight: insets.right + 15}]}>
+		<SafeAreaView style={styles.container}>
 			<Header coinsOnLoad={coins} gemsOnLoad={gems} />
 
 			<ModalPetReceived modalVisible={modalPetNewVisible} setModalVisible={setModalPetNewVisible} petReceived={{"frameImage": 28, "level": 1, "name": "electric1", "petImage": 57, "rarity": "Rare", "stars": 1, "xp": 43}} isNewPet={true} numberCardsReceived={43} gemsReceived={2} />
@@ -102,7 +100,8 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn,
 					<Slider style={{width: 300, height: 40, flex: 1}} minimumValue={5} maximumValue={120} step={5} value={timer/60} onValueChange={(value) => setTimer(value * 60)} minimumTrackTintColor="black"/>
 					<View style={{width: 350, flex: 1, flexDirection:"row", alignItems: "center", justifyContent: "space-around", marginVertical: 18}}> 
 						<View>
-							<Text style={{fontSize: 16, fontWeight: 700}}>Deep Focus Mode:</Text>
+							{/* <Text style={{fontSize: 16, fontWeight: 700}}>Deep Focus Mode:</Text> */}
+							<Text style={{fontSize: 16, color: "red", fontWeight: 900}}>THIS IS BUILD 4</Text>
 							<Text style={{fontSize: 11}}>Leaving the app will stop the timer</Text>
 						</View>
 						<Switch
@@ -141,7 +140,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn,
 				)}
 
 			<StatusBar hidden={true} />
-		</View>
+		</SafeAreaView>
 	)
 }
 
@@ -150,5 +149,6 @@ const styles = StyleSheet.create({
     flex: 1,
 		backgroundColor: "#30bced",
     alignItems: 'center',
+    paddingHorizontal: 15, 
   },  
 })
