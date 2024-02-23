@@ -43,8 +43,8 @@ export async function sendPushNotif(time) {
   await registerForPushNotificationsAsync()
   notifIdentifier = await Notifications.scheduleNotificationAsync({
     content: {
-      title: "Your focus session has ended",
-      body: 'Come back and collect you reward!',
+      title: "Focus session has ended",
+      body: 'Come back and collect your reward!',
       sound: "default"
     },
     trigger: { seconds: time },

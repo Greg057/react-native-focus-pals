@@ -16,7 +16,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.greg057.firstapp"
+      "bundleIdentifier": "com.greg057.firstapp",
+      "buildNumber": "2",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "The app does NOT use the microphone at any point but it uses the Expo Audio dependency which has the OPTION to use the microphone, however, as already stated, it is not used in the app itself."
+      }
     },
     "android": {
       "adaptiveIcon": {
