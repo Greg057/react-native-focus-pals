@@ -9,11 +9,19 @@ import { playSoundSelect } from '../logic/useSound'
 import ModalPetUpgraded from './modals/ModalPetUpgraded'
 import ModalError from './modals/ModalError'
 import { setXPPet, petUpgrade } from "../logic/petDisplayLogic"
-
-const screenWidth = Dimensions.get("window").width
-const numColumns = Math.floor(screenWidth / 125)
+import * as ScreenOrientation from 'expo-screen-orientation'
 
 export function PetDisplay({petsOwned, selectPet}) {
+	const [numColumns, setNumColumns] = useState(3)
+
+	useEffect(() => {
+		(async () => {
+			await ScreenOrientation.getOrientationAsync()
+		})()
+		const screenWidth = Dimensions.get("window").width
+		setNumColumns(Math.floor(screenWidth / 125))
+	})
+	
 	return (
     <View style={{flex: 1, alignSelf: "center"}}>
 			<FlatList showsVerticalScrollIndicator={false} numColumns={numColumns}

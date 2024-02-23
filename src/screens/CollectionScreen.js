@@ -17,7 +17,7 @@ export default function CollectionScreen ({petsOwnedOnLoad}) {
   }, [])
 		
 	return (
-		<SafeAreaView style={{backgroundColor: "black", flex: 1, paddingHorizontal: 15}}>
+		<SafeAreaView style={{backgroundColor: "black", flex: 1, paddingHorizontal: 15, paddingBottom: 60}}>
 			<Header />
 			<View style={{ backgroundColor: "#232b2b", marginBottom: 12, flexDirection: "row", justifyContent: "space-between", padding: 12, borderRadius: 8}}>
 				<Text style={{color: "white", fontWeight: "bold"}}>Pals Collected</Text>

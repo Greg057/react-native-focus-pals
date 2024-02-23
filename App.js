@@ -1,4 +1,4 @@
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import MainScreen from "./src/screens/MainScreen"
@@ -11,7 +11,6 @@ import * as SplashScreen from 'expo-splash-screen'
 import { fetchData, authNewUser, loadResourcesAndDataAsync } from "./src/logic/appStart"
 import ASSETS from "./src/constants/assetsData"
 import 'expo-dev-client'
-
 
 SplashScreen.preventAutoHideAsync()
 const Tab = createBottomTabNavigator()
@@ -57,10 +56,10 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Tab.Navigator initialRouteName="Timer" screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarActiveBackgroundColor: "#30bced", tabBarStyle: {height: 60, backgroundColor: "#02748D"}}}>
-          {!isTimerOn && <Tab.Screen name="Shop" children={()=><ShopScreen />} options={{tabBarIcon: () => <SafeAreaView><Image style={{ width: 60, height: 60}} source={ASSETS.icons.shopIconNav}/></SafeAreaView>}} />}
-          <Tab.Screen name="Timer" children={()=><MainScreen coins={coins} gems={gems} petsOwnedOnLoad={petsOwnedOnLoad} setIsTimerOn={setIsTimerOn} isNewUser={isNewUser} setIsNewUser={setIsNewUser} />} options={{tabBarItemStyle: {borderRightColor: "rgba(211,211,211, 0.9)", borderRightWidth: 1, borderLeftColor: "rgba(211,211,211, 0.9)", borderLeftWidth: 1}, tabBarIcon: () => <SafeAreaView><Image style={{ width: 60, height: 60}} source={ASSETS.icons.homeIconNav}/></SafeAreaView>}} />
-          {!isTimerOn && <Tab.Screen name="Collection" children={()=><CollectionScreen petsOwnedOnLoad={petsOwnedOnLoad}/>} options={{tabBarIcon: () => <SafeAreaView><Image style={{ width: 60, height: 60}} source={ASSETS.icons.collectionIconNav}/></SafeAreaView>}} />}
+        <Tab.Navigator initialRouteName="Timer" screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarActiveBackgroundColor: "#30bced", tabBarInactiveBackgroundColor: "#02748D", tabBarStyle: {height: 60, paddingBottom: 0, backgroundColor: "transparent", position: "absolute", borderTopWidth: 0}}}>
+          {!isTimerOn && <Tab.Screen name="Shop" children={()=><ShopScreen />} options={{tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={ASSETS.icons.shopIconNav}/>, tabBarItemStyle: {borderTopLeftRadius: 32, borderLeftColor: "rgba(211,211,211, 0.9)", borderLeftWidth: 2, borderTopColor: "rgba(211,211,211, 0.9)", borderTopWidth: 2}}}/>}
+          <Tab.Screen name="Timer" children={()=><MainScreen coins={coins} gems={gems} petsOwnedOnLoad={petsOwnedOnLoad} setIsTimerOn={setIsTimerOn} isNewUser={isNewUser} setIsNewUser={setIsNewUser} />} options={{tabBarItemStyle: {borderRightColor: "rgba(211,211,211, 0.9)", borderRightWidth: 2, borderLeftColor: "rgba(211,211,211, 0.9)", borderLeftWidth: 2, borderTopColor: "rgba(211,211,211, 0.9)", borderTopWidth: 2}, tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={ASSETS.icons.homeIconNav}/>}}/>
+          {!isTimerOn && <Tab.Screen name="Collection" children={()=><CollectionScreen petsOwnedOnLoad={petsOwnedOnLoad}/>} options={{tabBarIcon: () =><Image style={{ width: 60, height: 60}} source={ASSETS.icons.collectionIconNav}/>, tabBarItemStyle: {borderTopRightRadius: 32, borderRightColor: "rgba(211,211,211, 0.9)", borderRightWidth: 2, borderTopColor: "rgba(211,211,211, 0.9)", borderTopWidth: 2}}}/>}
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
