@@ -1,9 +1,7 @@
 import { FlatList, Text, View, ImageBackground, Pressable, Dimensions } from "react-native"
-import 'react-native-get-random-values'
 import { Image } from 'expo-image'
 import ASSETS from "../constants/assetsData"
-import { memo } from "react"
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import ModalUpgrade from "./modals/ModalUpgrade"
 import { playSoundSelect } from '../logic/useSound'
 import ModalPetUpgraded from './modals/ModalPetUpgraded'

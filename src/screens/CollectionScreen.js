@@ -1,9 +1,7 @@
 import { Text, View } from "react-native"
 import { Header } from "../components/Header"
-import 'react-native-get-random-values'
 import { PetDisplay } from "../components/PetDisplay"
 import { useEffect, useState } from "react"
-import 'react-native-get-random-values'
 import { getPetData, sortPets } from "../logic/setPetDataSorted"
 import { SafeAreaView } from "react-native-safe-area-context"
 
