@@ -101,7 +101,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn,
 					<View style={{width: 350, flex: 1, flexDirection:"row", alignItems: "center", justifyContent: "space-around", marginVertical: 18}}> 
 						<View>
 							{/* <Text style={{fontSize: 16, fontWeight: 700}}>Deep Focus Mode:</Text> */}
-							<Text style={{fontSize: 16, color: "red", fontWeight: 900}}>THIS IS BUILD 5</Text>
+							<Text style={{fontSize: 16, color: "red", fontWeight: 900}}>THIS IS BUILD 6</Text>
 							<Text style={{fontSize: 11}}>Leaving the app will stop the timer</Text>
 						</View>
 						<Switch

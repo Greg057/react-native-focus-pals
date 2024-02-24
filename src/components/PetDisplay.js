@@ -14,14 +14,20 @@ import * as ScreenOrientation from 'expo-screen-orientation'
 export function PetDisplay({petsOwned, selectPet}) {
 	const [numColumns, setNumColumns] = useState(3)
 
+	const calculateNumColumns = () => {
+    const screenWidth = Dimensions.get('window').width;
+    setNumColumns(Math.floor(screenWidth / 125));
+  }
+
 	useEffect(() => {
-		(async () => {
-			await ScreenOrientation.getOrientationAsync()
-		})()
-		const screenWidth = Dimensions.get("window").width
-		setNumColumns(Math.floor(screenWidth / 125))
-	})
-	
+		calculateNumColumns()
+		const listener = () => {
+      calculateNumColumns()
+    }
+		ScreenOrientation.addOrientationChangeListener(listener)
+    
+	}, [])
+
 	return (
     <View style={{flex: 1, alignSelf: "center"}}>
 			<FlatList showsVerticalScrollIndicator={false} numColumns={numColumns}
