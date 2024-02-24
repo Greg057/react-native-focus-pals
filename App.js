@@ -64,7 +64,7 @@ function NavBar ({isTimerOn, coins, gems, petsOwnedOnLoad, setIsTimerOn, isNewUs
   const insets = useSafeAreaInsets()
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Timer" screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarActiveBackgroundColor: "#30bced", tabBarInactiveBackgroundColor: "#02748D", tabBarStyle: {display: isTimerOn && "none", height: 60, backgroundColor: "transparent", position: "absolute", borderTopWidth: 0, paddingHorizontal: 4, paddingBottom: insets.bottom}}}>
+      <Tab.Navigator initialRouteName="Timer" screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarActiveBackgroundColor: "#30bced", tabBarInactiveBackgroundColor: "#02748D", tabBarStyle: {display: isTimerOn && "none", height: 60, backgroundColor: "transparent", position: "absolute", borderTopWidth: 0, paddingHorizontal: 4, marginBottom: insets.bottom}}}>
         <Tab.Screen name="Shop" children={()=><ShopScreen />} 
           options={{tabBarIcon: () => <Image style={{ width: 60, height: 60}} source={ASSETS.icons.shopIconNav}/>, 
             tabBarItemStyle: {borderTopLeftRadius: 24, borderBottomLeftRadius: 24, borderColor: "rgba(211,211,211, 0.9)", borderLeftWidth: 2, borderTopWidth: 2, borderBottomWidth: 2}}}/>

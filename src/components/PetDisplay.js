@@ -1,4 +1,4 @@
-import { FlatList, Text, View, ImageBackground, Pressable, useWindowDimensions } from "react-native"
+import { FlatList, Text, View, ImageBackground, Pressable, Dimensions } from "react-native"
 import 'react-native-get-random-values'
 import { Image } from 'expo-image'
 import ASSETS from "../constants/assetsData"
@@ -12,10 +12,11 @@ import { setXPPet, petUpgrade } from "../logic/petDisplayLogic"
 
 export function PetDisplay({petsOwned, selectPet = null}) {
 	const [numColumns, setNumColumns] = useState(3)
-	const {width, height} = useWindowDimensions()
+	const windowWidth = Dimensions.get('window').width;
+	const windowHeight = Dimensions.get('window').height
 
 	useEffect(() => {
-		width > height ? setNumColumns(Math.floor(height / 125)) : setNumColumns(Math.floor(width / 125))
+		windowWidth > windowHeight ? setNumColumns(Math.floor(windowHeight / 125)) : setNumColumns(Math.floor(windowWidth / 125))
 	}, [])
 
 	return (

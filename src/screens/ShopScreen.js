@@ -6,13 +6,12 @@ import { useState } from "react"
 import { GameCurrencyUI } from "../components/Header"
 import ASSETS from "../constants/assetsData"
 import ModalBuyGold from "../components/modals/ModalBuyGold"
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 export default function ShopScreen () {
-	const insets = useSafeAreaInsets()
 		
 	return (
-		<SafeAreaView style={{backgroundColor: "#30bced", flex: 1, paddingHorizontal: 15, paddingBottom: insets.bottom + 60}}>
+		<SafeAreaView style={{backgroundColor: "#30bced", flex: 1, paddingHorizontal: 15, paddingBottom: 60}}>
 			<Header />
 			
 			<ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
