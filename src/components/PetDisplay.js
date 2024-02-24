@@ -1,4 +1,4 @@
-import { FlatList, Text, View, ImageBackground, Pressable, Dimensions } from "react-native"
+import { FlatList, Text, View, ImageBackground, Pressable, useWindowDimensions } from "react-native"
 import { Image } from 'expo-image'
 import ASSETS from "../constants/assetsData"
 import { memo, useEffect, useState } from "react"
@@ -10,16 +10,15 @@ import { setXPPet, petUpgrade } from "../logic/petDisplayLogic"
 
 export function PetDisplay({petsOwned, selectPet = null}) {
 	const [numColumns, setNumColumns] = useState(3)
-	const windowWidth = Dimensions.get('window').width;
-	const windowHeight = Dimensions.get('window').height
+	const {width, height} = useWindowDimensions()
 
 	useEffect(() => {
-		windowWidth > windowHeight ? setNumColumns(Math.floor(windowHeight / 125)) : setNumColumns(Math.floor(windowWidth / 125))
+		width > height ? setNumColumns(Math.floor(height / 125)) : setNumColumns(Math.floor(width / 125))
 	}, [])
 
 	return (
     <View style={{flex: 1, alignSelf: "center"}}>
-			<FlatList showsVerticalScrollIndicator={false} numColumns={numColumns}
+			<FlatList key={numColumns} showsVerticalScrollIndicator={false} numColumns={numColumns}
 							data={petsOwned} renderItem={({item}) => <PetDisplayMain pet={item} selectPet={selectPet}/>} keyExtractor={(item) => item.name}/>
 		</View>
 	)
