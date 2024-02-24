@@ -5,11 +5,13 @@ import { PetDisplay } from "../components/PetDisplay"
 import { useEffect, useState } from "react"
 import 'react-native-get-random-values'
 import { getPetData, sortPets } from "../logic/setPetDataSorted"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 
 export default function CollectionScreen ({petsOwnedOnLoad}) {
 	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
 	const [numberPetsDiscovered, setNumberPetsDiscovered] = useState(0)
+
+	const insets = useSafeAreaInsets()
 		
   useEffect(() => {
     const unsubscribe = getPetData(setPetsOwned, setNumberPetsDiscovered)
@@ -17,7 +19,7 @@ export default function CollectionScreen ({petsOwnedOnLoad}) {
   }, [])
 		
 	return (
-		<SafeAreaView style={{backgroundColor: "black", flex: 1, paddingHorizontal: 15, paddingBottom: 60}}>
+		<SafeAreaView style={{backgroundColor: "black", flex: 1, paddingHorizontal: 15, paddingBottom: insets.bottom + 60}}>
 			<Header />
 			<View style={{ backgroundColor: "#232b2b", marginBottom: 12, flexDirection: "row", justifyContent: "space-between", padding: 12, borderRadius: 8}}>
 				<Text style={{color: "white", fontWeight: "bold"}}>Pals Collected</Text>

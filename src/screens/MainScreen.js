@@ -14,7 +14,7 @@ import Slider from '@react-native-community/slider'
 import { sendPushNotif, cancelNotif } from '../logic/sendPushNotif'
 import { onSnapshotPetSelected } from '../logic/onSnapshotLogic'
 import ModalPetReceived from '../components/modals/ModalPetReceived'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn, isNewUser, setIsNewUser}) {
@@ -24,8 +24,10 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn,
 	const [modalPetNewVisible, setModalPetNewVisible] = useState(false)
 	const [selectedPet, setSelectedPet] = useState(null)
 	const [petsOwned, setPetsOwned] = useState(sortPets(petsOwnedOnLoad))
-
 	const [isDeepModeEnabled, setIsDeepModeEnabled] = useState(false)
+
+	const insets = useSafeAreaInsets()
+
   const toggleSwitch = () => setIsDeepModeEnabled(isDeepModeEnabled ? false : true)
 
 	const appState = useRef(AppState.currentState)
@@ -89,7 +91,7 @@ export default function MainScreen ({coins, gems, petsOwnedOnLoad, setIsTimerOn,
 	}
 
 	return (
-		<SafeAreaView style={styles.container}>
+		<SafeAreaView style={[styles.container, {paddingBottom: insets.bottom + 60}]}>
 			<Header coinsOnLoad={coins} gemsOnLoad={gems} />
 
 			<ModalPetReceived modalVisible={modalPetNewVisible} setModalVisible={setModalPetNewVisible} petReceived={{"frameImage": 28, "level": 1, "name": "electric1", "petImage": 57, "rarity": "Rare", "stars": 1, "xp": 43}} isNewPet={true} numberCardsReceived={43} gemsReceived={2} />
@@ -148,7 +150,6 @@ const styles = StyleSheet.create({
     flex: 1,
 		backgroundColor: "#30bced",
     alignItems: 'center',
-    paddingHorizontal: 15, 
-		paddingBottom: 60
+    paddingHorizontal: 15
   },  
 })

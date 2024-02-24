@@ -1,17 +1,18 @@
 import { Text, View, ScrollView, Pressable, Image } from "react-native"
-import {Header} from "../components/Header"
+import { Header } from "../components/Header"
 import EggDisplay from "../components/EggDisplay"
 import ModalError from "../components/modals/ModalError"
 import { useState } from "react"
 import { GameCurrencyUI } from "../components/Header"
 import ASSETS from "../constants/assetsData"
 import ModalBuyGold from "../components/modals/ModalBuyGold"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 
 export default function ShopScreen () {
+	const insets = useSafeAreaInsets()
 		
 	return (
-		<SafeAreaView style={{backgroundColor: "#30bced", flex: 1, paddingHorizontal: 15, paddingBottom: 60}}>
+		<SafeAreaView style={{backgroundColor: "#30bced", flex: 1, paddingHorizontal: 15, paddingBottom: insets.bottom + 60}}>
 			<Header />
 			
 			<ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
@@ -35,7 +36,7 @@ export default function ShopScreen () {
 	)
 }
 
-function ShopHeader ({text}) {
+function ShopHeader ({ text }) {
 	return (
 		<View style={{ backgroundColor: "#02748D", marginVertical: 12, alignItems: "center", paddingVertical: 6, paddingHorizontal: 12, borderRadius: 8}}>
 			<Text style={{color: "white", fontWeight: "bold"}}>{text}</Text>

@@ -10,13 +10,13 @@ import ModalPetUpgraded from './modals/ModalPetUpgraded'
 import ModalError from './modals/ModalError'
 import { setXPPet, petUpgrade } from "../logic/petDisplayLogic"
 
-export function PetDisplay({petsOwned, selectPet}) {
+export function PetDisplay({petsOwned, selectPet = null}) {
 	const [numColumns, setNumColumns] = useState(3)
-	const {width} = useWindowDimensions()
+	const {width, height} = useWindowDimensions()
 
 	useEffect(() => {
-		setNumColumns(Math.floor(width / 125))
-	}, [width])
+		width > height ? setNumColumns(Math.floor(height / 125)) : setNumColumns(Math.floor(width / 125))
+	}, [])
 
 	return (
     <View style={{flex: 1, alignSelf: "center"}}>
