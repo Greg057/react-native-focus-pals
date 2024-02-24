@@ -1,4 +1,4 @@
-import { FlatList, Text, View, ImageBackground, Pressable, Dimensions } from "react-native"
+import { FlatList, Text, View, ImageBackground, Pressable, useWindowDimensions } from "react-native"
 import 'react-native-get-random-values'
 import { Image } from 'expo-image'
 import ASSETS from "../constants/assetsData"
@@ -9,24 +9,14 @@ import { playSoundSelect } from '../logic/useSound'
 import ModalPetUpgraded from './modals/ModalPetUpgraded'
 import ModalError from './modals/ModalError'
 import { setXPPet, petUpgrade } from "../logic/petDisplayLogic"
-import * as ScreenOrientation from 'expo-screen-orientation'
 
 export function PetDisplay({petsOwned, selectPet}) {
 	const [numColumns, setNumColumns] = useState(3)
-
-	const calculateNumColumns = () => {
-    const screenWidth = Dimensions.get('window').width;
-    setNumColumns(Math.floor(screenWidth / 125));
-  }
+	const {width} = useWindowDimensions()
 
 	useEffect(() => {
-		calculateNumColumns()
-		const listener = () => {
-      calculateNumColumns()
-    }
-		ScreenOrientation.addOrientationChangeListener(listener)
-    
-	}, [])
+		setNumColumns(Math.floor(width / 125))
+	}, [width])
 
 	return (
     <View style={{flex: 1, alignSelf: "center"}}>

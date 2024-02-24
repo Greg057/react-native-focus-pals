@@ -12,7 +12,7 @@ export function Header ({coinsOnLoad, gemsOnLoad}) {
 	}, [])
 	
 	return (
-		<View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 16,	paddingTop: 12}}>
+		<View style={{width: "100%", flexDirection: "row", justifyContent: "space-between", marginBottom: 16,	paddingTop: 8}}>
 			<GameCurrencyUI imageSource={ASSETS.icons.gem} amount={gems} size={50}/>
 			<GameCurrencyUI imageSource={ASSETS.icons.coin} amount={coins} size={55}/>
 		</View>
