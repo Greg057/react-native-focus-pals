@@ -1,4 +1,3 @@
-import { Image } from "react-native"
 import { doc, getDoc, setDoc } from "firebase/firestore"
 import { FIREBASE_DB } from "../../firebaseConfig"
 import { getAuth, signInAnonymously } from "@firebase/auth"
