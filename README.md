@@ -6,11 +6,13 @@
 
 ## App Previews
 <p align="center">
-  <img src="assets/icons/readme_1.png" width="180">
-  <img src="assets/icons/readme_2.png" width="180">
-  <img src="assets/icons/readme_3.png" width="180">
-  <img src="assets/icons/readme_4.png" width="180">
-  <img src="assets/icons/readme_5.png" width="180">
+  <img src="assets/icons/readme_1.png" width="250">
+  <img src="assets/icons/readme_2.png" width="250">
+  <img src="assets/icons/readme_3.png" width="250">
+</p>
+<p align="center">
+  <img src="assets/icons/readme_4.png" width="250">
+  <img src="assets/icons/readme_5.png" width="250">
 </p>
 
 ## Project Overview
