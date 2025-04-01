@@ -1,6 +1,13 @@
 # Focus Pals
 
-**Note:** *Not on the App Store anymore as of March 2025.* I decided not to renew the Apple Developer Program membership, which costs around **160 AUD/year**, as I am a broke college student.
+**Note:** *Not on the App Store anymore as of March 2025.* I decided not to renew the Apple Developer Program membership, which costs around **160 AUD/year** (I am a broke college student).
+
+## App Previews
+<img src="assets/icons/readme_1.png" width="250">
+<img src="assets/icons/readme_2.png" width="250">
+<img src="assets/icons/readme_3.png" width="250">
+<img src="assets/icons/readme_4.png" width="250">
+<img src="assets/icons/readme_5.png" width="250">
 
 ## Project Overview
 **Focus Pals** is a gamified focus and study companion app designed to enhance productivity, self-control, and concentration. Built with **React Native/JavaScript**, the app uses **Firebase** for its backend.  
