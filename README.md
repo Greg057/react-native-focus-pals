@@ -2,7 +2,7 @@
 
 ## ⚠️ Important Notice
 > **❌ Not on the App Store anymore as of March 2025.**  
-> I decided not to renew the Apple Developer Program membership, which costs **160 AUD/year**, since I am a broke college student. 💸
+> I decided not to renew the Apple Developer Program membership since it costs **160 AUD/year**.
 
 ## App Previews
 <p align="center">
