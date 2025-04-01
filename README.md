@@ -1,6 +1,8 @@
 # Focus Pals
 
-**Note:** *Not on the App Store anymore as of March 2025.* I decided not to renew the Apple Developer Program membership, which costs around **160 AUD/year** (I am a broke college student).
+## ⚠️ Important Notice
+> **❌ Not on the App Store anymore as of March 2025.**  
+> I decided not to renew the Apple Developer Program membership, which costs **160 AUD/year**, since I am a broke college student. 💸
 
 ## App Previews
 <p align="center">
